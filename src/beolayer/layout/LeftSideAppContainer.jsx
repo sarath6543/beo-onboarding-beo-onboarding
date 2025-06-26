@@ -19,29 +19,25 @@ export default function LeftSideAppContainer({ isOpen, isMobile, onClose }) {
             : "relative"
         }`}
       >
-        <div className="mb-10">
-          <h2 className="text-lg font-bold">My Logo</h2>
-        </div>
-       <nav>
-  <ul className="space-y-4">
-    <li>
-      <Link to="/page1" className="text-blue-600 hover:underline">
-        Page 1
-      </Link>
-    </li>
-    <li>
-      <Link to="/page2" className="text-blue-600 hover:underline">
-        Page 2
-      </Link>
-    </li>
-    <li>
-      <Link to="/page3" className="text-blue-600 hover:underline">
-        Page 3
-      </Link>
-    </li>
-  </ul>
-</nav>
-
+        <nav>
+          <ul className="space-y-4">
+            <li>
+              <Link to="/page1" className="text-blue-600 hover:underline">
+                Page 1
+              </Link>
+            </li>
+            <li>
+              <Link to="/page2" className="text-blue-600 hover:underline">
+                Page 2
+              </Link>
+            </li>
+            <li>
+              <Link to="/page3" className="text-blue-600 hover:underline">
+                Page 3
+              </Link>
+            </li>
+          </ul>
+        </nav>
       </aside>
     </>
   );
