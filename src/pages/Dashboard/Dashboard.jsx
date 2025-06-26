@@ -14,7 +14,7 @@ const Dashboard = () => {
       setIsSidebarOpen(!mobile);
     };
 
-    handleResize(); // Initial check
+    handleResize(); 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -32,7 +32,11 @@ const Dashboard = () => {
           onClose={() => setIsSidebarOpen(false)}
         />
       <PageContainer title="Dashboard">
-      <p>Welcome to the dashboard!</p>
+         <div className="flex flex-col h-190 items-center justify-center text-white">
+          <p className='text-4xl'>WELCOME TO</p>
+          <p className="text-5xl font-bold">BEO ONBOARDING</p>
+        </div>
+
      </PageContainer>
       </div>
     </div>

@@ -20,7 +20,7 @@ export default function LeftSideAppContainer({ isOpen, isMobile, onClose }) {
         }`}
       >
         <div className="mb-10">
-          <h2 className="text-lg font-bold">My Logo</h2>
+          <h2 className="text-lg font-bold"></h2>
         </div>
        <nav>
   <ul className="space-y-4">

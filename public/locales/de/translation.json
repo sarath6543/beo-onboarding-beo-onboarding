@@ -2,5 +2,8 @@
   "login": "Anmeldung",
   "email": "E-Mail",
   "password": "Passwort",
-  "language": "Sprache"
+  "language": "Sprache",
+  "Welcome": "Bienvenue à React et react-i18next"
+
 }
+
