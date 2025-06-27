@@ -1,10 +1,9 @@
-// LoginForm.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import InputField from "../../beolayer/components/base/InputField/InputField";
 import Button from "../../beolayer/components/base/Button/Button";
-
+import { useAuthQuery } from "../../queries/auth/useAuthQuery";
 export const LoginForm = () => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
@@ -12,9 +11,15 @@ export const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e) => {
+  const { login, loading, error } = useAuthQuery(); 
+
+  const handleLogin = async (e) => {
     e.preventDefault();
-    navigate("/");
+    const result = await login(email, password);
+    if (result?.token) {
+      navigate("/"); 
+    }
+   
   };
 
   const switchLanguage = (lng) => {
@@ -30,15 +35,23 @@ export const LoginForm = () => {
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        required
       />
       <InputField
         label={t("password")}
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        required
       />
 
-      <Button type="submit">{t("login")}</Button>
+      {error && (
+        <p className="text-red-500 text-sm text-center mt-2">{error}</p>
+      )}
+
+      <Button type="submit" disabled={loading}>
+        {loading ? t("logging_in") : t("login")}
+      </Button>
 
       <div className="mt-6 text-center">
         <span>{t("language")}: </span>

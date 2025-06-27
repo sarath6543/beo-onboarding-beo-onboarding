@@ -1,9 +1,10 @@
 {
-  "login": "Anmeldung",
-  "email": "E-Mail",
+  "login": "Login",
+  "email": "Email",
   "password": "Passwort",
+  "loading": "Laden...",
+  "invalid_credentials": "ungültige_Anmeldeinformationen",
   "language": "Sprache",
-  "Welcome": "Bienvenue à React et react-i18next"
-
+  "or": "oder",
+  "forgot_password": "Passwort vergessen"
 }
-

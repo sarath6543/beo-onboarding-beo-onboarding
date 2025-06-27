@@ -11,7 +11,7 @@ export default function LeftSideAppContainer({ isOpen, isMobile, onClose }) {
         />
       )}
       <aside
-        className={`bg-gray-100 w-64 p-5 h-full overflow-y-auto z-50 ${
+        className={`bg-white w-64 p-5 h-full overflow-y-auto z-50 ${
           isMobile
             ? `fixed top-0 left-0 transition-transform duration-300 ${
                 isOpen ? "translate-x-0" : "-translate-x-full"

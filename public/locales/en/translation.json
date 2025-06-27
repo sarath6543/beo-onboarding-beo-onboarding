@@ -2,6 +2,9 @@
   "login": "Login",
   "email": "Email",
   "password": "Password",
+  "loading": "Loading...",
+  "invalid_credentials": "Invalid Credentials",
   "language": "Language",
-   "Welcome": "Welcome to React and react-i18next"
+  "or": "or",
+  "forgot_password": "Forgot Password?"
 }
