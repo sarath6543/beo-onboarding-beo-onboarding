@@ -26,7 +26,7 @@ export default function LeftSideAppContainer({ isOpen, isMobile, onClose }) {
   <ul className="space-y-4">
     <li>
       <Link to="/page1" className="text-blue-600 hover:underline">
-        Page 1
+        home
       </Link>
     </li>
     <li>
