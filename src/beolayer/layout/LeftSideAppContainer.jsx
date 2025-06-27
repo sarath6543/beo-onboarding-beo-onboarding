@@ -31,7 +31,7 @@ export default function LeftSideAppContainer({ isOpen, isMobile, onClose }) {
     </li>
     <li>
       <Link to="/page2" className="text-blue-600 hover:underline">
-        Page 2
+        dashboard
       </Link>
     </li>
     <li>
