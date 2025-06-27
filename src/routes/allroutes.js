@@ -10,7 +10,7 @@ const routes = [
     path: "/",
     name: "Dashboard",
     value: React.lazy(() => import("../pages/Dashboard/Dashboard")),
-    isAuthProtected: true,
+    isAuthProtected: false,
     role: null,
   },
   {

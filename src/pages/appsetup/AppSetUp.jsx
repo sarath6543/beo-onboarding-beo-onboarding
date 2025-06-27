@@ -5,7 +5,7 @@ const AppSetUp = () => {
   return (
     <div
       id="base_page_wrapper"
-      className="h-screen w-screen bg-blue-700 grid grid-cols-1 md:grid-cols-3"
+      className="h-screen w-screen bg-grey-700 grid grid-cols-1 md:grid-cols-3"
     >
       <div
         id="basic_form_section_right"
