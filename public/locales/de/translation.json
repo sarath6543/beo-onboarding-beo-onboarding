@@ -1,6 +1,10 @@
 {
-  "login": "Anmeldung",
-  "email": "E-Mail",
+  "login": "Login",
+  "email": "Email",
   "password": "Passwort",
-  "language": "Sprache"
+  "loading": "Laden...",
+  "invalid_credentials": "ungültige_Anmeldeinformationen",
+  "language": "Sprache",
+  "or": "oder",
+  "forgot_password": "Passwort vergessen"
 }

@@ -6,7 +6,7 @@ export default function TopBar({ isMobile, onToggleSidebar }) {
   const toggleLogout = () => setShowLogout((prev) => !prev);
 
   return (
-    <header className="h-16 bg-blue-600 text-white flex items-center justify-between px-5 relative">
+    <header className="h-16 bg-white text-black flex items-center justify-between px-5 relative">
       <div className="flex items-center space-x-4">
         {isMobile && (
           <button
@@ -32,7 +32,7 @@ export default function TopBar({ isMobile, onToggleSidebar }) {
         {showLogout && (
           <div className="absolute right-0 mt-2 w-32 bg-white text-black shadow-lg rounded z-50">
             <button
-              onClick={() => alert("Logged out")} // Replace with actual logout logic
+              onClick={() => alert("Logged out")} 
               className="block w-full text-left px-4 py-2 hover:bg-gray-100"
             >
               Log out

@@ -2,5 +2,9 @@
   "login": "Login",
   "email": "Email",
   "password": "Password",
-  "language": "Language"
+  "loading": "Loading...",
+  "invalid_credentials": "Invalid Credentials",
+  "language": "Language",
+  "or": "or",
+  "forgot_password": "Forgot Password?"
 }

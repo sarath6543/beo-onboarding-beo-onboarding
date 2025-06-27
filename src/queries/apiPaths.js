@@ -1,13 +1,6 @@
-import { get } from "react-hook-form";
-
-const API_PATHS = {
-  auth: {
-    login: "api/login/login",
-    register: "/auth/register",
-    logout: "/auth/logout",
-    refresh: "/auth/refresh",
-  },
-
+const apiPaths = {
+  login: "/api/login",
 };
 
-export default API_PATHS;
+export default apiPaths;
+
