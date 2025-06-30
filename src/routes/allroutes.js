@@ -34,9 +34,9 @@ const routes = [
   role: null,
 },
 {
-  path: "/back-ground-verification",
-  name: "back-ground-verification",
-  value: React.lazy(() => import("../pages/BackGroundVerification/BackGroundVerification")),
+  path: "/back-ground-verification-main",
+  name: "back-ground-verification-main",
+  value: React.lazy(() => import("../pages/BackGroundVerification/BackGroundVerificationMain")),
   isAuthProtected: false,
   role: null,
 },

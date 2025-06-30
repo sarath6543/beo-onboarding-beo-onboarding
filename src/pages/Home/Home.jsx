@@ -8,12 +8,12 @@ import "./Home.css";
 const Home = () => {
   const navigate = useNavigate();
 
-const steps = [
-  { label: 'Review & Accept offer', status: 'Completed', path: '/offer' },
-  { label: 'BGV document submission', status: 'InProgress', path: '/back-ground-verification' },
-  { label: 'Pre joining formalities', status: 'Yet to start', path: '/formalities' },
-  { label: 'Your day 1', status: 'Yet to start', path: '/day1' },
-];
+  const steps = [
+    { label: 'Review & Accept offer', status: 'Completed', path: '/offer' },
+    { label: 'BGV document submission', status: 'InProgress', path: '/back-ground-verification-main' },
+    { label: 'Pre joining formalities', status: 'Yet to start', path: '/formalities' },
+    { label: 'Your day 1', status: 'Yet to start', path: '/day1' },
+  ];
 
   const tiles = [
     { title: 'Your Onboarding Process', image: image_test, path: '/onboarding' },
@@ -28,7 +28,7 @@ const steps = [
   };
 
 
-  
+
 
   return (
     <PageLayout title="Onboarding">
@@ -37,15 +37,15 @@ const steps = [
           <div className="left-box">
             <h3>Let's Get You Settled In!</h3>
             <ul className="step-list">
-           {steps.map((step, index) => (
-  <StepItem
-    key={index}
-    icon="📄"
-    label={step.label}
-    status={step.status}
-    path={step.path}
-  />
-))}
+              {steps.map((step, index) => (
+                <StepItem
+                  key={index}
+                  icon="📄"
+                  label={step.label}
+                  status={step.status}
+                  path={step.path}
+                />
+              ))}
             </ul>
           </div>
 
