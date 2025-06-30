@@ -1,0 +1,51 @@
+/* Stretch the white tab box full width */
+.full-width-tab-bar {
+  width: 100%;
+  padding: 0 16px; /* Optional padding to give space on sides */
+  margin-bottom: 24px;
+}
+
+/* White box */
+.tab-box {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: white;
+  padding: 16px;
+  border-radius: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  flex-wrap: wrap;
+}
+
+/* Tab buttons */
+.tab-btn {
+  flex: 1;
+  min-width: 120px;
+  text-align: center;
+  margin: 4px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: transparent;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #333;
+}
+
+.tab-btn:hover {
+  background-color: #f3f3f3;
+}
+
+.tab-btn.active {
+  background-color: black;
+  color: white;
+}
+
+.tab-icon {
+  font-size: 1.2rem;
+}
