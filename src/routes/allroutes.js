@@ -6,10 +6,17 @@ const routes = [
     value: React.lazy(() => import("../pages/appsetup/AppSetUp")),
     isAuthProtected: false,
   },
-  {
+  // {
+  //   path: "/",
+  //   name: "Dashboard",
+  //   value: React.lazy(() => import("../pages/Dashboard/Dashboard")),
+  //   isAuthProtected: false,
+  //   role: null,
+  // },
+    {
     path: "/",
-    name: "Dashboard",
-    value: React.lazy(() => import("../pages/Dashboard/Dashboard")),
+    name: "Home",
+    value: React.lazy(() => import("../pages/Home/Home")),
     isAuthProtected: false,
     role: null,
   },
@@ -20,26 +27,20 @@ const routes = [
     isAuthProtected: false,
   },
   {
-  path: "/page1",
-  name: "Page1",
-  value: React.lazy(() => import("../pages/Page1/Page1")),
+  path: "/offer",
+  name: "offer",
+  value: React.lazy(() => import("../pages/Offer/Offer")),
   isAuthProtected: false,
   role: null,
 },
 {
-  path: "/page2",
-  name: "Page2",
-  value: React.lazy(() => import("../pages/Page2/Page2")),
+  path: "/back-ground-verification",
+  name: "back-ground-verification",
+  value: React.lazy(() => import("../pages/BackGroundVerification/BackGroundVerification")),
   isAuthProtected: false,
   role: null,
 },
-{
-  path: "/page3",
-  name: "Page3",
-  value: React.lazy(() => import("../pages/Page3/Page3")),
-  isAuthProtected: false,
-  role: null,
-},
+
 ];
 
 export default routes;
