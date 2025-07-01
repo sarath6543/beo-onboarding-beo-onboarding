@@ -13,8 +13,13 @@ export default function PANCardForm() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleSave = () => {
+    console.log("Saving PAN card details:", formData);
+
+  };
+
   return (
-    <FormWrapper columns={2}>
+    <FormWrapper columns={2} onSave={handleSave}>
       <InputField
         label="PAN Number"
         value={formData.panNumber}

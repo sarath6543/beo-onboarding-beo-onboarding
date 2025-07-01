@@ -1,11 +1,12 @@
 
 import React from "react";
 
-const InputField = ({ label, type = "text", value, onChange, required = true }) => (
+const InputField = ({ label, type = "text", value, onChange, required = true,name }) => (
   <label className="block mb-4 text-sm font-medium text-gray-700">
     {label}
     <input
       type={type}
+       name={name}
       value={value}
       onChange={onChange}
       required={required}
