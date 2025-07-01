@@ -1,5 +1,5 @@
 import React from "react";
-import "./FormWrapper.css"; // optional, based on your styling setup
+import "./FormWrapper.css"; // Make sure this file exists and is linked properly
 
 const FormWrapper = ({ columns = 2, children, onSave }) => {
   return (

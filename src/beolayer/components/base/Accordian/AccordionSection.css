@@ -1,8 +1,9 @@
 .accordion-container {
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  border: 2px solid #ccc;
+  border-radius: 16px;
   margin: 10px;
-  background: #f3f3f3;
+  background: #DCDCDC;
+  padding: 16px;
 }
 
 .accordion-header {
@@ -10,30 +11,19 @@
   justify-content: space-between;
   padding: 12px;
   cursor: pointer;
-  background-color: #ddd;
-  border-bottom: 1px solid #ccc;
-}
+  background-color: #DCDCDC;
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 
 .accordion-body {
-  padding: 16px;
+  background-color: #ffffff;
+  padding: 10px; /* Remove all padding */
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  margin-top: 12px;
+  overflow: hidden; /* Ensures inner content stays flush */
 }
 
-.footer {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
-}
-
-.footer button {
-  padding: 6px 12px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
+.accordion-body-content {
+  padding: 16px; /* Add inner padding to form content */
 }
