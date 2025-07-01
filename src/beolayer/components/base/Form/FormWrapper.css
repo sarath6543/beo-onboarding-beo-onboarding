@@ -1,7 +1,10 @@
+.form-wrapper-container {
+  margin-bottom: 24px;
+}
+
 .form-wrapper {
   display: grid;
   gap: 16px;
-  margin-bottom: 24px;
 }
 
 .cols-1 {
@@ -18,4 +21,19 @@
 
 .cols-4 {
   grid-template-columns: repeat(4, 1fr);
+}
+
+.form-wrapper-save {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.form-wrapper-save button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
