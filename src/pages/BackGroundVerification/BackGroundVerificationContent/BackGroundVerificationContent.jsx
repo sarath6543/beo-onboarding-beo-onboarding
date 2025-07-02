@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import PersonalDetailsMain from "../PersonalDetails/PersonalDetailsMain";
-// import EducationDetailsMain from "./EducationDetailsMain";
-// import ExperienceDetailsMain from "./ExperienceDetailsMain";
-import "./BackGroundVerificationContent.css";
 
 const TABS = [
   { key: "personal", label: "Personal Details", icon: "👤" },
@@ -26,26 +23,32 @@ export default function BackgroundVerificationContent() {
   };
 
   return (
-  <>
-    {/* Full width white tab box */}
-    <div className="full-width-tab-box">
-      <div className="tab-box">
-        {TABS.map((tab) => (
-          <button
-            key={tab.key}
-            onClick={() => setActiveTab(tab.key)}
-            className={`tab-btn ${activeTab === tab.key ? "active" : ""}`}
-          >
-            <span className="tab-icon">{tab.icon}</span>
-            <span>{tab.label}</span>
-          </button>
-        ))}
-      </div>
+    <div className="w-[95vw] mx-auto box-border">
+      {/* Tabs */}
+  <div className="w-full mb-6">
+  <div className="w-full flex flex-wrap gap-2 bg-white p-4 rounded-2xl shadow-md">
+    {TABS.map((tab) => (
+      <button
+        key={tab.key}
+        onClick={() => setActiveTab(tab.key)}
+        className={`flex-grow sm:flex-grow-0 sm:w-auto flex items-center justify-center gap-2 min-w-[120px] px-4 py-2 text-center rounded-lg font-medium transition duration-200
+          ${
+            activeTab === tab.key
+              ? "bg-[#DADADA] text-white"
+              : "bg-transparent text-gray-800 hover:bg-gray-100"
+          }
+        `}
+      >
+        <span className="text-lg">{tab.icon}</span>
+        <span className="text-sm sm:text-base">{tab.label}</span>
+      </button>
+    ))}
+  </div>
+</div>
+
+
+      {/* Content */}
+      <div className="w-full">{renderTab()}</div>
     </div>
-
-    {/* Below the tabs: content */}
-    <div className="tab-content">{renderTab()}</div>
-  </>
-);
-
+  );
 }

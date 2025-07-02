@@ -4,27 +4,28 @@ import PANCardForm from "./forms/PANCardForm";
 import PersonalDeatilsForm from "./forms/PersonalDeatilsForm";
 import AadhaarForm from "./forms/AadhaarForm";
 import AddressForm from "./forms/AddressForm";
+import FontIcon from "../../../beolayer/components/base/icons/FontIcon.jsx";
 
 
 export default function PersonalDetailsMain() {
   return (
     <>
-      <AccordionSection title="Personal Details">
-        <PersonalDeatilsForm/>
+      <AccordionSection icon={<FontIcon iconName="Person" />} title="Personal Details">
+        <PersonalDeatilsForm />
       </AccordionSection>
-     
-      <AccordionSection title="PAN Card">
+
+      <AccordionSection icon={<FontIcon iconName="Person" />} title="PAN Card">
         <PANCardForm />
       </AccordionSection>
 
-      <AccordionSection title="Aadhaar Details">
-        <AadhaarForm/>
+      <AccordionSection icon={<FontIcon iconName="Person" />} title="Aadhaar Details">
+        <AadhaarForm />
       </AccordionSection>
 
-      <AccordionSection title="Address">
-        <AddressForm/>
+      <AccordionSection icon={<FontIcon iconName="Person" />} title="Address">
+        <AddressForm />
       </AccordionSection>
-      
+
     </>
   );
 }

@@ -1,32 +1,42 @@
-// StepItem.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './StepItem.css'; // Assuming your CSS is in this file
 
 const StepItem = ({ icon, label, status, path }) => {
   const navigate = useNavigate();
 
-  const getStatusClass = () => {
+  const getStatusClasses = () => {
     switch (status?.toLowerCase()) {
       case 'completed':
-        return 'completed';
+        return 'bg-green-500 text-white';
       case 'inprogress':
-        return 'in-progress';
+        return 'bg-orange-500 text-white';
       case 'yet to start':
-        return 'yet-to-start';
+        return 'bg-gray-500 text-white';
       default:
-        return '';
+        return 'bg-gray-300 text-white';
     }
   };
 
   return (
-    <li className="step-item-wrapper" onClick={() => navigate(path)}>
-      <div className="step-icon">{icon}</div>
-      <div className="step-content">
-        <span className="step-label">{label}</span>
-        <span className={`step-chip ${getStatusClass()}`}>{status}</span>
+    <li
+      className="flex items-start justify-between p-4 mb-2 bg-white border-b-[1.5px] border-gray-200 cursor-pointer hover:bg-gray-100 transition"
+      onClick={() => navigate(path)}
+    >
+      {/* Icon */}
+      <div className="text-[20px] mr-3">{icon}</div>
+
+      {/* Content */}
+      <div className="flex-1 flex flex-col pb-4">
+        <span className="text-base font-medium mb-1">{label}</span>
+        <span
+          className={`text-xs py-1 px-3 rounded-full capitalize w-fit ${getStatusClasses()}`}
+        >
+          {status}
+        </span>
       </div>
-      <div className="step-arrow">➔</div>
+
+      {/* Arrow */}
+      <div className="text-lg ml-3 text-gray-500">➔</div>
     </li>
   );
 };

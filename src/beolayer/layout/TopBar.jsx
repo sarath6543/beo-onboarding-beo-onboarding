@@ -12,7 +12,7 @@ export default function TopBar({ isMobile, onToggleSidebar }) {
       style={{ height: 88 }}
     >
       <div className="flex items-center space-x-4">
-        {isMobile && (
+        {/* {isMobile && (
           <button
             onClick={onToggleSidebar}
             className="text-2xl focus:outline-none"
@@ -20,7 +20,7 @@ export default function TopBar({ isMobile, onToggleSidebar }) {
           >
             ☰
           </button>
-        )}
+        )} */}
         <img
           src= {beo_logo} 
           alt="Logo"
