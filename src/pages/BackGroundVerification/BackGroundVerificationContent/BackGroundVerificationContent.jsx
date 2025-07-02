@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import PersonalDetailsMain from "../PersonalDetails/PersonalDetailsMain";
-// import EducationDetailsMain from "./EducationDetailsMain";
-// import ExperienceDetailsMain from "./ExperienceDetailsMain";
+import EducationDetailsMain from "../EducationDetails/EducationDetailsMain"
+import ExperienceDetailsMain from "../ExperienceDetails/ExperienceDetailsMain";
+import DocumentationDetailsMain from "../DocumentationDetails/DocumentationDetailsMain";
 import "./BackGroundVerificationContent.css";
 
 const TABS = [
@@ -16,10 +17,10 @@ export default function BackgroundVerificationContent() {
 
   const renderTab = () => {
     switch (activeTab) {
-      case "personal":
-        return <PersonalDetailsMain />;
-      // case "education": return <EducationDetailsMain />;
-      // case "experience": return <ExperienceDetailsMain />;
+      case "personal": return <PersonalDetailsMain />;
+      case "education": return <EducationDetailsMain />;
+      case "experience": return <ExperienceDetailsMain />;
+      case "documentation": return <DocumentationDetailsMain/>;
       default:
         return null;
     }
