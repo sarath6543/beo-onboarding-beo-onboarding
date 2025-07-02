@@ -1,28 +1,34 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import "./StepItem.css"; // Optional: external styles
+// StepItem.jsx
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import './StepItem.css'; // Assuming your CSS is in this file
 
-export default function StepItem({ icon, label, status, path }) {
+const StepItem = ({ icon, label, status, path }) => {
   const navigate = useNavigate();
 
   const getStatusClass = () => {
-    if (status === "Completed") return "step-chip completed";
-    if (status === "InProgress") return "step-chip in-progress";
-    return "step-chip yet-to-start";
-  };
-
-  const handleClick = () => {
-    if (path) navigate(path);
+    switch (status?.toLowerCase()) {
+      case 'completed':
+        return 'completed';
+      case 'inprogress':
+        return 'in-progress';
+      case 'yet to start':
+        return 'yet-to-start';
+      default:
+        return '';
+    }
   };
 
   return (
-    <div className="step-item-wrapper" onClick={handleClick}>
+    <li className="step-item-wrapper" onClick={() => navigate(path)}>
       <div className="step-icon">{icon}</div>
       <div className="step-content">
-        <div className="step-label">{label}</div>
-        <div className={getStatusClass()}>{status}</div>
+        <span className="step-label">{label}</span>
+        <span className={`step-chip ${getStatusClass()}`}>{status}</span>
       </div>
       <div className="step-arrow">➔</div>
-    </div>
+    </li>
   );
-}
+};
+
+export default StepItem;

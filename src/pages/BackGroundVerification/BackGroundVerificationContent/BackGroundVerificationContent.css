@@ -1,8 +1,8 @@
-/* Stretch the white tab box full width */
+
 .full-width-tab-bar {
   width: 1645;
   height: 98;
-  padding: 0 16px; /* Optional padding to give space on sides */
+  padding: 0 16px; 
   margin-bottom: 24px;
 }
 
@@ -21,7 +21,7 @@
 /* Tab buttons */
 .tab-btn {
   flex: 1;
-  min-width: 120px;
+  min-width: 80px;
   text-align: center;
   margin: 4px;
   padding: 10px 16px;
@@ -35,7 +35,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  color: #333;
+  color: #333333;
 }
 
 .tab-btn:hover {
@@ -43,8 +43,9 @@
 }
 
 .tab-btn.active {
-  background-color: #454545;
+  background-color: #DADADA;
   color: white;
+
 }
 
 .tab-icon {
