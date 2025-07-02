@@ -9,26 +9,35 @@ const Home = () => {
   const navigate = useNavigate();
 
   const steps = [
-    { label: 'Review & Accept offer', status: 'Completed', path: '/offer' },
-    { label: 'BGV document submission', status: 'InProgress', path: '/back-ground-verification-main' },
-    { label: 'Pre joining formalities', status: 'Yet to start', path: '/formalities' },
-    { label: 'Your day 1', status: 'Yet to start', path: '/day1' },
+    { label: "Review & Accept offer", status: "Completed", path: "/offer" },
+    {
+      label: "BGV document submission",
+      status: "InProgress",
+      path: "/back-ground-verification-main",
+    },
+    {
+      label: "Pre joining formalities",
+      status: "Yet to start",
+      path: "/formalities",
+    },
+    { label: "Your day 1", status: "Yet to start", path: "/day1" },
   ];
 
   const tiles = [
-    { title: 'Your Onboarding Process', image: image_test, path: '/onboarding' },
-    { title: 'Policies', image: image_test, path: '/policies' },
-    { title: 'Know your Buddy', image: image_test, path: '/buddy' },
-    { title: 'Locations', image: image_test, path: '/locations' },
-    { title: 'Life at BEO', image: image_test, path: '/life-at-beo' },
+    {
+      title: "Your Onboarding Process",
+      image: image_test,
+      path: "/onboarding",
+    },
+    { title: "Policies", image: image_test, path: "/policies" },
+    { title: "Know your Buddy", image: image_test, path: "/buddy" },
+    { title: "Locations", image: image_test, path: "/locations" },
+    { title: "Life at BEO", image: image_test, path: "/life-at-beo" },
   ];
 
   const handleTileClick = (tile) => {
     if (tile.path) navigate(tile.path);
   };
-
-
-
 
   return (
     <PageLayout title="Onboarding">
@@ -85,7 +94,10 @@ const Home = () => {
 
             <div className="news-tile">
               <strong>Important news</strong>
-              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry...</p>
+              <p>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry...
+              </p>
             </div>
           </div>
         </div>

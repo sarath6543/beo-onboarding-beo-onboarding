@@ -1,89 +1,101 @@
 import React from "react";
-import PageLayout from "../../beolayer/layout/PageLayout";
 import TopBar from "../../beolayer/layout/TopBar";
+import { useNavigate } from "react-router-dom";
+import "./Offer.css"; 
+import samplePDF from "../../assets/documents/sample_offer.pdf"
+import { useState } from "react";
+import { pdfjs } from 'react-pdf';
+import { Document, Page } from 'react-pdf';
+
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+
+
 
 
 const Offer = () => {
-    return (
-        <PageLayout title="Offer">
-        <div className="min-h-screen bg-gray-100 p-6 font-sans">
-      <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-6">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-2xl font-bold">Review & Accept Offer</h1>
-            <p className="text-sm text-gray-500 mt-1">
-              Your joining date with BEO is <span className="text-black font-semibold">20-06-2025</span>
-            </p>
-          </div>
-          {/* <div className="space-x-2">
-            <button className="border border-gray-300 px-4 py-1 rounded text-sm">Print</button>
-            <button className="border border-gray-300 px-4 py-1 rounded text-sm">Download</button>
-          </div> */}
-        </div>
- 
-        {/* Offer Letter Text */}
-        <div className="border border-gray-300 rounded-md h-64 overflow-y-auto p-4 text-sm text-gray-700 bg-gray-50 mb-6">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec condimentum aliquam
-            lacinia. Praesent luctus arcu nec justo ornare consequat...
-          </p>
-          <p className="mt-4">
-            Pellentesque vehicula, urna eu dapibus cursus, metus orci feugiat turpis...
-          </p>
-          <p className="mt-4">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit...
-          </p>
-          <p className="mt-4">
-            Pellentesque vehicula, urna eu dapibus cursus...
-          </p>
-        </div>
- 
-<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 items-stretch">
-  {/* Left Column */}
-  <div className="flex flex-col justify-between h-full">
-    <div>
-      <label className="text-sm font-medium text-gray-700 block mb-1">Name</label>
-      <input
-        type="text"
-        placeholder="Enter your name"
-        className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-    </div>
+    const navigate = useNavigate();
+const [numPages, setNumPages] = useState();
+const [pageNumber, setPageNumber] = useState(1);
 
-    <div className="mt-4">
-      <label className="text-sm font-medium text-gray-700 block mb-1">Comment</label>
-      <textarea
-        placeholder="Enter your comment"
-        className="w-full border rounded px-3 py-2 text-sm h-20 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-    </div>
-  </div>
+function onDocumentLoadSuccess({ numPages }) {
+  setNumPages(numPages);
+}
 
-  {/* Right Column */}
-  <div className="flex flex-col h-full">
-    <label className="text-sm font-medium text-gray-700 block mb-1">Upload Sign</label>
-    <div className="flex-1 border  rounded-lg p-4 text-center text-sm text-gray-500 cursor-pointer hover:bg-gray-100 flex flex-col justify-center">
-      Click to upload
-      <div className="text-xs mt-2 text-gray-400">PDF, DOCX, TXT | &lt; 10 MB</div>
-    </div>
-  </div>
+  return (
+    <>
+    <div className="top-bar">
+      <TopBar />
 </div>
-
-
-
- 
-        {/* Buttons */}
-        <div className="flex justify-end space-x-4">
-          <button className="px-6 py-2 border border-gray-300 rounded text-sm">Decline</button>
-          <button className="px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-white rounded text-sm">
-            Accept
-          </button>
+      <div className="offer-banner">
+        <div>
+          <p className="offer-title">Review & Accept Offer</p>
+          <p className="offer-subtitle">Your joining date with BEO is</p>
         </div>
       </div>
+
+      <div className="offer-container">
+        <div className="offer-card">
+
+          <div className="offer-card-inner">
+
+            <div className="back-to-home" onClick={() => navigate('/')}>
+              <span className="back-arrow">←</span> Back
+            </div>
+            <hr className="divider" />
+
+
+       <div className="offer-letter-pdf" style={{ height: "600px" }}>
+  {/* <iframe
+    //  src={`${'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'}#toolbar=0&navpanes=0&scrollbar=0`}
+      src={`${samplePDF}#toolbar=0&navpanes=0&scrollbar=0`}
+    title="Offer Letter PDF"
+    width="100%"
+    height="100%"
+    style={{ border: "none" }}
+  /> */}
+  <div>
+      <Document file={samplePDF} onLoadSuccess={onDocumentLoadSuccess}>
+        <Page pageNumber={pageNumber} />
+      </Document>
+      <p>
+        Page {pageNumber} of {numPages}
+      </p>
     </div>
-        </PageLayout>
-    );
+</div>
+            {/* Form Section */}
+            <div className="form-grid">
+              <div className="form-column">
+                <div>
+                  <label className="form-label">Name</label>
+                  <input type="text" placeholder="Enter your name" className="form-input" />
+                </div>
+
+                <div className="form-field">
+                  <label className="form-label">Comment</label>
+                  <textarea placeholder="Enter your comment" className="form-textarea" />
+                </div>
+              </div>
+
+              <div className="form-column">
+                <label className="form-label">Upload Sign</label>
+                <div className="upload-box">
+                  Click to upload
+                  <div className="upload-note">PDF, DOCX, TXT | &lt; 10 MB</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Buttons */}
+            <div className="button-group">
+              <button className="btn btn-decline">Decline</button>
+              <button className="btn btn-accept">Accept</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default Offer;

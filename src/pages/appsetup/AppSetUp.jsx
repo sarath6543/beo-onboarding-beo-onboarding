@@ -1,6 +1,6 @@
 import React from "react";
 import { LoginForm } from "./LoginForm"; 
-import logo from '../../assets/beo-logo.png' 
+import logo from'../../assets/beo_logo.png'
 
 
 const AppSetUp = () => {
