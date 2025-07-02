@@ -19,7 +19,7 @@ export default function PANCardForm() {
   };
 
   return (
-    <FormWrapper columns={2} onSave={handleSave}>
+    <FormWrapper columns={3} onSave={handleSave}>
       <InputField
         label="PAN Number"
         type="text"

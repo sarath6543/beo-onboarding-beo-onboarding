@@ -1,19 +1,32 @@
 import React, { useState } from "react";
-import "./AccordionSection.css";
+import FontIcon from "../icons/FontIcon.jsx";
 
 const AccordionSection = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <div className="accordion-container">
-      <div className="accordion-header" onClick={() => setIsOpen(!isOpen)}>
-        <span className="title">{title}</span>
-        <span className="toggle">{isOpen ? "Λ" : "V"}</span>
+    <div className="w-full border-2 border-gray-300 rounded-2xl my-2.5 bg-[#DADADA] p-4 box-border">
+      {/* Header */}
+      <div className="flex justify-between items-center p-3 bg-[#DADADA] rounded-md">
+        <span className="font-semibold">{title}</span>
+
+        {/* Arrow Toggle Only */}
+        <span
+          onClick={() => setIsOpen(!isOpen)}
+          className="cursor-pointer ml-4"
+        >
+          {isOpen ? (
+            <FontIcon iconName="UpArrow" />
+          ) : (
+            <FontIcon iconName="DownArrow" />
+          )}
+        </span>
       </div>
 
+      {/* Body */}
       {isOpen && (
-        <div className="accordion-body">
-          {children}
+        <div className="bg-white mt-3 rounded-xl shadow-sm overflow-hidden">
+          <div className="p-4">{children}</div>
         </div>
       )}
     </div>

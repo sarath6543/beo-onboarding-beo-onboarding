@@ -3,40 +3,49 @@ import { useNavigate } from "react-router-dom";
 import image_test from "../../assets/image_test.png";
 import PageLayout from "../../beolayer/layout/PageLayout";
 import StepItem from "../../beolayer/components/base/Step/StepItem";
-import "./Home.css";
 
 const Home = () => {
   const navigate = useNavigate();
 
   const steps = [
-    { label: 'Review & Accept offer', status: 'Completed', path: '/offer' },
-    { label: 'BGV document submission', status: 'InProgress', path: '/back-ground-verification-main' },
-    { label: 'Pre joining formalities', status: 'Yet to start', path: '/formalities' },
-    { label: 'Your day 1', status: 'Yet to start', path: '/day1' },
+    { label: "Review & Accept offer", status: "Completed", path: "/offer" },
+    {
+      label: "BGV document submission",
+      status: "InProgress",
+      path: "/back-ground-verification-main",
+    },
+    {
+      label: "Pre joining formalities",
+      status: "Yet to start",
+      path: "/formalities",
+    },
+    { label: "Your day 1", status: "Yet to start", path: "/day1" },
   ];
 
   const tiles = [
-    { title: 'Your Onboarding Process', image: image_test, path: '/onboarding' },
-    { title: 'Policies', image: image_test, path: '/policies' },
-    { title: 'Know your Buddy', image: image_test, path: '/buddy' },
-    { title: 'Locations', image: image_test, path: '/locations' },
-    { title: 'Life at BEO', image: image_test, path: '/life-at-beo' },
+    {
+      title: "Your Onboarding Process",
+      image: image_test,
+      path: "/onboarding",
+    },
+    { title: "Policies", image: image_test, path: "/policies" },
+    { title: "Know your Buddy", image: image_test, path: "/buddy" },
+    { title: "Locations", image: image_test, path: "/locations" },
+    { title: "Life at BEO", image: image_test, path: "/life-at-beo" },
   ];
 
   const handleTileClick = (tile) => {
     if (tile.path) navigate(tile.path);
   };
 
-
-
-
   return (
     <PageLayout title="Onboarding">
-      <div className="home-container">
-        <div className="home-content">
-          <div className="left-box">
-            <h3>Let's Get You Settled In!</h3>
-            <ul className="step-list">
+      <div className="p-8 font-[Segoe UI]">
+        <div className="flex flex-wrap gap-5 mt-5">
+          {/* Left Box */}
+          <div className="bg-white rounded-lg p-5 shadow-md flex-1 min-w-[280px]">
+            <h3 className="mb-4 text-lg font-semibold">Let's Get You Settled In!</h3>
+            <ul className="list-none p-0 m-0 space-y-4">
               {steps.map((step, index) => (
                 <StepItem
                   key={index}
@@ -49,43 +58,47 @@ const Home = () => {
             </ul>
           </div>
 
-          <div className="tiles-wrapper">
-            <div className="tiles-grid">
-              <div className="left-tiles">
+          {/* Right Section */}
+          <div className="flex flex-col flex-1 min-w-[280px]">
+            <div className="flex flex-wrap gap-5">
+              <div className="grid grid-cols-2 gap-5 flex-2 min-w-[280px]">
                 {tiles.slice(0, 4).map((tile, index) => (
                   <div
                     key={index}
-                    className="tile-box"
+                    className="bg-white rounded-lg p-4 shadow-md text-center cursor-pointer flex flex-col justify-center"
                     onClick={() => handleTileClick(tile)}
                   >
                     <img
                       src={tile.image}
                       alt={tile.title}
-                      className="tile-image"
+                      className="max-w-full h-[100px] object-contain mb-2"
                     />
                     <h4>{tile.title}</h4>
                   </div>
                 ))}
               </div>
 
-              <div className="right-tile">
+              <div className="flex-1 min-w-[280px]">
                 <div
-                  className="tile-box"
+                  className="bg-white rounded-lg p-4 shadow-md text-center cursor-pointer flex flex-col justify-center h-full"
                   onClick={() => handleTileClick(tiles[4])}
                 >
                   <img
                     src={tiles[4].image}
                     alt={tiles[4].title}
-                    className="tile-image"
+                    className="max-w-full h-[100px] object-contain mb-2"
                   />
                   <h4>{tiles[4].title}</h4>
                 </div>
               </div>
             </div>
 
-            <div className="news-tile">
+            <div className="mt-5 bg-white p-4 rounded-lg shadow-md h-[120px]">
               <strong>Important news</strong>
-              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry...</p>
+              <p className="text-sm mt-1">
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry...
+              </p>
             </div>
           </div>
         </div>

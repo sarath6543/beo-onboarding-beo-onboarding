@@ -20,7 +20,7 @@ const AadhaarForm = () => {
     };
 
   return (
-    <FormWrapper columns={2} onSave={handleSave}>
+    <FormWrapper columns={3} onSave={handleSave}>
 
         <InputField
             label="Aadhaar Card Number"

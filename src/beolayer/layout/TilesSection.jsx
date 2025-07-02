@@ -1,51 +1,23 @@
 import React from "react";
 
 const TilesSection = ({ tiles, onTileClick }) => {
-  const styles = {
-    rightBox: {
-      display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
-      gap: '20px',
-      flex: 2,
-    },
-    tile: {
-      backgroundColor: '#fff',
-      padding: '10px',
-      borderRadius: '10px',
-      boxShadow: '0 2px 6px rgba(0,0,0,0.08)',
-      display: 'flex',
-      flexDirection: 'column',
-      cursor: 'pointer',
-    },
-    image: {
-      width: '100%',
-      height: '120px',
-      objectFit: 'cover',
-      borderRadius: '8px',
-      marginBottom: '10px',
-    },
-    title: {
-      fontWeight: '500',
-      fontSize: '1rem',
-      marginBottom: '6px',
-    },
-    viewMore: {
-      fontSize: '0.9em',
-      color: '#007bff',
-    },
-  };
-
   return (
-    <div style={styles.rightBox}>
+    <div className="grid gap-5 grid-cols-[repeat(auto-fill,minmax(180px,1fr))] flex-2">
       {tiles.map((tile, index) => (
         <div
           key={index}
-          style={styles.tile}
           onClick={() => onTileClick && onTileClick(tile)}
+          className="bg-white p-3 rounded-lg shadow-md flex flex-col cursor-pointer hover:shadow-lg transition-shadow"
         >
-          {tile.image && <img src={tile.image} alt={tile.title} style={styles.image} />}
-          <p style={styles.title}>{tile.title}</p>
-          <span style={styles.viewMore}>View more →</span>
+          {tile.image && (
+            <img
+              src={tile.image}
+              alt={tile.title}
+              className="w-full h-[120px] object-cover rounded-md mb-2"
+            />
+          )}
+          <p className="font-medium text-base mb-1">{tile.title}</p>
+          <span className="text-sm text-blue-600">View more →</span>
         </div>
       ))}
     </div>
