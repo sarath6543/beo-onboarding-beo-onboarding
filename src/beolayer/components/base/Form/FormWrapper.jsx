@@ -25,7 +25,7 @@
 // export default FormWrapper;
 
 import React from "react";
-import "./FormWrapper.css"; // Make sure this file exists and is linked properly
+import "./FormWrapper.css"; 
 
 const FormWrapper = ({ columns = 2, children, onSave }) => {
   const gridColsClass = {

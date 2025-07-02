@@ -12,6 +12,9 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/b
 
 
 
+import { RiPrinterLine } from "react-icons/ri";
+import { MdOutlineFileDownload } from "react-icons/md";
+
 
 const Offer = () => {
     const navigate = useNavigate();

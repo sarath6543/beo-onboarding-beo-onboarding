@@ -17,6 +17,7 @@
 
 // export default InputField;
 
+import { object } from "prop-types";
 import React from "react";
 
 const InputField = ({
@@ -26,8 +27,11 @@ const InputField = ({
   onChange,
   required = true,
   name,
+  options ={}
 }) => {
+
   const isUpload = type === "upload";
+  const isDropDown = type === "dropdown"
 
   return (
     <label className="block mb-4 text-sm font-medium text-gray-700">
@@ -60,6 +64,21 @@ const InputField = ({
             />
           </div>
           <p className="text-xs text-gray-500 mt-1">PDF, JPG</p>
+        </div>
+      ) : isDropDown ?(
+        <div className='mb-4'>
+          <select 
+            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            onChange={onChange}
+            name={name}
+            value={value}
+            required={required}
+            >
+            <option value="" disabled hidden>Select</option>
+            {Object.entries(options).map(([label,value])=>(
+              <option key={value} value={value}>{label}</option>
+            ))}
+          </select>
         </div>
       ) : (
         <input
