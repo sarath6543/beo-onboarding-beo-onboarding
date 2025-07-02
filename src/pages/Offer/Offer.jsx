@@ -1,5 +1,6 @@
 import React from "react";
 import PageLayout from "../../beolayer/layout/PageLayout";
+import TopBar from "../../beolayer/layout/TopBar";
 
 
 const Offer = () => {
