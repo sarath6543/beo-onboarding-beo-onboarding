@@ -4,7 +4,7 @@ import PANCardForm from "./forms/PANCardForm";
 import PersonalDeatilsForm from "./forms/PersonalDeatilsForm";
 import AadhaarForm from "./forms/AadhaarForm";
 import AddressForm from "./forms/AddressForm";
-import FontIcon from "../../../beolayer/components/base/icons/FontIcon.jsx";
+import FontIcon from "../../../beolayer/components/base/Icons/FontIcon.jsx.jsx";
 
 
 export default function PersonalDetailsMain() {

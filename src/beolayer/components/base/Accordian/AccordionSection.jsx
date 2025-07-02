@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import FontIcon from "../icons/FontIcon.jsx";
+import FontIcon from "../Icons/FontIcon.jsx.jsx";
 
 const AccordionSection = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(true);
