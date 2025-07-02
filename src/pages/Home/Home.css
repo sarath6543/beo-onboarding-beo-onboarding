@@ -1,7 +1,9 @@
+
+
 .home-container {
   padding: 30px;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #DCDCDC;
+ 
 }
 
 .home-title {
@@ -76,8 +78,7 @@
 .tiles-grid {
   display: flex;
   gap: 20px;
-  align-items: stretch; /* Make children same height */
-  /* remove flex-wrap if you want fixed layout */
+  flex-wrap: wrap;
 }
 
 .left-tiles {
@@ -91,17 +92,6 @@
 .right-tile {
   flex: 1;
   min-width: 280px;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: stretch; /* stretch vertically */
-}
-
-.right-tile .tile-box {
-  flex-grow: 1; /* fill full height */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
 .tile-box {
@@ -111,22 +101,17 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
   cursor: pointer;
-
+  height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .tile-image {
-  width: 100%;
-  height: 120px; /* fixed height */
-  object-fit: cover; /* fill & crop if needed */
-  margin-bottom: 10px; /* space between image & title */
-}
-
-.tile-box h4 {
-  margin: 0;
-  font-size: 1.1rem;
-  line-height: 1.2;
+  max-width: 100%;
+  height: 100px;
+  object-fit: contain;
+  margin-bottom: 10px;
 }
 
 .news-tile {
