@@ -29,21 +29,11 @@ export const LoginForm = () => {
   return (
 
       <form onSubmit={handleLogin}>
-        {/* <h3 className="mb-6 text-xl font-semibold text-center">{t("BEO")}</h3> */}
         <div className="text-center mb-9">
           <p className="font-bold text-[45px] tracking-[3px]">ONBOARDING</p>
         </div>
 
 
-  
-        {/* <InputField
-          label={t("Username")}
-          placeholder="Enter Your Username"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        /> */}
         <label className="block mb-4 text-sm font-medium text-gray-700">
           {t("Username")}
           <input
@@ -56,25 +46,18 @@ export const LoginForm = () => {
           />
         </label>
 
-        {/* <InputField
-          label={t("password")}
-          placeholder="Enter Your Password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        /> */}
-          <label className="block mb-4 text-sm font-medium text-gray-700">
-                {t("password")}
-                <input
-                  placeholder="Enter Your Password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  className="rounded-[10px] mt-1 block w-full px-6 py-4 border border-black rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                />
-              </label>
+      
+        <label className="block mb-4 text-sm font-medium text-gray-700">
+            {t("password")}
+            <input
+              placeholder="Enter Your Password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="rounded-[10px] mt-1 block w-full px-6 py-4 border border-black rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            />
+         </label>
   
         {error && (
           <p className="text-red-500 text-sm text-center mt-2">{error}</p>
