@@ -3,9 +3,6 @@ import PersonalDetailsMain from "../PersonalDetails/PersonalDetailsMain";
 import EducationDetailsMain from "../EducationDetails/EducationDetailsMain";
 import ExperienceDetailsMain from "../ExperienceDetails/ExperienceDetailsMain";
 import DocumentationDetailsMain from "../DocumentationDetails/DocumentationDetailsMain";
-import EducationDetailsMain from "../EducationDetails/EducationDetailsMain";
-import ExperienceDetailsMain from "../ExperienceDetails/ExperienceDetailsMain"
-import DocumentationDetailsMain from "../DocumentationDetails/DocumentationDetailsMain"
 
 const TABS = [
   { key: "personal", label: "Personal Details", icon: "👤" },

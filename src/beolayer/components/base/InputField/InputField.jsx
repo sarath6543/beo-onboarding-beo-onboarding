@@ -41,7 +41,7 @@ const InputField = ({
           <div className="flex w-full border border-gray-300 rounded-md shadow-sm overflow-hidden">
             <button
               type="button"
-              className="w-1/4 bg-gray-500 text-white text-sm font-medium px-4 py-2"
+              className="w-1/4 bg-[#D0D0D0] text-white text-sm font-medium px-4 py-2"
               onClick={() => document.getElementById(name).click()}
             >
               Browse
@@ -75,8 +75,8 @@ const InputField = ({
             required={required}
             >
             <option value="" disabled hidden>Select</option>
-            {Object.entries(options).map(([label,value])=>(
-              <option key={value} value={value}>{label}</option>
+            {options.map(({key,value})=>(
+              <option key={value} value={value}>{key}</option>
             ))}
           </select>
         </div>

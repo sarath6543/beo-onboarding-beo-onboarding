@@ -19,8 +19,12 @@ const PersonalDeatilsForm = () => {
     alternateMobile:"",
     aadhar:"",
   });
-  
 
+  const options = [
+  { key: "Male", value: "male" },
+  { key: "Female", value: "female" }
+  ];
+  
   const handleChange =(e)=>{
     const {name ,value} = e.target;
     setFormData((prev )=>({ ...prev, [name]: value }))
@@ -77,30 +81,13 @@ const PersonalDeatilsForm = () => {
         name="placeOfBirth"
       />
 
-      {/* <div className='mb-4'>
-        <label className="block text-sm font-medium text-gray-700" htmlFor="">Gender</label>
-        <select 
-          className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-          onChange={(e)=>setFormData((prev )=>({ ...prev, gender: e.target.value }))} 
-          name=""
-          value={formData.gender} 
-          >
-          <option value="" disabled hidden>Select</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
-      </div> */}
-
       <InputField
         type='dropdown'  
         label="Gender"
         value={formData.gender}
         onChange={handleChange}
         name="gender"
-        options={{
-          "Male":"male",
-          "Female":"female",
-        }}
+        options={options}
       />
       
       <InputField
