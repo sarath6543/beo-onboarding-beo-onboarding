@@ -1,120 +1,98 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import FormWrapper from '../../../../beolayer/components/base/Form/FormWrapper'
 import InputField from '../../../../beolayer/components/base/InputField/InputField'
 
 const AddressForm = () => {
 
-    const [formDataCurrent,setFormDataCurrent] = useState({
-        addressLine1:"",
-        addressLine2:"",
-        addressLine3:"",
-        landmark:"",
-        city:"",
-        country:"",
-        state:"",
-        pin:"",
-        DurationOfStay:""
-    })
+    const [formDataCurrent, setFormDataCurrent] = useState({
+        addressLine1: "",
+        addressLine2: "",
+        addressLine3: "",
+        landmark: "",
+        city: "",
+        country: "",
+        state: "",
+        pin: "",
+        DurationOfStay: ""
+    });
 
-    const [formDataPermanent,setFormDataPermanent] = useState({
-        addressLine1:"",
-        addressLine2:"",
-        addressLine3:"",
-        landmark:"",
-        city:"",
-        country:"",
-        state:"",
-        pin:"",
-        DurationOfStay:""
-    })
+    const [formDataPermanent, setFormDataPermanent] = useState({
+        addressLine1: "",
+        addressLine2: "",
+        addressLine3: "",
+        landmark: "",
+        city: "",
+        country: "",
+        state: "",
+        pin: "",
+        DurationOfStay: ""
+    });
+
+    const [sameAsCurrent, setSameAsCurrent] = useState(false);
+
+    useEffect(() => {
+        if (sameAsCurrent) {
+            setFormDataPermanent({ ...formDataCurrent });
+        }
+    }, [sameAsCurrent, formDataCurrent]);
 
     const handleChangeCurrent = (e) => {
-        const {name ,value } = e.target;
-        setFormDataCurrent((prev) => ({...prev , [name]:value}));
-    }
+        const { name, value } = e.target;
+        setFormDataCurrent((prev) => ({ ...prev, [name]: value }));
+    };
 
     const handleChangePermanent = (e) => {
-        const {name ,value } = e.target;
-        setFormDataPermanent((prev) => ({...prev , [name]:value}));
-    }
+        const { name, value } = e.target;
+        setFormDataPermanent((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const handleCheckboxChange = (e) => {
+        setSameAsCurrent(e.target.checked);
+    };
 
     const handleSave = () => {
-        console.log("Saving Address details:", formData);
+        const finalPermanent = sameAsCurrent ? formDataCurrent : formDataPermanent;
+        console.log("Saving Address details:");
+        console.log("Current Address:", formDataCurrent);
+        console.log("Permanent Address:", finalPermanent);
     };
-  return (
-    <>
-    <p className='text-lg font-medium'>Current Address</p>
-    <FormWrapper columns={3} onSave={handleSave}>
-        <InputField 
-            label="Address Line 1"
-            type='text'
-            value={formDataCurrent.addressLine1}
-            onChange={handleChangeCurrent}
-            name="addressLine1"
-        />
-        <InputField 
-            label="Address Line 2"
-            type='text'
-            value={formDataCurrent.addressLine2}
-            onChange={handleChangeCurrent}
-            name="addressLine2"
-        />
-        <InputField 
-            label="Address Line 3"
-            type='text'
-            value={formDataCurrent.addressLine3}
-            onChange={handleChangeCurrent}
-            name="addressLine3"
-        />
-        <InputField 
-            label="Landmark"
-            type='text'
-            value={formDataCurrent.landmark}
-            onChange={handleChangeCurrent}
-            name="landmark"
-        />
-        <InputField 
-            label="City"
-            type='text'
-            value={formDataCurrent.city}
-            onChange={handleChangeCurrent}
-            name="city"
-        />
-        <InputField 
-            label="Country"
-            type='text'
-            value={formDataCurrent.country}
-            onChange={handleChangeCurrent}
-            name="country"
-        />
-        <InputField 
-            label="State"
-            type='text'
-            value={formDataCurrent.state}
-            onChange={handleChangeCurrent}
-            name="state"
-        />
-        <InputField 
-            label="Pin Code"
-            type='text'
-            value={formDataCurrent.pin}
-            onChange={handleChangeCurrent}
-            name="pin"
-        />
-        <InputField 
-            label="Duration of Stay From"
-            type='text'
-            value={formDataCurrent.DurationOfStay}
-            onChange={handleChangeCurrent}
-            name="DurationOfStay"
-        />
 
-        <p>Permant Address</p>
-        
+    const renderAddressFields = (formData, handleChange, disabled = false) => (
+        <>
+            <InputField label="Address Line 1" type="text" name="addressLine1" value={formData.addressLine1} onChange={handleChange} disabled={disabled} />
+            <InputField label="Address Line 2" type="text" name="addressLine2" value={formData.addressLine2} onChange={handleChange} disabled={disabled} />
+            <InputField label="Address Line 3" type="text" name="addressLine3" value={formData.addressLine3} onChange={handleChange} disabled={disabled} />
+            <InputField label="Landmark" type="text" name="landmark" value={formData.landmark} onChange={handleChange} disabled={disabled} />
+            <InputField label="City" type="text" name="city" value={formData.city} onChange={handleChange} disabled={disabled} />
+            <InputField label="Country" type="text" name="country" value={formData.country} onChange={handleChange} disabled={disabled} />
+            <InputField label="State" type="text" name="state" value={formData.state} onChange={handleChange} disabled={disabled} />
+            <InputField label="Pin Code" type="text" name="pin" value={formData.pin} onChange={handleChange} disabled={disabled} />
+            <InputField label="Duration of Stay From" type="text" name="DurationOfStay" value={formData.DurationOfStay} onChange={handleChange} disabled={disabled} />
+        </>
+    );
 
-    </FormWrapper>
-    </>
-  )
-}
+    return (
+        <FormWrapper columns={3} onSave={handleSave}>
+            <p className="text-lg font-medium col-span-3">Current Address</p>
+            {renderAddressFields(formDataCurrent, handleChangeCurrent)}
 
-export default AddressForm
+            <div className="my-4 col-span-3">
+                <label className="flex items-center w space-x-2">
+                   
+                    <span className="text-sm">Permanent address is same as current address</span>
+                     <input
+                        className="w-4 h-5"
+                        type="checkbox"
+                        checked={sameAsCurrent}
+                        onChange={handleCheckboxChange}
+                    />
+                </label>
+            </div>
+
+            <p className="text-lg font-medium col-span-3">Permanent Address</p>
+            {renderAddressFields(formDataPermanent, handleChangePermanent, sameAsCurrent)}
+        </FormWrapper>
+    );
+};
+
+export default AddressForm;
