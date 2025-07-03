@@ -10,7 +10,7 @@ export default function PageContainer({ title, children }) {
 
  
         <div className="text-sm text-gray-600">
-          <Link to="/" className="hover:underline text-blue-600">Home</Link>
+          <Link to="/" className="hover:underline text-black">Home</Link>
           <span className="mx-2">/</span>
           <span className="text-black">{title}</span>
         </div>

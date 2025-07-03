@@ -23,7 +23,7 @@ const FormWrapper = ({ columns = 2, children, onSave }) => {
           <button
             onClick={onSave}
             // className="bg-white text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors duration-300 text-base"
-              className="bg-[#DADADA] text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors duration-300 text-base"
+              className="bg-white text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors duration-300 text-base border-1 border-[#DADADA]"
           >
             Save
           </button>
