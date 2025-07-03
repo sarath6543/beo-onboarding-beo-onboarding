@@ -4,8 +4,6 @@ import EducationDetailsMain from "../EducationDetails/EducationDetailsMain";
 import ExperienceDetailsMain from "../ExperienceDetails/ExperienceDetailsMain";
 import DocumentationDetailsMain from "../DocumentationDetails/DocumentationDetailsMain";
 
-import ProgressBar from "../../../beolayer/components/base/ProgressBar/ProgressBar";
-
 const TABS = [
   { key: "personal", label: "Personal Details", icon: "👤" },
   { key: "education", label: "Education Details", icon: "🎓" },

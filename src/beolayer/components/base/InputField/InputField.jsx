@@ -30,6 +30,8 @@ const InputField = ({
   name,
   options ={},
   asterisk
+  disabled = false,
+  options ={}
 }) => {
 
   const isUpload = type === "upload";
@@ -44,6 +46,7 @@ const InputField = ({
             <button
               type="button"
               className="w-1/4 bg-[#D0D0D0] text-[#4E4E4E] text-sm font-medium px-4 py-2"
+              className="w-1/4 bg-[#DADADA] text-white text-sm font-medium px-4 py-2"
               onClick={() => document.getElementById(name).click()}
             >
               Browse
@@ -54,6 +57,7 @@ const InputField = ({
               name={name}
               onChange={onChange}
               required={required}
+              disabled={disabled}
               className="w-3/4 px-4 py-2 text-sm text-gray-700 focus:outline-none"
               style={{ display: "none" }}
             />
@@ -75,6 +79,7 @@ const InputField = ({
             name={name}
             value={value}
             required={required}
+            disabled={disabled}
             >
             <option value="" disabled hidden>Select</option>
             {options.map(({key,value})=>(
@@ -89,6 +94,7 @@ const InputField = ({
           value={value}
           onChange={onChange}
           required={required}
+          disabled={disabled}
           className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
         />
       )}
