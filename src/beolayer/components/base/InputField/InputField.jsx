@@ -19,6 +19,7 @@
 
 import { object } from "prop-types";
 import React from "react";
+import FontIcon from "../Icons/FontIcon.jsx";
 
 const InputField = ({
   label,
@@ -27,7 +28,8 @@ const InputField = ({
   onChange,
   required = true,
   name,
-  options ={}
+  options ={},
+  asterisk
 }) => {
 
   const isUpload = type === "upload";
@@ -35,13 +37,13 @@ const InputField = ({
 
   return (
     <label className="block mb-4 text-sm font-medium text-gray-700">
-      {label}
+      {label}{asterisk && <FontIcon iconName="Asterisk" size="8px" verticalAlign="top" color="red"/>}
       {isUpload ? (
         <div className="relative mt-1 w-full">
           <div className="flex w-full border border-gray-300 rounded-md shadow-sm overflow-hidden">
             <button
               type="button"
-              className="w-1/4 bg-[#D0D0D0] text-white text-sm font-medium px-4 py-2"
+              className="w-1/4 bg-[#D0D0D0] text-[#4E4E4E] text-sm font-medium px-4 py-2"
               onClick={() => document.getElementById(name).click()}
             >
               Browse

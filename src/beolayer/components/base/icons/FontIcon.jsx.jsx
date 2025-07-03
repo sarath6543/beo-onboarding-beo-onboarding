@@ -5,6 +5,7 @@ import { TiMortarBoard } from "react-icons/ti";
 import { LuBookOpenText } from "react-icons/lu";
 import { BsPersonGear } from "react-icons/bs";import { IoIosArrowUp } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
+import { FaAsterisk } from "react-icons/fa6";
 
 const iconMap = {  
 Person: IoPersonCircle,
@@ -12,7 +13,8 @@ Education: TiMortarBoard,
 Documentation: LuBookOpenText,
 Experience: BsPersonGear,
 UpArrow: IoIosArrowUp,
-DownArrow: IoIosArrowDown
+DownArrow: IoIosArrowDown,
+Asterisk: FaAsterisk,
 };
 
 const FontIcon = ({ iconName, color = '#000', size = '16px', display='inline', verticalAlign='text-bottom',margin="0.25rem"}) => {

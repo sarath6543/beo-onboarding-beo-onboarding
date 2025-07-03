@@ -51,6 +51,7 @@ const AddressForm = () => {
             value={formDataCurrent.addressLine1}
             onChange={handleChangeCurrent}
             name="addressLine1"
+            asterisk
         />
         <InputField 
             label="Address Line 2"
@@ -79,6 +80,7 @@ const AddressForm = () => {
             value={formDataCurrent.city}
             onChange={handleChangeCurrent}
             name="city"
+            asterisk
         />
         <InputField 
             label="Country"
@@ -86,6 +88,7 @@ const AddressForm = () => {
             value={formDataCurrent.country}
             onChange={handleChangeCurrent}
             name="country"
+            asterisk
         />
         <InputField 
             label="State"
@@ -93,6 +96,7 @@ const AddressForm = () => {
             value={formDataCurrent.state}
             onChange={handleChangeCurrent}
             name="state"
+            asterisk
         />
         <InputField 
             label="Pin Code"
@@ -100,6 +104,7 @@ const AddressForm = () => {
             value={formDataCurrent.pin}
             onChange={handleChangeCurrent}
             name="pin"
+            asterisk
         />
         <InputField 
             label="Duration of Stay From"
@@ -107,6 +112,7 @@ const AddressForm = () => {
             value={formDataCurrent.DurationOfStay}
             onChange={handleChangeCurrent}
             name="DurationOfStay"
+            asterisk
         />
 
         <p>Permant Address</p>

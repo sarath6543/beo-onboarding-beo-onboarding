@@ -28,6 +28,7 @@ const AadhaarForm = () => {
             value={formData.aadhaarNumber}
             name="aadhaarNumber"
             onChange={handleChange}
+            asterisk
         />
 
         <InputField
@@ -35,6 +36,7 @@ const AadhaarForm = () => {
             type="text"
             value={formData.aadhaarNumber}
             name="aadhaarNumber"
+            asterisk
         />
 
         <InputField
@@ -42,6 +44,7 @@ const AadhaarForm = () => {
             type="upload"
             value={formData.aadhaarFile}
             name="aadhaarFile"
+            asterisk
         />
     </FormWrapper>
   )

@@ -42,6 +42,7 @@ const PersonalDeatilsForm = () => {
         value={formData.firstName}
         onChange={handleChange}
         name="firstName"
+        asterisk
       />
       <InputField
         label="Middle Name"
