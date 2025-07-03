@@ -36,6 +36,7 @@ const DocumentationDetailsForm = () => {
                     value={formData.aadhaar}
                     onChange={handleChange}
                     name="aadhaar"
+                    asterisk
                 />
                 <InputField
                     label="Pan"
@@ -43,6 +44,7 @@ const DocumentationDetailsForm = () => {
                     value={formData.pan}
                     onChange={handleChange}
                     name="pan"
+                    asterisk
                 />
                 <InputField
                     label="Photo"
@@ -50,6 +52,7 @@ const DocumentationDetailsForm = () => {
                     value={formData.photo}
                     onChange={handleChange}
                     name="photo"
+                    asterisk
                 />
         </FormWrapper>
 
@@ -61,6 +64,7 @@ const DocumentationDetailsForm = () => {
                     value={formData.tenth}
                     onChange={handleChange}
                     name="tenth"
+                    asterisk
                 />
                 <InputField
                     label="12th"
@@ -68,6 +72,7 @@ const DocumentationDetailsForm = () => {
                     value={formData.twelfth}
                     onChange={handleChange}
                     name="twelfth"
+                    asterisk
                 />
                 <InputField
                     label="Diploma"
@@ -75,6 +80,7 @@ const DocumentationDetailsForm = () => {
                     value={formData.diploma}
                     onChange={handleChange}
                     name="diploma"
+                    asterisk
                 />
             </FormWrapper>
 
@@ -86,6 +92,7 @@ const DocumentationDetailsForm = () => {
                     value={formData.payslip}
                     onChange={handleChange}
                     name="payslip"
+                    asterisk
                 />
                 <InputField
                     label="Relieving/ Experience letter"
@@ -93,6 +100,7 @@ const DocumentationDetailsForm = () => {
                     value={formData.experience}
                     onChange={handleChange}
                     name="experience"
+                    asterisk
                 />
                 <InputField
                     label="Diploma"
@@ -100,6 +108,7 @@ const DocumentationDetailsForm = () => {
                     value={formData.diploma2}
                     onChange={handleChange}
                     name="diploma2"
+                    asterisk
                 />
             </FormWrapper>
 
