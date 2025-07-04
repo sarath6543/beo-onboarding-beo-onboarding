@@ -7,7 +7,7 @@ const AccordionSection = ({ title, children }) => {
   return (
     <div className="w-full border-2 border-gray-300 rounded-2xl my-2.5 bg-[#DADADA] p-4 box-border">
       {/* Header */}
-      <div className="flex justify-between items-center p-3 bg-[#DADADA] rounded-md">
+      <div className="flex justify-between items-center p-3 bg-[#DCACACA] rounded-md">
         <span className="font-semibold">{title}</span>
 
         {/* Arrow Toggle Only */}
