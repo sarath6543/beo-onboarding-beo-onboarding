@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import TopBar from "../../beolayer/layout/TopBar";
 import { useNavigate } from "react-router-dom";
-import samplePDF from "../../assets/documents/sample_offer.pdf";
+import samplePDF from "../../assets/documents/sample.pdf";
 import { pdfjs } from "react-pdf";
 import { Document, Page } from "react-pdf";
 import FontIcon from "../../beolayer/components/base/Icons/FontIcon.jsx";
+import PDFViewer from "../../beolayer/components/PDFViewer/PDFViewer.jsx";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
@@ -122,12 +123,10 @@ const Offer = () => {
         <div className="max-w-6xl mx-auto">
           {/* PDF Viewer */}
           <div className="max-h-[344px] overflow-y-auto rounded-xl shadow-md border border-gray-300 p-5 bg-white mb-8">
-            <Document file={samplePDF} onLoadSuccess={onDocumentLoadSuccess}>
-              <Page pageNumber={pageNumber} width={600} />
+            <Document file={samplePDF} onLoadSuccess={onDocumentLoadSuccess} >
+              <Page pageNumber={pageNumber} width={1100} renderTextLayer={false}/>
             </Document>
-            <p className="text-sm mt-3 text-center text-gray-600">
-              Page {pageNumber} of {numPages}
-            </p>
+          
           </div>
 
           {/* Form */}
