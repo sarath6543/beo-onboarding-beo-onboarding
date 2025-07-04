@@ -7,6 +7,7 @@ import { BsPersonGear } from "react-icons/bs";import { IoIosArrowUp } from "reac
 import { IoIosArrowDown } from "react-icons/io";
 import { CgSoftwareUpload } from "react-icons/cg";
 import { IoArrowBack } from "react-icons/io5";
+import { FaAsterisk } from "react-icons/fa";
 
 const iconMap = {  
 Person: IoPersonCircle,
@@ -15,6 +16,7 @@ Documentation: LuBookOpenText,
 Experience: BsPersonGear,
 UpArrow: IoIosArrowUp,
 DownArrow: IoIosArrowDown,
+Asterisk: FaAsterisk,
 Upload: CgSoftwareUpload,
 Back: IoArrowBack
 };

@@ -39,6 +39,7 @@ const EducationDetailsForm = () => {
                     value={formData10th.board}
                     onChange={handleChange}
                     name="board"
+                    asterisk
                 />
                 <InputField
                     label="School"
@@ -46,6 +47,7 @@ const EducationDetailsForm = () => {
                     value={formData10th.school}
                     onChange={handleChange}
                     name="school"
+                    asterisk
                 />
                 <InputField
                     label="Percentage"
@@ -53,6 +55,7 @@ const EducationDetailsForm = () => {
                     value={formData10th.percentage}
                     onChange={handleChange}
                     name="percentage"
+                    asterisk
                 />
             
                 <InputField
@@ -61,6 +64,7 @@ const EducationDetailsForm = () => {
                     value={formData10th.fromDate}
                     onChange={handleChange}
                     name="fromDate"
+                    asterisk
                 />
                 <InputField
                     label="To Date"
@@ -68,7 +72,16 @@ const EducationDetailsForm = () => {
                     value={formData10th.toDate}
                     onChange={handleChange}
                     name="toDate"
-                />   
+                    asterisk
+                /> 
+                <InputField
+                    label="Certificate"
+                    type="upload"
+                    value={formData12th.toDate}
+                    onChange={handleChange}
+                    name=""
+                    asterisk
+                />  
             </FormWrapper>
 
         <p className='mt-6 text-xl font-medium'>12th Standard</p>
@@ -79,6 +92,7 @@ const EducationDetailsForm = () => {
                     value={formData12th.board}
                     onChange={handleChange}
                     name="board"
+                    asterisk
                 />
                 <InputField
                     label="School"
@@ -86,13 +100,15 @@ const EducationDetailsForm = () => {
                     value={formData12th.school}
                     onChange={handleChange}
                     name="school"
+                    asterisk
                 />
                 <InputField
-                    label="Percentage"
+                    label="Percentage/CGPA"
                     type="text"
                     value={formData12th.percentage}
                     onChange={handleChange}
                     name="percentage"
+                    asterisk
                 />
                 <InputField
                     label="From Date"
@@ -100,6 +116,7 @@ const EducationDetailsForm = () => {
                     value={formData12th.fromDate}
                     onChange={handleChange}
                     name="fromDate"
+                    asterisk
                 />
                 <InputField
                     label="To Date"
@@ -107,44 +124,64 @@ const EducationDetailsForm = () => {
                     value={formData12th.toDate}
                     onChange={handleChange}
                     name="toDate"
+                    asterisk
+                />
+                <InputField
+                    label="Certificate"
+                    type="upload"
+                    value={formData12th.toDate}
+                    onChange={handleChange}
+                    name=""
+                    asterisk
                 />
             </FormWrapper>
         <p className='mt-6 text-xl font-medium'>Diploma/UG/PG/Others</p>
             <FormWrapper columns={3}>
                 <InputField
-                    label="Board"
+                    label="University"
                     type="text"
                     value={formData12th.board}
                     onChange={handleChange}
                     name="board"
                 />
                 <InputField
-                    label="School"
+                    label="College/Institute"
                     type="text"
                     value={formData12th.school}
                     onChange={handleChange}
                     name="school"
+                    asterisk
                 />
                 <InputField
-                    label="Percentage"
+                    label="Mode of Education"
                     type="text"
                     value={formData12th.percentage}
                     onChange={handleChange}
                     name="percentage"
                 />
                 <InputField
-                    label="From Date"
+                    label="Specilazation"
                     type="date"
                     value={formData12th.fromDate}
                     onChange={handleChange}
                     name="fromDate"
+                    asterisk
                 />
                 <InputField
-                    label="To Date"
+                    label="Percentage/CGPA"
                     type="date"
                     value={formData12th.toDate}
                     onChange={handleChange}
                     name="toDate"
+                    asterisk
+                />
+                <InputField
+                    label="Certificate"
+                    type="upload"
+                    value={formData12th.toDate}
+                    onChange={handleChange}
+                    name=""
+                    asterisk
                 />
             </FormWrapper>
     </FormWrapper>

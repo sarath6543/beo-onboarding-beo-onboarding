@@ -26,20 +26,23 @@ export default function PANCardForm() {
         value={formData.panNumber}
         onChange={handleChange}
         name="panNumber"
+        asterisk
       />
       <InputField
         label="Name on PAN"
-          type="text"
+        type="text"
         value={formData.panName}
         onChange={handleChange}
         name="panName"
+        asterisk
       />
        <InputField
-        label="PAN Number"
-          type="upload"
+        label="PAN"
+        type="upload"
         value={formData.panNumber}
         onChange={handleChange}
         name="panNumber"
+        asterisk
       />
      
     </FormWrapper>

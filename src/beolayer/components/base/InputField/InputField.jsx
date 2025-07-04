@@ -1,24 +1,6 @@
-
-// import React from "react";
-
-// const InputField = ({ label, type = "text", value, onChange, required = true,name }) => (
-//   <label className="block mb-4 text-sm font-medium text-gray-700">
-//     {label}
-//     <input
-//       type={type}
-//        name={name}
-//       value={value}
-//       onChange={onChange}
-//       required={required}
-//       className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-//     />
-//   </label>
-// );
-
-// export default InputField;
-
-import { object } from "prop-types";
 import React from "react";
+import FontIcon from "../Icons/FontIcon.jsx";
+
 
 const InputField = ({
   label,
@@ -27,22 +9,21 @@ const InputField = ({
   onChange,
   required = true,
   name,
-  disabled = false,
+  asterisk,
   options ={}
 }) => {
-
   const isUpload = type === "upload";
   const isDropDown = type === "dropdown"
 
   return (
     <label className="block mb-4 text-sm font-medium text-gray-700">
-      {label}
+      {label}{asterisk && <FontIcon iconName="Asterisk" size="6px" verticalAlign="top" color="red"/>}
       {isUpload ? (
         <div className="relative mt-1 w-full">
           <div className="flex w-full border border-gray-300 rounded-md shadow-sm overflow-hidden">
             <button
               type="button"
-              className="w-1/4 bg-[#ABABAB] text-[#4E4E4E] text-sm font-light-semibold px-4 py-2"
+              className="w-1/4 bg-gray-500 text-white text-sm font-medium px-4 py-2"
               onClick={() => document.getElementById(name).click()}
             >
               Browse
@@ -53,7 +34,6 @@ const InputField = ({
               name={name}
               onChange={onChange}
               required={required}
-              disabled={disabled}
               className="w-3/4 px-4 py-2 text-sm text-gray-700 focus:outline-none"
               style={{ display: "none" }}
             />
@@ -75,22 +55,23 @@ const InputField = ({
             name={name}
             value={value}
             required={required}
-            disabled={disabled}
+            // disabled={disabled}
             >
             <option value="" disabled hidden>Select</option>
-            {Object.entries(options).map(([label,value])=>(
-              <option key={value} value={value}>{label}</option>
+            {options.map(({key,value})=>(
+              <option key={value} value={value}>{key}</option>
             ))}
           </select>
         </div>
-      ) : (
+      ) :
+      
+      (
         <input
           type={type}
           name={name}
           value={value}
           onChange={onChange}
           required={required}
-          disabled={disabled}
           className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
         />
       )}
@@ -99,4 +80,3 @@ const InputField = ({
 };
 
 export default InputField;
-
