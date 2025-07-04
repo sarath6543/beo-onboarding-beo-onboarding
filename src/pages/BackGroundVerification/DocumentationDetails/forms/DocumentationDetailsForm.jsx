@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import FormWrapper from '../../../../beolayer/components/base/Form/FormWrapper'
 import InputField from '../../../../beolayer/components/base/InputField/InputField';
+import usePanCardStore from '../../../../beolayer/stores/BGV/PersonalDetails/usePanCardStore';
 
 
 const DocumentationDetailsForm = () => {
+      const { panNumber, panName, panFile } = usePanCardStore();
+      console.log(panNumber, panName, panFile,"from store ");
 
     const [formData,setFormData] = useState({
             aadhaar:"",
