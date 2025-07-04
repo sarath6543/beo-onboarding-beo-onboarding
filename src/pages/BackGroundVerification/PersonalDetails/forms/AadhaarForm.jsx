@@ -1,53 +1,82 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useForm } from 'react-hook-form';
 import FormWrapper from '../../../../beolayer/components/base/Form/FormWrapper'
 import InputField from '../../../../beolayer/components/base/InputField/InputField';
+import useAadharDetailsStore from '../../../../beolayer/stores/BGV/PersonalDetails/useAadharDetailsStore';
 
 const AadhaarForm = () => {
 
-    const [formData,setFormData] = useState({
-        aadhaarNumber:"",
-        aadhaarName:"",
-        aadhaarFile:""
-    })
+    const { aadharNumber, aadharName, aadharFile, setAadharField } = useAadharDetailsStore();
+    const { register, handleSubmit, watch, setValue, reset, formState: { errors } } = useForm({
+       defaultValues: {
+    aadharNumber: aadharNumber,
+    aadharName: aadharName,
+    aadharFile: aadharFile ? [aadharFile] : null,
+}
+    });
 
-    const handleChange = (e) => {
-        const {name ,value } = e.target;
-        setFormData((prev) => ({...prev , [name]:value}));
-    }
+ useEffect(() => {
+    const subscription = watch((value, { name }) => {
+        console.log("Watch triggered:", name, value);
+        if (name === "aadharFile" && value.aadharFile?.[0]) {
+            setAadharField("aadharFile", value.aadharFile[0]);
+        } else if (name && value[name] !== undefined) {
+            setAadharField(name, value[name]);
+        }
+    });
+    return () => subscription.unsubscribe();
+}, [watch, setAadharField]);
 
-    const handleSave = () => {
-        console.log("Saving Aadhaar details:", formData);
+
+    const onSubmit = (data) => {
+        const file = data.aadharFile?.[0] || null;
+        console.log("Saving Aadhar card details:", {
+            aadhaarNumber: data.aadhaarNumber,
+            aadhaarName: data.aadhaarName,
+            aadhaarFile: file,
+        });
+        // resetAadharForm();
+        // reset(); // optional
     };
+ const watchedFile = watch("aadhaarFile");
+    return (
+        <FormWrapper columns={3} onSave={handleSubmit(onSubmit)}>
 
-  return (
-    <FormWrapper columns={3} onSave={handleSave}>
+           <InputField
+  label="Aadhaar Card Number"
+  type="text"
+  {...register("aadharNumber", { required: "Aadhar Number is required" })}
+  value={watch("aadharNumber")}
+  name="aadharNumber"
+  onChange={(e) => setValue("aadharNumber", e.target.value)}
+  asterisk
+  error={errors.aadharNumber?.message}
+/>
 
-        <InputField
-            label="Aadhaar Card Number"
-            type="text"
-            value={formData.aadhaarNumber}
-            name="aadhaarNumber"
-            onChange={handleChange}
-            asterisk
-        />
+<InputField
+  label="Aadhaar Card Name"
+  type="text"
+  {...register("aadharName", { required: "Aadhar Name is required" })}
+  value={watch("aadharName")}
+  name="aadharName"
+  onChange={(e) => setValue("aadharName", e.target.value)}
+  asterisk
+  error={errors.aadharName?.message}
+/>
 
-        <InputField
-            label="Name as it appears on Aadhaar Card"
-            type="text"
-            value={formData.aadhaarNumber}
-            name="aadhaarNumber"
-            asterisk
-        />
+<InputField
+  label="Upload Aadhar"
+  type="upload"
+  {...register("aadharFile", { required: "Aadhar file is required" })}
+  onChange={(e) => setValue("aadharFile", e.target.files)}
+  name="aadharFile"
+  asterisk
+  value={watch("aadharFile")?.[0] || ""}
+  error={errors.aadharFile?.message}
+/>
 
-        <InputField
-            label="Aadhaar Card Number"
-            type="upload"
-            value={formData.aadhaarFile}
-            name="aadhaarFile"
-            asterisk
-        />
-    </FormWrapper>
-  )
+        </FormWrapper>
+    )
 }
 
 export default AadhaarForm
