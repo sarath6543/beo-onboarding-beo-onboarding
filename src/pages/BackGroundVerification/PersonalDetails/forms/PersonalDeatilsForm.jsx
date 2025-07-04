@@ -25,6 +25,15 @@ const PersonalDeatilsForm = () => {
   { key: "Female", value: "female" }
   ];
   
+  const nationality = [
+    {key:"India", value:"india" }
+  ]
+
+  const maritalStatus = [
+    { key: "Single", value: "single" },
+    { key: "Married ", value: "Married " },
+  ]
+  
   const handleChange =(e)=>{
     const {name ,value} = e.target;
     setFormData((prev )=>({ ...prev, [name]: value }))
@@ -70,10 +79,12 @@ const PersonalDeatilsForm = () => {
         name="dob"
       />
       <InputField
+        type='dropdown'
         label="Nationality"
         value={formData.nationality}
         onChange={handleChange}
         name="nationality"
+        options={nationality}
       />
       <InputField
         label="Place Of Birth"
@@ -89,13 +100,16 @@ const PersonalDeatilsForm = () => {
         onChange={handleChange}
         name="gender"
         options={options}
+        asterisk
       />
       
       <InputField
+        type='dropdown'
         label="Marital Status"
         value={formData.MaritalStatus}
         onChange={handleChange}
         name="genMaritalStatusder"
+        options={maritalStatus}
       />
       <InputField
         label="Email ID"
