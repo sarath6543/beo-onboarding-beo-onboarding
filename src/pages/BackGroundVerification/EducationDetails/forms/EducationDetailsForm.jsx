@@ -15,16 +15,36 @@ const EducationDetailsForm = () => {
         },
     ]);
 
-    const handleChange = (e) => {
-        const { value } = e.target;
-        setFormDataList((prev) => ([ ...prev, {
-        board:"",
-        school:"",
-        percentage:"",
-        fromDate:"",
-        toDate:"",
+    const handleSelectChange = (e) => {
+    const { value } = e.target;
+    setFormDataList((prev) => [
+        ...prev,
+        {
+        board: "",
+        school: "",
+        percentage: "",
+        fromDate: "",
+        toDate: "",
         key: value
-    }]));  
+        }
+    ]);
+    };
+
+    const handleInputChange = (e, index) => {
+    const { name, value } = e.target;
+    setFormDataList((prev) => {
+        const updated = [...prev];
+        updated[index][name] = value;
+        return updated;
+    });
+    };
+
+    const handleDeleteForm =(removeForm) =>{
+      setFormDataList((prev)=> prev.filter((_,index)=> index !==removeForm))
+    }
+
+    const disableDropdown = (value) => {
+        return formDataList.some(item => item.key === value);
     };
 
     const handleSave = () => {
@@ -42,7 +62,7 @@ const EducationDetailsForm = () => {
                         label="Board"
                         type="text"
                         value={formData.board}
-                        onChange={handleChange}
+                        onChange={(e) => handleInputChange(e, index)}
                         name="board"
                         asterisk
                     />
@@ -50,7 +70,7 @@ const EducationDetailsForm = () => {
                         label="School"
                         type="text"
                         value={formData.school}
-                        onChange={handleChange}
+                        onChange={(e) => handleInputChange(e, index)}
                         name="school"
                         asterisk
                     />
@@ -58,7 +78,7 @@ const EducationDetailsForm = () => {
                         label="Percentage"
                         type="text"
                         value={formData.percentage}
-                        onChange={handleChange}
+                        onChange={(e) => handleInputChange(e, index)}
                         name="percentage"
                         asterisk
                     />
@@ -67,7 +87,7 @@ const EducationDetailsForm = () => {
                         label="From Date"
                         type="date"
                         value={formData.fromDate}
-                        onChange={handleChange}
+                        onChange={(e) => handleInputChange(e, index)}
                         name="fromDate"
                         asterisk
                     />
@@ -75,7 +95,7 @@ const EducationDetailsForm = () => {
                         label="To Date"
                         type="date"
                         value={formData.toDate}
-                        onChange={handleChange}
+                        onChange={(e) => handleInputChange(e, index)}
                         name="toDate"
                         asterisk
                     /> 
@@ -83,28 +103,51 @@ const EducationDetailsForm = () => {
                         label="Certificate"
                         type="upload"
                         value={formData.toDate}
-                        onChange={handleChange}
+                        onChange={(e) => handleInputChange(e, index)}
                         name=""
                         asterisk
                     />  
                 </FormWrapper>
-                <hr />
-                
+               
+                {formDataList.length > 1 &&
+                    <>
+                        <div className="flex justify-end">
+                        <button
+                            className="px-4 py-2 rounded transition-colors duration-300 text-base bg-red-200 hover:bg-red-500 hover:text-white" 
+                            onClick={()=>handleDeleteForm(index)}
+                        >Delete -</button>
+                        </div>
+                    </>  
+                }
+
+                <div className="my-4 me-6 flex justify-end">
+                    <label className="flex items-center space-x-2">
+                        <span className="text-sm">Click if This is your highest education qualification</span>
+                        <input
+                        className="w-4 h-5"
+                        type="checkbox"
+                        // checked={}
+                        // onChange={}
+                        />
+                    </label>
+                </div>
+
+             <hr />    
         </>
-            ))}
+        ))}
 
             <div className="flex justify-start">     
             <select 
-                onChange={handleChange}
+                onChange={handleSelectChange}
                 defaultValue=""
                 className="mt-1 block px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             >
                 <option value="" disabled hidden>Add Education</option>
-                <option disabled={formDataList.includes("12th")} value="12th">12th standard</option>
-                <option value="diploma">Diploma</option>
-                <option value="ug">UG</option>
-                <option value="pg">PG</option>
-                <option value="others">Others</option>
+                <option disabled={disableDropdown("12th")} value="12th">12th standard</option>
+                <option disabled={disableDropdown("Diploma")} value="Diploma">Diploma</option>
+                <option disabled={disableDropdown("UG")} value="UG">UG</option>
+                <option disabled={disableDropdown("PG")} value="PG">PG</option>
+                <option disabled={disableDropdown("Others")} value="Others">Others</option>
             </select>
             </div>
 

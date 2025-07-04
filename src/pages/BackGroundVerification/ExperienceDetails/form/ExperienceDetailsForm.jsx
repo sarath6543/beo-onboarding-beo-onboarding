@@ -36,11 +36,6 @@ const ExperienceDetailsForm = () => {
       setFormDataList((prev)=> prev.filter((_,index)=> index !==removeForm))
     }
 
-    // const handleChange = (e) => {
-    //     const { name, value } = e.target;
-    //     setFormData((prev) => ({ ...prev, [name]: value }));
-    // };
-
     const handleChange = (index, e) => {
       const { name, value } = e.target;
       setFormDataList((prevList) =>
@@ -65,6 +60,7 @@ const ExperienceDetailsForm = () => {
         value={formData.companyName}
         onChange={(e) => handleChange(index, e)}
         name="companyName"
+        asterisk
       />
       <InputField
         label="Employee ID"
@@ -79,6 +75,7 @@ const ExperienceDetailsForm = () => {
         value={formData.designation}
         onChange={(e) => handleChange(index, e)}
         name="designation"
+        asterisk
       />
       <InputField
         label="Location"
@@ -86,6 +83,7 @@ const ExperienceDetailsForm = () => {
         value={formData.location}
         onChange={(e) => handleChange(index, e)}
         name="location"
+        asterisk
       />
       <InputField
         label="Mode of Employement"
@@ -93,6 +91,7 @@ const ExperienceDetailsForm = () => {
         value={formData.modeOfEmployement}
         onChange={(e) => handleChange(index, e)}
         name="modeOfEmployement"
+        asterisk
       />
       <InputField
         label="Start Date"
@@ -100,6 +99,7 @@ const ExperienceDetailsForm = () => {
         value={formData.startDate}
         onChange={(e) => handleChange(index, e)}
         name="startDate"
+        asterisk
       />
       <InputField
         label="Last Working Date"
@@ -108,8 +108,36 @@ const ExperienceDetailsForm = () => {
         onChange={(e) => handleChange(index, e)}
         name="lastWorkingDate"
       />
+      <InputField
+        label="Relieving / Experience letter"
+        type="upload"
+        value={formData.lastWorkingDate}
+        onChange={(e) => handleChange(index, e)}
+        name="lastWorkingDate"
+        asterisk
+      />
+      <InputField
+        label="Last 3 month's payslips "
+        type="upload"
+        value={formData.lastWorkingDate}
+        onChange={(e) => handleChange(index, e)}
+        name="lastWorkingDate"
+        asterisk
+      />
       
     </FormWrapper>
+
+    <div className="my-4 me-6 flex justify-end">
+                    <label className="flex items-center space-x-2">
+                        <span className="text-sm">Current Organization</span>
+                        <input
+                        className="w-4 h-5"
+                        type="checkbox"
+                        // checked={}
+                        // onChange={}
+                        />
+                    </label>
+                </div>
 
     {formDataList.length > 1 &&
      <>
@@ -122,6 +150,7 @@ const ExperienceDetailsForm = () => {
      </>
       
     }
+  
     
     <hr className="my-10"/>
   </>

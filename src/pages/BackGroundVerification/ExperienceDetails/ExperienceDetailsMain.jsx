@@ -4,7 +4,7 @@ import ExperienceDetailsForm from './form/ExperienceDetailsForm'
 
 const ExperienceDetailsMain = () => {
   return (
-   <AccordionSection title="Education Details">
+   <AccordionSection title="Experience Details">
         <ExperienceDetailsForm/>
    </AccordionSection>
   )
