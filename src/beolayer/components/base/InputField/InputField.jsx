@@ -56,7 +56,7 @@ const InputField = ({
             name={name}
             value={value}
             required={required}
-            // disabled={disabled}
+            disabled={disabled}
             >
             <option value="" disabled hidden>Select</option>
             {options.map(({key,value})=>(

@@ -55,9 +55,6 @@ export default function BackgroundVerificationContent() {
   </div>  
 </div>
 
-
-
-
       {/* Content */}
       <div className="w-full">{renderTab()}</div>
     </div>

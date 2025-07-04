@@ -4,186 +4,112 @@ import InputField from '../../../../beolayer/components/base/InputField/InputFie
 
 const EducationDetailsForm = () => {
 
-    const [formData10th,setFormData10th] = useState({
+    const [formDataList,setFormDataList] = useState([
+        {
         board:"",
         school:"",
         percentage:"",
         fromDate:"",
-        toDate:""
-    });
-
-    const [formData12th,setFormData12th] = useState({
-        board:"",
-        school:"",
-        percentage:"",
-        fromDate:"",
-        toDate:""
-    });
+        toDate:"",
+        key:"10th Standard"
+        },
+    ]);
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData10th((prev) => ({ ...prev, [name]: value }));
+        const { value } = e.target;
+        setFormDataList((prev) => ([ ...prev, {
+        board:"",
+        school:"",
+        percentage:"",
+        fromDate:"",
+        toDate:"",
+        key: value
+    }]));  
     };
 
     const handleSave = () => {
-        console.log("Saving educational details:", formData10th);
+        console.log("Saving educational details:", formDataList);
     };
+
 
   return (
     <FormWrapper columns={1} onSave={handleSave}> 
-        <p className='text-xl font-medium'>10th Standard</p>
-            <FormWrapper columns={3}>    
-                <InputField
-                    label="Board"
-                    type="text"
-                    value={formData10th.board}
-                    onChange={handleChange}
-                    name="board"
-                    asterisk
-                />
-                <InputField
-                    label="School"
-                    type="text"
-                    value={formData10th.school}
-                    onChange={handleChange}
-                    name="school"
-                    asterisk
-                />
-                <InputField
-                    label="Percentage"
-                    type="text"
-                    value={formData10th.percentage}
-                    onChange={handleChange}
-                    name="percentage"
-                    asterisk
-                />
-            
-                <InputField
-                    label="From Date"
-                    type="date"
-                    value={formData10th.fromDate}
-                    onChange={handleChange}
-                    name="fromDate"
-                    asterisk
-                />
-                <InputField
-                    label="To Date"
-                    type="date"
-                    value={formData10th.toDate}
-                    onChange={handleChange}
-                    name="toDate"
-                    asterisk
-                /> 
-                <InputField
-                    label="Certificate"
-                    type="upload"
-                    value={formData12th.toDate}
-                    onChange={handleChange}
-                    name=""
-                    asterisk
-                />  
-            </FormWrapper>
+       {formDataList.map((formData,index)=>(
+        <>
+            <p className='text-xl font-medium'>{formData.key}</p>
+                <FormWrapper columns={3}>    
+                    <InputField
+                        label="Board"
+                        type="text"
+                        value={formData.board}
+                        onChange={handleChange}
+                        name="board"
+                        asterisk
+                    />
+                    <InputField
+                        label="School"
+                        type="text"
+                        value={formData.school}
+                        onChange={handleChange}
+                        name="school"
+                        asterisk
+                    />
+                    <InputField
+                        label="Percentage"
+                        type="text"
+                        value={formData.percentage}
+                        onChange={handleChange}
+                        name="percentage"
+                        asterisk
+                    />
+                
+                    <InputField
+                        label="From Date"
+                        type="date"
+                        value={formData.fromDate}
+                        onChange={handleChange}
+                        name="fromDate"
+                        asterisk
+                    />
+                    <InputField
+                        label="To Date"
+                        type="date"
+                        value={formData.toDate}
+                        onChange={handleChange}
+                        name="toDate"
+                        asterisk
+                    /> 
+                    <InputField
+                        label="Certificate"
+                        type="upload"
+                        value={formData.toDate}
+                        onChange={handleChange}
+                        name=""
+                        asterisk
+                    />  
+                </FormWrapper>
+                <hr />
+                
+        </>
+            ))}
 
-        <p className='mt-6 text-xl font-medium'>12th Standard</p>
-            <FormWrapper columns={3}>
-                <InputField
-                    label="Board"
-                    type="text"
-                    value={formData12th.board}
-                    onChange={handleChange}
-                    name="board"
-                    asterisk
-                />
-                <InputField
-                    label="School"
-                    type="text"
-                    value={formData12th.school}
-                    onChange={handleChange}
-                    name="school"
-                    asterisk
-                />
-                <InputField
-                    label="Percentage/CGPA"
-                    type="text"
-                    value={formData12th.percentage}
-                    onChange={handleChange}
-                    name="percentage"
-                    asterisk
-                />
-                <InputField
-                    label="From Date"
-                    type="date"
-                    value={formData12th.fromDate}
-                    onChange={handleChange}
-                    name="fromDate"
-                    asterisk
-                />
-                <InputField
-                    label="To Date"
-                    type="date"
-                    value={formData12th.toDate}
-                    onChange={handleChange}
-                    name="toDate"
-                    asterisk
-                />
-                <InputField
-                    label="Certificate"
-                    type="upload"
-                    value={formData12th.toDate}
-                    onChange={handleChange}
-                    name=""
-                    asterisk
-                />
-            </FormWrapper>
-        <p className='mt-6 text-xl font-medium'>Diploma/UG/PG/Others</p>
-            <FormWrapper columns={3}>
-                <InputField
-                    label="University"
-                    type="text"
-                    value={formData12th.board}
-                    onChange={handleChange}
-                    name="board"
-                />
-                <InputField
-                    label="College/Institute"
-                    type="text"
-                    value={formData12th.school}
-                    onChange={handleChange}
-                    name="school"
-                    asterisk
-                />
-                <InputField
-                    label="Mode of Education"
-                    type="text"
-                    value={formData12th.percentage}
-                    onChange={handleChange}
-                    name="percentage"
-                />
-                <InputField
-                    label="Specilazation"
-                    type="date"
-                    value={formData12th.fromDate}
-                    onChange={handleChange}
-                    name="fromDate"
-                    asterisk
-                />
-                <InputField
-                    label="Percentage/CGPA"
-                    type="date"
-                    value={formData12th.toDate}
-                    onChange={handleChange}
-                    name="toDate"
-                    asterisk
-                />
-                <InputField
-                    label="Certificate"
-                    type="upload"
-                    value={formData12th.toDate}
-                    onChange={handleChange}
-                    name=""
-                    asterisk
-                />
-            </FormWrapper>
+            <div className="flex justify-start">     
+            <select 
+                onChange={handleChange}
+                defaultValue=""
+                className="mt-1 block px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            >
+                <option value="" disabled hidden>Add Education</option>
+                <option disabled={formDataList.includes("12th")} value="12th">12th standard</option>
+                <option value="diploma">Diploma</option>
+                <option value="ug">UG</option>
+                <option value="pg">PG</option>
+                <option value="others">Others</option>
+            </select>
+            </div>
+
+
+
     </FormWrapper>
   )
 }
