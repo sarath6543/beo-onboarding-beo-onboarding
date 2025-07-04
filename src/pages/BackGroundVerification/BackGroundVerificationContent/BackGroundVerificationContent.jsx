@@ -40,7 +40,7 @@ export default function BackgroundVerificationContent() {
           className={`inline-flex items-center gap-2 rounded-lg font-medium transition duration-200 px-8 py-1
             ${
               activeTab === tab.key
-                ? "bg-[#DADADA] text-white"
+                ? "bg-[#4C4C4C] text-white"
                 : "text-gray-800 hover:bg-gray-100"
             }
           `}

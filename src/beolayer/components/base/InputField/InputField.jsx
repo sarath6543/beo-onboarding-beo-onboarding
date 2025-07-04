@@ -42,7 +42,7 @@ const InputField = ({
           <div className="flex w-full border border-gray-300 rounded-md shadow-sm overflow-hidden">
             <button
               type="button"
-              className="w-1/4 bg-[#DADADA] text-white text-sm font-medium px-4 py-2"
+              className="w-1/4 bg-[#ABABAB] text-[#4E4E4E] text-sm font-light-semibold px-4 py-2"
               onClick={() => document.getElementById(name).click()}
             >
               Browse
