@@ -1,4 +1,3 @@
-// src/store/usePanCardStore.js
 import { create } from "zustand";
 
 const usePanCardStore = create((set) => ({

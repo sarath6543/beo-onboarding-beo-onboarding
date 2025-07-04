@@ -49,7 +49,11 @@ const PersonalDeatilsForm = () => {
   const handleSave = () => {
     console.log("Saving Personal details:", formData);
   };
+  const [file, setFile] = useState(null);
 
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
   
   return (
     <FormWrapper columns={3} onSave={handleSave}>
@@ -163,13 +167,14 @@ const PersonalDeatilsForm = () => {
         asterisk
       />
 
-      <InputField
-        type='upload'
-        label="Photo"
-        value={formData.photo}
-        onChange={handleChange}
-        name="photo"
-      />
+     <InputField
+      label="Photo"
+      type="upload"
+      name="photo"
+      value={file}
+      onChange={handleFileChange}
+      asterisk
+    />
         
 
     </FormWrapper>

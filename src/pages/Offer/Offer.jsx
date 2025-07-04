@@ -29,21 +29,44 @@ const Offer = () => {
       "image/png",
       "image/jpg",
     ];
-    const maxSize = 100 * 1024;
+    const maxSize = 100 * 1024; // 100 KB
 
     if (!allowedTypes.includes(file.type)) {
-      return "Invalid file type.";
+      return Promise.resolve("Invalid file type.");
     }
     if (file.size > maxSize) {
-      return "File size must be under 100 KB.";
+      return Promise.resolve("File size must be under 100 KB.");
     }
-    return "";
+
+    // If image, check dimensions asynchronously
+    if (file.type.startsWith("image/")) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+          const maxWidth = 800;
+          const maxHeight = 600;
+          if (img.naturalWidth > maxWidth || img.naturalHeight > maxHeight) {
+            resolve(`Image dimensions must be under ${maxWidth}x${maxHeight}px.`);
+          } else {
+            resolve("");
+          }
+        };
+        img.onerror = () => {
+          resolve("Failed to load image for dimension validation.");
+        };
+        img.src = URL.createObjectURL(file);
+      });
+    }
+
+    // For PDFs, no dimension validation needed
+    return Promise.resolve("");
   };
 
-  const handleFileChange = (e) => {
+  // Handle file input change
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      const validation = validateFile(file);
+      const validation = await validateFile(file);
       if (validation) {
         setError(validation);
         setUploadedFile(null);
@@ -55,6 +78,7 @@ const Offer = () => {
       }
     }
   };
+
 
   const getPreviewUrl = () => (uploadedFile ? URL.createObjectURL(uploadedFile) : null);
 
