@@ -17,7 +17,8 @@ const PersonalDeatilsForm = () => {
     pin:"",
     mobile:"",
     alternateMobile:"",
-    aadhar:"",
+    photo:"",
+    bloodGroup:"",
   });
 
   const options = [
@@ -32,6 +33,12 @@ const PersonalDeatilsForm = () => {
   const maritalStatus = [
     { key: "Single", value: "single" },
     { key: "Married ", value: "Married " },
+  ]
+
+  const bloodGroup = [
+    { key: "A -ve", value: "A -ve" },
+    { key: "A +ve", value: "A +ve" },
+
   ]
   
   const handleChange =(e)=>{
@@ -58,18 +65,21 @@ const PersonalDeatilsForm = () => {
         value={formData.middleName}
         onChange={handleChange}
         name="middleName"
+        asterisk
       />
       <InputField
         label="Last Name"
         value={formData.lastName}
         onChange={handleChange}
         name="lastName"
+        asterisk
       />  
       <InputField
         label="Father's Name"
         value={formData.fathersName}
         onChange={handleChange}
         name="fathersName"
+        asterisk
       />
       <InputField
         type='date'
@@ -77,6 +87,7 @@ const PersonalDeatilsForm = () => {
         value={formData.dob}
         onChange={handleChange}
         name="dob"
+        asterisk
       />
       <InputField
         type='dropdown'
@@ -85,12 +96,14 @@ const PersonalDeatilsForm = () => {
         onChange={handleChange}
         name="nationality"
         options={nationality}
+        asterisk
       />
       <InputField
         label="Place Of Birth"
         value={formData.placeOfBirth}
         onChange={handleChange}
         name="placeOfBirth"
+        asterisk
       />
 
       <InputField
@@ -110,38 +123,52 @@ const PersonalDeatilsForm = () => {
         onChange={handleChange}
         name="genMaritalStatusder"
         options={maritalStatus}
+        asterisk
       />
       <InputField
         label="Email ID"
         value={formData.email}
         onChange={handleChange}
         name="email"
+        asterisk
       />
       <InputField
         label="PIN Code"
         value={formData.pin}
         onChange={handleChange}
         name="pin"
+        asterisk
       />
       <InputField
         label="Mobile"
         value={formData.mobile}
         onChange={handleChange}
         name="mobile"
+        asterisk
       />
       <InputField
         label="Alternate Mobile Number"
         value={formData.alternateMobile}
         onChange={handleChange}
         name="alternateMobile"
+        asterisk
+      />
+      <InputField
+        type='dropdown'
+        label="Blood Group"
+        value={formData.bloodGroup}
+        onChange={handleChange}
+        name="bloodGroup"
+        options={bloodGroup}
+        asterisk
       />
 
       <InputField
         type='upload'
-        label="Aadhar"
-        value={formData.aadhar}
+        label="Photo"
+        value={formData.photo}
         onChange={handleChange}
-        name="aadhar"
+        name="photo"
       />
         
 
