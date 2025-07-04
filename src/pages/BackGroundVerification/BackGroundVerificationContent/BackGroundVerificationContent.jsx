@@ -30,7 +30,7 @@ export default function BackgroundVerificationContent() {
     <div className="w-[95vw] mx-auto box-border">
       {/* Tabs */}
 <div className="w-full mb-6">
-  <div className="w-full flex flex-wrap bg-white p-4 rounded-2xl shadow-md">
+  <div className="w-full flex flex-wrap bg-white pt-4 rounded-2xl shadow-md overflow-hidden">
     {TABS.map((tab) => (
       <button
         key={tab.key}
@@ -51,7 +51,7 @@ export default function BackgroundVerificationContent() {
         </span>
       </button>
     ))}
-    <ProgressBar/>
+    <ProgressBar completed={70}/>
   </div>  
 </div>
 

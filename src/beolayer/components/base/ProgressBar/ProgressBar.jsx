@@ -1,25 +1,16 @@
 import React from 'react'
 
-const ProgressBar = () => {
-
+const ProgressBar = (props) => {
+    const { completed } = props;
   return (
     <>
-    <div style={{height: 10,
-        width: '100%',
-        backgroundColor: "#EBBC00A1",
-        borderRadius: 50,
-        margin: 50,
-        
-    }}>
-        <div style={{height: '100%',
-        width: `10%`,
-        backgroundColor: "#00C792",
-        borderRadius: 'inherit',
-        textAlign: 'right'
-        }}>
-            <span></span>
+    <div class="h-3 w-full bg-[#EBBC00A1]  overflow-hidden">
+        <div style={{width:`${completed}%`}} className="h-full bg-[#00C792] text-right">
+            
+            
         </div>
     </div>
+
     </>
   )
 }
