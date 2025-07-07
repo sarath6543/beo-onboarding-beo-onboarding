@@ -1,49 +1,106 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useForm } from "react-hook-form";
 import FormWrapper from '../../../../beolayer/components/base/Form/FormWrapper'
 import InputField from '../../../../beolayer/components/base/InputField/InputField'
+import usePersonalDetailsStore from '../../../../beolayer/stores/BGV/PersonalDetails/usePersonalDetailsStore'
 
 const PersonalDeatilsForm = () => {
-  const [formData,setFormData] = useState({
-    firstName:"",
-    middleName:"",
-    lastName:"",
-    fathersName:"",
-    dob:"",
-    nationality:"",
-    placeOfBirth:"",
-    gender:"",
-    MaritalStatus:"",
-    email:"",
-    pin:"",
-    mobile:"",
-    alternateMobile:"",
-    photo:"",
-    bloodGroup:"",
-  });
+  // const [formData,setFormData] = useState({
+  //   firstName:"",
+  //   middleName:"",
+  //   lastName:"",
+  //   fathersName:"",
+  //   dob:"",
+  //   nationality:"",
+  //   placeOfBirth:"",
+  //   gender:"",
+  //   MaritalStatus:"",
+  //   email:"",
+  //   pin:"",
+  //   mobile:"",
+  //   alternateMobile:"",
+  //   photo:"",
+  //   bloodGroup:"",
+  // });
 
+  const { firstName, middleName, lastName, fathersName, dob, nationality, placeOfBirth, gender, maritalStatus, email, pin, mobile, alternateMobileNumber, photoFile, bloodGroup, setPersonalDetailsField } = usePersonalDetailsStore();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    reset,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      firstName: firstName,
+      middleName: middleName,
+      lastName: lastName,
+      fathersName: fathersName,
+      dob: dob,
+      nationality: nationality,
+      placeOfBirth: placeOfBirth,
+      gender: gender,
+      maritalStatus: maritalStatus,
+      email: email,
+      pin: pin,
+      mobile: mobile,
+      alternateMobileNumber: alternateMobileNumber,
+      bloodGroup: bloodGroup,
+      photoFile: photoFile ? [photoFile] : null,
+    },
+  })
+
+  useEffect(() => {
+    const subscription = watch((value, { name }) => {
+      if (name === "photoFile" && value.photoFile?.[0]) {
+        setPersonalDetailsField("photoFile", value.photoFile[0]);
+      } else if (name && value[name] !== undefined) {
+        setPersonalDetailsField(name, value[name]);
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, setPersonalDetailsField]);
+
+  const onSubmit = (data) => {
+    const file = data.photoFile?.[0] || null;
+    // console.log("Saving PAN card details:", {
+    //   panNumber: data.panNumber,
+    //   panName: data.panName,
+    //   panFile: file,
+    // });
+    // resetPanForm();
+    // reset(); // optional
+  };
   const options = [
-  { key: "Male", value: "male" },
-  { key: "Female", value: "female" }
+    { key: "Male", value: "male" },
+    { key: "Female", value: "female" }
   ];
-  
-  const nationality = [
-    {key:"India", value:"india" }
+
+  const nationalityOptions = [
+    { key: "India", value: "india" }
   ]
 
-  const maritalStatus = [
+  const maritalStatusOptions = [
     { key: "Single", value: "single" },
     { key: "Married ", value: "Married " },
   ]
+    const bloodGroupOptions = [
+      { key: "A+", value: "A+" },
+      { key: "A-", value: "A-" },
+      { key: "B+", value: "B+" },
+      { key: "B-", value: "B-" },
+      { key: "O+", value: "O+" },
+      { key: "O-", value: "O-" },
+      { key: "AB+", value: "AB+" },
+      { key: "AB-", value: "AB-" },
+    ]
 
-  const bloodGroup = [
-    { key: "A -ve", value: "A -ve" },
-    { key: "A +ve", value: "A +ve" },
 
-  ]
-  
-  const handleChange =(e)=>{
-    const {name ,value} = e.target;
-    setFormData((prev )=>({ ...prev, [name]: value }))
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
   const handleSave = () => {
@@ -54,129 +111,143 @@ const PersonalDeatilsForm = () => {
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
-  
+  const watchedFile = watch("photoFile");
   return (
-    <FormWrapper columns={3} onSave={handleSave}>
+    <FormWrapper columns={3} onSave={handleSubmit(onSubmit)}>
+
+
       <InputField
         label="First Name"
-        value={formData.firstName}
-        onChange={handleChange}
-        name="firstName"
+        type="text"
+        {...register("firstName", { required: "First Name is required" })}
+        value={watch("firstName")}
+        onChange={(e) => setValue("firstName", e.target.value)}
+        name="panfirstNameumber"
         asterisk
-      />
-      <InputField
-        label="Middle Name"
-        value={formData.middleName}
-        onChange={handleChange}
-        name="middleName"
-        asterisk
-      />
-      <InputField
-        label="Last Name"
-        value={formData.lastName}
-        onChange={handleChange}
-        name="lastName"
-        asterisk
-      />  
-      <InputField
-        label="Father's Name"
-        value={formData.fathersName}
-        onChange={handleChange}
-        name="fathersName"
-        asterisk
-      />
-      <InputField
-        type='date'
-        label="Date Of Birth"
-        value={formData.dob}
-        onChange={handleChange}
-        name="dob"
-        asterisk
-      />
-      <InputField
-        type='dropdown'
-        label="Nationality"
-        value={formData.nationality}
-        onChange={handleChange}
-        name="nationality"
-        options={nationality}
-        asterisk
-      />
-      <InputField
-        label="Place Of Birth"
-        value={formData.placeOfBirth}
-        onChange={handleChange}
-        name="placeOfBirth"
-        asterisk
+        error={errors.firstName?.message}
       />
 
       <InputField
-        type='dropdown'  
+        label="Middle Name"
+        type="text"
+        {...register("middleName", { required: "Middle Name is required" })}
+        value={watch("middleName")}
+        onChange={(e) => setValue("middleName", e.target.value)}
+        name="middleName"
+        asterisk
+        error={errors.middleName?.message}
+      />
+
+      <InputField
+        label="Last Name"
+        type="text"
+        {...register("lastName", { required: "Last Name is required" })}
+        value={watch("lastName")}
+        onChange={(e) => setValue("lastName", e.target.value)}
+        name="lastName"
+        asterisk
+        error={errors.lastName?.message}
+      />
+
+      <InputField
+        label="Father's Name"
+        type="text"
+        {...register("fathersName", { required: "Father's Name is required" })}
+        value={watch("fathersName")}
+        onChange={(e) => setValue("fathersName", e.target.value)}
+        name="fathersName"
+        asterisk
+        error={errors.fathersName?.message}
+      />
+
+      <InputField
+        label="Date Of Birth"
+        type="date"
+        {...register("dob", { required: "Date Of Birth is required" })}
+        value={watch("dob")}
+        onChange={(e) => setValue("dob", e.target.value)}
+        name="dob"
+        asterisk
+        error={errors.dob?.message}
+      />
+
+      <InputField
+        label="Nationality"
+        type="dropdown"
+        {...register("nationality", { required: "Nationality is required" })}
+        value={watch("nationality")}
+        onChange={(e) => setValue("nationality", e.target.value)}
+        name="nationality"
+        options={nationalityOptions}
+        asterisk
+        error={errors.nationality?.message}
+      />
+
+      <InputField
+        label="Place Of Birth"
+        type="text"
+        {...register("placeOfBirth", { required: "Place Of Birth is required" })}
+        value={watch("placeOfBirth")}
+        onChange={(e) => setValue("placeOfBirth", e.target.value)}
+        name="placeOfBirth"
+        asterisk
+        error={errors.placeOfBirth?.message}
+      />
+
+      <InputField
         label="Gender"
-        value={formData.gender}
-        onChange={handleChange}
+        type="dropdown"
+        {...register("gender", { required: "Gender is required" })}
+        value={watch("gender")}
+        onChange={(e) => setValue("gender", e.target.value)}
         name="gender"
         options={options}
         asterisk
+        error={errors.gender?.message}
       />
-      
       <InputField
-        type='dropdown'
         label="Marital Status"
-        value={formData.MaritalStatus}
-        onChange={handleChange}
-        name="genMaritalStatusder"
-        options={maritalStatus}
+        type="dropdown"
+        {...register("maritalStatus", { required: "Marital Status is required" })}
+        value={watch("maritalStatus")}
+        onChange={(e) => setValue("maritalStatus", e.target.value)}
+        name="maritalStatus"
+        options={maritalStatusOptions}
         asterisk
-      />
-      <InputField
-        label="Email ID"
-        value={formData.email}
-        onChange={handleChange}
-        name="email"
-        asterisk
-      />
-      <InputField
-        label="PIN Code"
-        value={formData.pin}
-        onChange={handleChange}
-        name="pin"
-        asterisk
-      />
-      <InputField
-        label="Mobile"
-        value={formData.mobile}
-        onChange={handleChange}
-        name="mobile"
-        asterisk
+        error={errors.maritalStatus?.message}
       />
       <InputField
         label="Alternate Mobile Number"
-        value={formData.alternateMobile}
-        onChange={handleChange}
-        name="alternateMobile"
+        type="text"
+        {...register("alternateMobileNumber", { required: "Alternate Mobile Number is required" })}
+        value={watch("alternateMobileNumber")}
+        onChange={(e) => setValue("alternateMobileNumber", e.target.value)}
+        name="alternateMobileNumber"
         asterisk
+        error={errors.alternateMobileNumber?.message}
       />
       <InputField
-        type='dropdown'
-        label="Blood Group"
-        value={formData.bloodGroup}
-        onChange={handleChange}
-        name="bloodGroup"
-        options={bloodGroup}
-        asterisk
+      label="Blood Group"
+      type="dropdown"
+      {...register("bloodGroup", { required: "Blood Group is required" })}
+      value={watch("bloodGroup")}
+      onChange={(e) => setValue("bloodGroup", e.target.value)}
+      name="bloodGroup"
+      options={bloodGroupOptions}
+      asterisk
+      error={errors.bloodGroup?.message}
       />
 
-     <InputField
-      label="Photo"
-      type="upload"
-      name="photo"
-      value={file}
-      onChange={handleFileChange}
-      asterisk
-    />
-        
-
+      <InputField
+        label="Upload Photo"
+        type="upload"
+        {...register("photoFile", { required: "Photo is required" })}
+        onChange={(e) => setValue("photoFile", e.target.files)}
+        name="photoFile"
+        asterisk
+        value={watchedFile?.[0] || ""}
+        error={errors.photoFile?.message}
+      />
     </FormWrapper>
   )
 }

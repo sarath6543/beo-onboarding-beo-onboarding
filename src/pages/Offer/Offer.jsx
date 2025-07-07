@@ -5,7 +5,7 @@ import samplePDF from "../../assets/documents/sample.pdf";
 import { pdfjs } from "react-pdf";
 import { Document, Page } from "react-pdf";
 import FontIcon from "../../beolayer/components/base/Icons/FontIcon.jsx";
-import PDFViewer from "../../beolayer/components/PDFViewer/PDFViewer.jsx";
+
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
