@@ -1,99 +1,174 @@
-import React, { useState, useEffect } from 'react'
-import FormWrapper from '../../../../beolayer/components/base/Form/FormWrapper'
-import InputField from '../../../../beolayer/components/base/InputField/InputField'
+import React, { useEffect } from 'react';
+import { useForm, Controller, useWatch } from 'react-hook-form';
+import FormWrapper from '../../../../beolayer/components/base/Form/FormWrapper';
+import InputField from '../../../../beolayer/components/base/InputField/InputField';
+import useAddressStore from '../../../../beolayer/stores/BGV/PersonalDetails/useAddressStore';
 
 const AddressForm = () => {
+  const {
+    formDataCurrent,
+    formDataPermanent,
+    sameAsCurrent,
+    setFormDataCurrent,
+    setFormDataPermanent,
+    setSameAsCurrent
+  } = useAddressStore();
 
-    const [formDataCurrent, setFormDataCurrent] = useState({
-        addressLine1: "",
-        addressLine2: "",
-        addressLine3: "",
-        landmark: "",
-        city: "",
-        country: "",
-        state: "",
-        pin: "",
-        DurationOfStay: ""
-    });
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors }
+  } = useForm({
+    defaultValues: {
+      current: formDataCurrent,
+      permanent: formDataPermanent,
+      sameAsCurrent: sameAsCurrent,
+    }
+  });
 
-    const [formDataPermanent, setFormDataPermanent] = useState({
-        addressLine1: "",
-        addressLine2: "",
-        addressLine3: "",
-        landmark: "",
-        city: "",
-        country: "",
-        state: "",
-        pin: "",
-        DurationOfStay: ""
-    });
+  const watchedCurrent = useWatch({ control, name: 'current' });
+  const watchedPermanent = useWatch({ control, name: 'permanent' });
+  const watchedSameAsCurrent = useWatch({ control, name: 'sameAsCurrent' });
 
-    const [sameAsCurrent, setSameAsCurrent] = useState(false);
+  // Sync to Zustand store
+  useEffect(() => {
+    setFormDataCurrent(watchedCurrent);
+  }, [watchedCurrent, setFormDataCurrent]);
 
-    useEffect(() => {
-        if (sameAsCurrent) {
-            setFormDataPermanent({ ...formDataCurrent });
-        }
-    }, [sameAsCurrent, formDataCurrent]);
+  useEffect(() => {
+    setSameAsCurrent(watchedSameAsCurrent);
+  }, [watchedSameAsCurrent, setSameAsCurrent]);
 
-    const handleChangeCurrent = (e) => {
-        const { name, value } = e.target;
-        setFormDataCurrent((prev) => ({ ...prev, [name]: value }));
-    };
-    
+useEffect(() => {
+  if (watchedSameAsCurrent) {
+    // Only update permanent address in store if different from current
+    if (JSON.stringify(formDataPermanent) !== JSON.stringify(watchedCurrent)) {
+      setFormDataPermanent(watchedCurrent);
+    }
+    // Only update RHF permanent fields if different
+    const permanentInForm = watch('permanent');
+    if (JSON.stringify(permanentInForm) !== JSON.stringify(watchedCurrent)) {
+      setValue('permanent', watchedCurrent);
+    }
+  } else {
+    // If not same, update permanent from form values (watchedPermanent)
+    if (JSON.stringify(formDataPermanent) !== JSON.stringify(watchedPermanent)) {
+      setFormDataPermanent(watchedPermanent);
+    }
+  }
+}, [watchedSameAsCurrent, watchedCurrent, watchedPermanent, setFormDataPermanent, setValue, formDataPermanent, watch]);
 
-    const handleChangePermanent = (e) => {
-        const { name, value } = e.target;
-        setFormDataPermanent((prev) => ({ ...prev, [name]: value }));
-    };
 
-    const handleCheckboxChange = (e) => {
-        setSameAsCurrent(e.target.checked);
-    };
+  const onSubmit = (data) => {
+    const { current, permanent, sameAsCurrent } = data;
+    console.log("Saving Address details:");
+    console.log("Current Address:", current);
+    console.log("Permanent Address:", sameAsCurrent ? current : permanent);
+  };
+  const validationRules = {
+    addressLine1: { required: "Address Line 1 is required" },
+    addressLine2: { required: "Address Line 2 is required" },
+    addressLine3: { required: "Address Line 3 is required" },
+    landmark: { required: "Landmark is required" },
+    city: { required: "City is required" },
+    country: { required: "Country is required" },
+    state: { required: "State is required" },
+    pin: { required: "Pin Code is required" },
+    DurationOfStay: { required: "Duration of Stay is required" },
 
-    const handleSave = () => {
-        const finalPermanent = sameAsCurrent ? formDataCurrent : formDataPermanent;
-        console.log("Saving Address details:");
-        console.log("Current Address:", formDataCurrent);
-        console.log("Permanent Address:", finalPermanent);
-    };
+  };
 
-    const renderAddressFields = (formData, handleChange, disabled = false) => (
-        <>
-            <InputField label="Address Line 1" type="text" name="addressLine1" value={formData.addressLine1} onChange={handleChange} disabled={disabled} />
-            <InputField label="Address Line 2" type="text" name="addressLine2" value={formData.addressLine2} onChange={handleChange} disabled={disabled} />
-            <InputField label="Address Line 3" type="text" name="addressLine3" value={formData.addressLine3} onChange={handleChange} disabled={disabled} />
-            <InputField label="Landmark" type="text" name="landmark" value={formData.landmark} onChange={handleChange} disabled={disabled} />
-            <InputField label="City" type="text" name="city" value={formData.city} onChange={handleChange} disabled={disabled} />
-            <InputField label="Country" type="select" name="country" value={formData.country} onChange={handleChange} disabled={disabled} />
-            <InputField label="State" type="text" name="state" value={formData.state} onChange={handleChange} disabled={disabled} />
-            <InputField label="Pin Code" type="text" name="pin" value={formData.pin} onChange={handleChange} disabled={disabled} />
-            <InputField label="Duration of Stay From" type="date" name="DurationOfStay" value={formData.DurationOfStay} onChange={handleChange} disabled={disabled} />
-        </>
-    );
+  const renderAddressFields = (prefix, disabled = false) => (
+    <>
+      {[
+        { name: "addressLine1", label: "Address Line 1" },
+        { name: "addressLine2", label: "Address Line 2" },
+        { name: "addressLine3", label: "Address Line 3" },
+        { name: "landmark", label: "Landmark" },
+        { name: "city", label: "City" },
+        {
+          name: "country",
+          label: "Country",
+          type: "dropdown",
+          options: [
+            { key: "India", value: "India" },
+            { key: "USA", value: "USA" },
+          ],
+        },
+        { name: "state", label: "State" },
+        { name: "pin", label: "Pin Code" },
+        { name: "DurationOfStay", label: "Duration of Stay From", type: "date" },
+      ].map((field) => (
+        <Controller
+          key={`${prefix}.${field.name}`}
+          name={`${prefix}.${field.name}`}
+          control={control}
+          rules={validationRules[field.name] || {}}
+          render={({ field: controllerField }) => (
+            <InputField
+              {...controllerField}
+              label={field.label}
+              type={field.type || "text"}
+              disabled={disabled}
+              options={field.options || []}
+              error={errors?.[prefix]?.[field.name]?.message}
+            />
+          )}
+        />
+      ))}
+    </>
+  );
 
-    return (
-        <FormWrapper columns={3} onSave={handleSave}>
-            <p className="text-lg font-medium col-span-3">Current Address</p>
-            {renderAddressFields(formDataCurrent, handleChangeCurrent)}
+  return (
+    <FormWrapper columns={3} onSave={handleSubmit(onSubmit)}>
+      <p className="text-lg font-medium col-span-3">Current Address</p>
+      {renderAddressFields("current")}
 
-            <div className="my-4 col-span-3">
-                <label className="flex items-center w space-x-2">
-                   
-                    <span className="text-sm">Permanent address is same as current address</span>
-                     <input
-                        className="w-4 h-5"
-                        type="checkbox"
-                        checked={sameAsCurrent}
-                        onChange={handleCheckboxChange}
-                    />
-                </label>
-            </div>
+      {/* <div className="my-4 col-span-3">
+        <Controller
+          name="sameAsCurrent"
+          control={control}
+          render={({ field }) => (
+            <label className="flex items-center space-x-1">
+              <span className="text-sm">Permanent address is same as current address</span>
+              <input
+                type="checkbox"
+                className="w-4 h-5"
+                checked={field.value}
+                onChange={(e) => field.onChange(e.target.checked)}
+              />
+            </label>
+          )}
+        />
+      </div> */}
+      <div className="my-4 col-span-3">
+  <Controller
+    name="sameAsCurrent"
+    control={control}
+    render={({ field }) => (
+      <label className="flex items-center space-x-1">
+        {/*
+          By wrapping the input inside the label, clicking on the text
+          will now automatically toggle the checkbox.
+        */}
+        <input
+          type="checkbox"
+          className="w-4 h-5"
+          checked={field.value}
+          onChange={(e) => field.onChange(e.target.checked)}
+        />
+        <span className="text-sm">Permanent address is same as current address</span>
+      </label>
+    )}
+  />
+</div>
 
-            <p className="text-lg font-medium col-span-3">Permanent Address</p>
-            {renderAddressFields(formDataPermanent, handleChangePermanent, sameAsCurrent)}
-        </FormWrapper>
-    );
+      <p className="text-lg font-medium col-span-3">Permanent Address</p>
+      {renderAddressFields("permanent", watchedSameAsCurrent)}
+    </FormWrapper>
+  );
 };
 
 export default AddressForm;
