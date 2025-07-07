@@ -11,7 +11,8 @@ const InputField = ({
   asterisk,
   disabled,
   options = [],
-  error, 
+  error,
+  ...rest
 }) => {
   const isUpload = type === "upload";
   const isDropDown = type === "dropdown";
@@ -43,7 +44,7 @@ const InputField = ({
               type="file"
               name={name}
               onChange={onChange}
-              required={required}
+              disabled={disabled}
               className="w-3/4 px-4 py-2 text-sm text-gray-700 focus:outline-none"
               style={{ display: "none" }}
             />
@@ -83,9 +84,11 @@ const InputField = ({
           name={name}
           value={value}
           onChange={onChange}
-          required={required}
           disabled={disabled}
-          className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          {...rest}
+          className={`mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none
+    ${error ? 'border-gray-300' : 'border-gray-300'}
+  `}
         />
       )}
 
