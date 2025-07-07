@@ -190,6 +190,7 @@ console.log("inside experince details")
         value={watch("gender")}
         onChange={(e) => setValue("gender", e.target.value)}
         name="gender"
+        
         options={options}
         asterisk
         error={errors.gender?.message}
