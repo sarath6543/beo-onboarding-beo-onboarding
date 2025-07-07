@@ -1,181 +1,184 @@
-import React, { useState } from 'react'
-import FormWrapper from '../../../../beolayer/components/base/Form/FormWrapper'
-import InputField from '../../../../beolayer/components/base/InputField/InputField';
-
+import React from "react";
+import { useForm, useFieldArray } from "react-hook-form";
+import useExperienceStore from "../../../../beolayer/stores/BGV/EducationalDetails/useExperienceDetailsStore";
+import FormWrapper from "../../../../beolayer/components/base/Form/FormWrapper";
+import InputField from "../../../../beolayer/components/base/InputField/InputField";
 
 const ExperienceDetailsForm = () => {
+  const { experienceList, setExperienceList } = useExperienceStore();
 
-    const [formDataList, setFormDataList] = useState([
-    {
-        companyName: "",
-        employeeId: "",
-        designation: "",
-        location: "",
-        modeOfEmployement: "",
-        startDate: "",
-        lastWorkingDate: "",
+  const {
+    register,
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      experiences: experienceList,
     },
-    ]);
+  });
 
-    const handleAddForm = () => {
-        setFormDataList((prev) => [
-            ...prev,
-            {
-            companyName: "",
-            employeeId: "",
-            designation: "",
-            location: "",
-            modeOfEmployement: "",
-            startDate: "",
-            lastWorkingDate: "",
-            },
-        ]);
-    };
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "experiences",
+  });
 
-    const handleDeleteForm =(removeForm) =>{
-      setFormDataList((prev)=> prev.filter((_,index)=> index !==removeForm))
-    }
-
-    const handleChange = (index, e) => {
-      const { name, value } = e.target;
-      setFormDataList((prevList) =>
-        prevList.map((item, i) =>
-          i === index ? { ...item, [name]: value } : item
-        )
-      );
-    };
-
-    const handleSave = () => {
-        console.log("Saving Experiance details:", formData);
-    };
+  const onSubmit = (data) => {
+    console.log("Saving Experience Details:", data.experiences);
+    setExperienceList(data.experiences);
+  };
 
   return (
-    <>
-{formDataList.map((formData, index) => (
-  <>
-    <FormWrapper key={index} columns={3} >
-      <InputField
-        label="Company Name"
-        type="text"
-        value={formData.companyName}
-        onChange={(e) => handleChange(index, e)}
-        name="companyName"
-        asterisk
-      />
-      <InputField
-        label="Employee ID"
-        type="text"
-        value={formData.employeeId}
-        onChange={(e) => handleChange(index, e)}
-        name="employeeId"
-      />
-      <InputField
-        label="Designation"
-        type="text"
-        value={formData.designation}
-        onChange={(e) => handleChange(index, e)}
-        name="designation"
-        asterisk
-      />
-      <InputField
-        label="Location"
-        type="text"
-        value={formData.location}
-        onChange={(e) => handleChange(index, e)}
-        name="location"
-        asterisk
-      />
-      <InputField
-        label="Mode of Employement"
-        type="text"
-        value={formData.modeOfEmployement}
-        onChange={(e) => handleChange(index, e)}
-        name="modeOfEmployement"
-        asterisk
-      />
-      <InputField
-        label="Start Date"
-        type="date"
-        value={formData.startDate}
-        onChange={(e) => handleChange(index, e)}
-        name="startDate"
-        asterisk
-      />
-      <InputField
-        label="Last Working Date"
-        type="date"
-        value={formData.lastWorkingDate}
-        onChange={(e) => handleChange(index, e)}
-        name="lastWorkingDate"
-      />
-      <InputField
-        label="Relieving / Experience letter"
-        type="upload"
-        value={formData.lastWorkingDate}
-        onChange={(e) => handleChange(index, e)}
-        name="lastWorkingDate"
-        asterisk
-      />
-      <InputField
-        label="Last 3 month's payslips "
-        type="upload"
-        value={formData.lastWorkingDate}
-        onChange={(e) => handleChange(index, e)}
-        name="lastWorkingDate"
-        asterisk
-      />
-      
-    </FormWrapper>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      {fields.map((field, index) => (
+        <div key={field.id}>
+          <FormWrapper columns={3}>
+            <InputField
+              label="Company Name"
+              type="text"
+              asterisk
+              {...register(`experiences.${index}.companyName`, {
+                required: "Company Name is required",
+              })}
+              error={errors.experiences?.[index]?.companyName?.message}
+            />
+            <InputField
+              label="Employee Id"
+              type="text"
+              asterisk
+              {...register(`experiences.${index}.employeeId`, {
+                required: "Employee Id is required",
+              })}
+              error={errors.experiences?.[index]?.employeeId?.message}
+            />
+            <InputField
+              label="Designation"
+              type="text"
+              asterisk
+              {...register(`experiences.${index}.designation`, {
+                required: "Designation is required",
+              })}
+              error={errors.experiences?.[index]?.designation?.message}
+            />
+            <InputField
+              label="Location"
+              type="text"
+              asterisk
+              {...register(`experiences.${index}.location`, {
+                required: "Location is required",
+              })}
+              error={errors.experiences?.[index]?.location?.message}
+            />
+            <InputField
+              label="Mode of Employment"
+              type="text"
+              asterisk
+              {...register(`experiences.${index}.modeOfEmployement`, {
+                required: "Mode of Employment is required",
+              })}
+              error={errors.experiences?.[index]?.modeOfEmployement?.message}
+            />
 
-    <div className="my-4 me-6 flex justify-end">
-                    <label className="flex items-center space-x-2">
-                        <span className="text-sm">Current Organization</span>
-                        <input
-                        className="w-4 h-5"
-                        type="checkbox"
-                        // checked={}
-                        // onChange={}
-                        />
-                    </label>
-                </div>
+            <InputField
+              label="From Date"
+              type="date"
+              asterisk
+              {...register(`experiences.${index}.fromDate`, {
+                required: "From Date is required",
+              })}
+              error={errors.experiences?.[index]?.fromDate?.message}
+            />
+            <InputField
+              label="To Date"
+              type="date"
+              asterisk
+              {...register(`experiences.${index}.toDate`, {
+                required: "To Date is required",
+              })}
+              error={errors.experiences?.[index]?.toDate?.message}
+            />
+            <InputField
+              label="Relieving / Experience letter"
+              type="upload"
+              name="relievingLetterFile"
+              asterisk
+              onChange={(e) => setValue("relievingLetterFile", e.target.files)}
+              {...register(`experiences.${index}.relievingLetterFile`, {
+                required: "Relieving letter file is required",
+              })}
+              error={errors.experiences?.[index]?.relievingLetterFile?.message}
+            />
 
-    {formDataList.length > 1 &&
-     <>
-        <div className="flex justify-end">
-          <button
-            className="px-4 py-2 rounded transition-colors duration-300 text-base bg-red-200 hover:bg-red-500 hover:text-white" 
-            onClick={()=>handleDeleteForm(index)}
-          >Delete -</button>
+            <InputField
+              label="Salary Slip"
+              type="upload"
+              name="salarySlipFile"
+              asterisk
+              onChange={(e) => setValue("salarySlipFile", e.target.files)}
+              {...register(`experiences.${index}.salarySlipFile`, {
+                required: "Salary Slip is required",
+              })}
+              error={errors.experiences?.[index]?.salarySlipFile?.message}
+            />
+          </FormWrapper>
+
+          <div className="my-4 me-6 flex justify-end">
+            <label className="flex items-center space-x-2">
+              <span className="text-sm">Current Organization</span>
+              <input
+                className="w-4 h-5"
+                type="checkbox"
+                {...register(`experiences.${index}.isCurrentOrg`)}
+              />
+            </label>
+          </div>
+
+          {fields.length > 1 && (
+            <div className="flex justify-end">
+              <button
+                type="button"
+                className="px-4 py-2 rounded transition-colors duration-300 text-base bg-red-200 hover:bg-red-500 hover:text-white"
+                onClick={() => remove(index)}
+              >
+                Delete -
+              </button>
+            </div>
+          )}
+
+          <hr className="my-10" />
         </div>
-     </>
-      
-    }
-  
-    
-    <hr className="my-10"/>
-  </>
-  
-))}
+      ))}
 
-  <div className="flex justify-between">
-    
-    <button
-      className="bg-[#DADADA] text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors duration-300 text-base"
-      onClick={handleAddForm}
-    >ADD +
-    </button>
-  
-    <button
-      className="bg-[#DADADA] text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors duration-300 text-base"
-      // onClick={onSave}    
-    >Save
-    </button>
+      <div className="flex justify-between">
+        <button
+          type="button"
+          className="bg-[#DADADA] text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors duration-300 text-base"
+          onClick={() =>
+            append({
+              companyName: "",
+              employeeId: "",
+              designation: "",
+              location: "",
+              modeOfEmployement: "",
+              startDate: "",
+              lastWorkingDate: "",
+              relievingLetterFile: null,
+              salarySlipFile: null,
+            })
+          }
+        >
+          ADD +
+        </button>
+        <button
+          type="submit"
+          className="bg-[#DADADA] text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors duration-300 text-base"
+        >
+          Save
+        </button>
+      </div>
+    </form>
+  );
+};
 
-  </div>
-    
-  </>
-    
-  )
-}
-
-export default ExperienceDetailsForm
+export default ExperienceDetailsForm;
