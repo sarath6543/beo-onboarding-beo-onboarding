@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import TopBar from "../../beolayer/layout/TopBar";
 import { useNavigate } from "react-router-dom";
-import samplePDF from "../../assets/documents/sample_offer.pdf";
+import samplePDF from "../../assets/documents/sample.pdf";
 import { pdfjs } from "react-pdf";
 import { Document, Page } from "react-pdf";
 import FontIcon from "../../beolayer/components/base/Icons/FontIcon.jsx";
+import PDFViewer from "../../beolayer/components/PDFViewer/PDFViewer.jsx";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
@@ -29,21 +30,44 @@ const Offer = () => {
       "image/png",
       "image/jpg",
     ];
-    const maxSize = 100 * 1024;
+    const maxSize = 100 * 1024; // 100 KB
 
     if (!allowedTypes.includes(file.type)) {
-      return "Invalid file type.";
+      return Promise.resolve("Invalid file type.");
     }
     if (file.size > maxSize) {
-      return "File size must be under 100 KB.";
+      return Promise.resolve("File size must be under 100 KB.");
     }
-    return "";
+
+    // If image, check dimensions asynchronously
+    if (file.type.startsWith("image/")) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+          const maxWidth = 800;
+          const maxHeight = 600;
+          if (img.naturalWidth > maxWidth || img.naturalHeight > maxHeight) {
+            resolve(`Image dimensions must be under ${maxWidth}x${maxHeight}px.`);
+          } else {
+            resolve("");
+          }
+        };
+        img.onerror = () => {
+          resolve("Failed to load image for dimension validation.");
+        };
+        img.src = URL.createObjectURL(file);
+      });
+    }
+
+    // For PDFs, no dimension validation needed
+    return Promise.resolve("");
   };
 
-  const handleFileChange = (e) => {
+  // Handle file input change
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      const validation = validateFile(file);
+      const validation = await validateFile(file);
       if (validation) {
         setError(validation);
         setUploadedFile(null);
@@ -55,6 +79,7 @@ const Offer = () => {
       }
     }
   };
+
 
   const getPreviewUrl = () => (uploadedFile ? URL.createObjectURL(uploadedFile) : null);
 
@@ -98,12 +123,10 @@ const Offer = () => {
         <div className="max-w-6xl mx-auto">
           {/* PDF Viewer */}
           <div className="max-h-[344px] overflow-y-auto rounded-xl shadow-md border border-gray-300 p-5 bg-white mb-8">
-            <Document file={samplePDF} onLoadSuccess={onDocumentLoadSuccess}>
-              <Page pageNumber={pageNumber} width={600} />
+            <Document file={samplePDF} onLoadSuccess={onDocumentLoadSuccess} >
+              <Page pageNumber={pageNumber} width={1100} renderTextLayer={false}/>
             </Document>
-            <p className="text-sm mt-3 text-center text-gray-600">
-              Page {pageNumber} of {numPages}
-            </p>
+          
           </div>
 
           {/* Form */}

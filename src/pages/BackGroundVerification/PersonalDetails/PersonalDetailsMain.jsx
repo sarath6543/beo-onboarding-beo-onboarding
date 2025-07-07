@@ -10,7 +10,7 @@ import FontIcon from "../../../beolayer/components/base/Icons/FontIcon.jsx.jsx";
 export default function PersonalDetailsMain() {
   return (
     <>
-      <AccordionSection icon={<FontIcon iconName="Person" />} title="Personal Details">
+      <AccordionSection icon={<FontIcon iconName="Person" size="20px" />} title="Personal Details">
         <PersonalDeatilsForm />
       </AccordionSection>
 

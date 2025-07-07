@@ -40,6 +40,7 @@ const AddressForm = () => {
         const { name, value } = e.target;
         setFormDataCurrent((prev) => ({ ...prev, [name]: value }));
     };
+    
 
     const handleChangePermanent = (e) => {
         const { name, value } = e.target;
@@ -64,10 +65,10 @@ const AddressForm = () => {
             <InputField label="Address Line 3" type="text" name="addressLine3" value={formData.addressLine3} onChange={handleChange} disabled={disabled} />
             <InputField label="Landmark" type="text" name="landmark" value={formData.landmark} onChange={handleChange} disabled={disabled} />
             <InputField label="City" type="text" name="city" value={formData.city} onChange={handleChange} disabled={disabled} />
-            <InputField label="Country" type="text" name="country" value={formData.country} onChange={handleChange} disabled={disabled} />
+            <InputField label="Country" type="select" name="country" value={formData.country} onChange={handleChange} disabled={disabled} />
             <InputField label="State" type="text" name="state" value={formData.state} onChange={handleChange} disabled={disabled} />
             <InputField label="Pin Code" type="text" name="pin" value={formData.pin} onChange={handleChange} disabled={disabled} />
-            <InputField label="Duration of Stay From" type="text" name="DurationOfStay" value={formData.DurationOfStay} onChange={handleChange} disabled={disabled} />
+            <InputField label="Duration of Stay From" type="date" name="DurationOfStay" value={formData.DurationOfStay} onChange={handleChange} disabled={disabled} />
         </>
     );
 

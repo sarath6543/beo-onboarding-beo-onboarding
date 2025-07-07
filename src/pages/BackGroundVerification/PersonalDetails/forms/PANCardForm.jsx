@@ -1,54 +1,5 @@
-// import React, { useState } from "react";
-// import FormWrapper from "../../../../beolayer/components/base/Form/FormWrapper";
-// import InputField from "../../../../beolayer/components/base/InputField/InputField";
-
-// export default function PANCardForm() {
-//   const [formData, setFormData] = useState({
-//     panNumber: "",
-//     panName: "",
-//   });
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData((prev) => ({ ...prev, [name]: value }));
-//   };
-
-//   const handleSave = () => {
-//     console.log("Saving PAN card details:", formData);
-
-//   };
-
-//   return (
-//     <FormWrapper columns={3} onSave={handleSave}>
-//       <InputField
-//         label="PAN Number"
-//         type="text"
-//         value={formData.panNumber}
-//         onChange={handleChange}
-//         name="panNumber"
-//         asterisk
-//       />
-//       <InputField
-//         label="Name on PAN"
-//         type="text"
-//         value={formData.panName}
-//         onChange={handleChange}
-//         name="panName"
-//         asterisk
-//       />
-//        <InputField
-//         label="PAN"
-//         type="upload"
-//         value={formData.panNumber}
-//         onChange={handleChange}
-//         name="panNumber"
-//         asterisk
-//       />
-     
-//     </FormWrapper>
-//   );
-// }
-import React from "react";
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import FormWrapper from "../../../../beolayer/components/base/Form/FormWrapper";
 import InputField from "../../../../beolayer/components/base/InputField/InputField";
 import usePanCardStore from "../../../../beolayer/stores/BGV/PersonalDetails/usePanCardStore";
@@ -62,50 +13,80 @@ export default function PANCardForm() {
     resetPanForm,
   } = usePanCardStore();
 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    const finalValue = files ? files[0] : value;
-    setPanField(name, finalValue);
-  };
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    reset,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      panNumber: panNumber,
+      panName: panName,
+      panFile: panFile ? [panFile] : null,
+    },
+  });
 
-  const handleSave = () => {
-    console.log("Saving PAN card details:", {
-      panNumber,
-      panName,
-      panFile,
+  // Sync RHF form values to Zustand store when changed
+  useEffect(() => {
+    const subscription = watch((value, { name }) => {
+      if (name === "panFile" && value.panFile?.[0]) {
+        setPanField("panFile", value.panFile[0]);
+      } else if (name && value[name] !== undefined) {
+        setPanField(name, value[name]);
+      }
     });
+    return () => subscription.unsubscribe();
+  }, [watch, setPanField]);
 
-    // Example: reset form if needed
+  const onSubmit = (data) => {
+    const file = data.panFile?.[0] || null;
+    console.log("Saving PAN card details:", {
+      panNumber: data.panNumber,
+      panName: data.panName,
+      panFile: file,
+    });
     // resetPanForm();
+    // reset(); // optional
   };
+
+  const watchedFile = watch("panFile");
 
   return (
-    <FormWrapper columns={3} onSave={handleSave}>
+    <FormWrapper columns={3} onSave={handleSubmit(onSubmit)}>
       <InputField
         label="PAN Number"
         type="text"
-        value={panNumber}
-        onChange={handleChange}
+        {...register("panNumber", { required: "PAN Number is required" })}
+        value={watch("panNumber")}
+        onChange={(e) => setValue("panNumber", e.target.value)}
         name="panNumber"
         asterisk
+        error={errors.panNumber?.message}
       />
+
       <InputField
         label="Name on PAN"
         type="text"
-        value={panName}
-        onChange={handleChange}
+        {...register("panName", { required: "Name on PAN is required" })}
+        value={watch("panName")}
+        onChange={(e) => setValue("panName", e.target.value)}
         name="panName"
         asterisk
+        error={errors.panName?.message}
       />
+
       <InputField
         label="Upload PAN"
         type="upload"
-        value={panFile?.name || ""}
-        onChange={handleChange}
+        {...register("panFile", { required: "PAN file is required" })}
+        onChange={(e) => setValue("panFile", e.target.files)}
         name="panFile"
         asterisk
+        value={watchedFile?.[0] || ""}
+        error={errors.panFile?.message}
       />
     </FormWrapper>
   );
 }
-
