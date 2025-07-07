@@ -103,10 +103,6 @@ const PersonalDeatilsForm = () => {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSave = () => {
-    console.log("Saving Personal details:", formData);
-  };
-  const [file, setFile] = useState(null);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -201,6 +197,7 @@ const PersonalDeatilsForm = () => {
         value={watch("gender")}
         onChange={(e) => setValue("gender", e.target.value)}
         name="gender"
+        error={errors.gender?.message}
         options={options}
         asterisk
         error={errors.gender?.message}
