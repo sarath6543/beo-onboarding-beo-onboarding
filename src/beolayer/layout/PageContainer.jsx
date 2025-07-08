@@ -1,17 +1,14 @@
 import React from "react";
-import { Link, useLocation  } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function PageContainer({ title, children }) {
-
   const location = useLocation();
   const isHomePage = location.pathname === '/';
-
 
   return (
     <section className="flex-1 p-5 bg-[#E6E6E6] overflow-y-auto min-h-0 h-full">
      
       <div className="flex items-center justify-between mb-4">
-     
         <h2 className="text-xl font-semibold">{title}</h2>
 
  

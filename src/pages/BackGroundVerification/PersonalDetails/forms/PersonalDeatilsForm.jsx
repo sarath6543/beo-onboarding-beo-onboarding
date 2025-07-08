@@ -63,14 +63,7 @@ const PersonalDeatilsForm = () => {
   }, [watch, setPersonalDetailsField]);
 
   const onSubmit = (data) => {
-    const file = data.photoFile?.[0] || null;
-    // console.log("Saving PAN card details:", {
-    //   panNumber: data.panNumber,
-    //   panName: data.panName,
-    //   panFile: file,
-    // });
-    // resetPanForm();
-    // reset(); // optional
+console.log("inside experince details")
   };
   const options = [
     { key: "Male", value: "male" },
