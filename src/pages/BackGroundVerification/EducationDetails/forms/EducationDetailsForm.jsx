@@ -19,9 +19,11 @@ const EducationDetailsForm = () => {
         toDate:"",
         specialization:'',
         modeOfEducation:"",
-        key:"10th"
+        key:"10th Standard"
         },
     ]);
+
+    const [selectDrop,setSelectDrop] = useState("")
 
     const handleSelectChange = (e) => {
     const { value } = e.target;
@@ -37,6 +39,7 @@ const EducationDetailsForm = () => {
         key: value
         }
     ]);
+    setSelectDrop("")
     };
 
     const handleInputChange = (e, index) => {
@@ -64,7 +67,7 @@ const EducationDetailsForm = () => {
   return (
     <FormWrapper columns={1} onSave={handleSave}> 
        {formDataList.map((formData,index)=>{
-        const list = formData.key === "10th" || formData.key === "12th"
+        const list = formData.key === "10th Standard" || formData.key === "12th Standard"
         return (
         <>
             <p className='text-xl font-medium'>{formData.key}</p>
@@ -184,15 +187,16 @@ const EducationDetailsForm = () => {
             <div className="flex justify-start">     
             <select 
                 onChange={handleSelectChange}
-                defaultValue=""
+                value={selectDrop}
                 className="mt-1 block px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             >
                 <option value="" disabled hidden>Add Education</option>
-                <option disabled={disableDropdown("12th")} value="12th">12th standard</option>
-                <option disabled={disableDropdown("Diploma")} value="Diploma">Diploma</option>
-                <option disabled={disableDropdown("UG")} value="UG">UG</option>
-                <option disabled={disableDropdown("PG")} value="PG">PG</option>
-                <option disabled={disableDropdown("Others")} value="Others">Others</option>
+                <option hidden={disableDropdown("10th Standard")} value="10th Standard">10th standard</option>
+                <option hidden={disableDropdown("12th Standard")} value="12th Standard">12th standard</option>
+                <option value="Diploma">Diploma</option>
+                <option value="UG">UG</option>
+                <option value="PG">PG</option>
+                <option value="Others">Others</option>
             </select>
             </div>
     </FormWrapper>
