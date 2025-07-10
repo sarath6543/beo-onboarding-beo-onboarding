@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import FormWrapper from '../../../../beolayer/components/base/Form/FormWrapper';
 import InputField from '../../../../beolayer/components/base/InputField/InputField';
 import useEducationStore from '../../../../beolayer/stores/BGV/EducationalDetails/useEducationalDetailsStore';
@@ -12,6 +12,11 @@ const educationModeOptions = [
 ];
  
 const EducationDetailsForm = () => {
+
+  const [dropdownHidden, setDropdownHidden] = useState("")
+
+  const {educationList, setEducationList} = useEducationStore()
+
   const {
     control,
     register,
@@ -22,18 +27,7 @@ const EducationDetailsForm = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      education: [
-        {
-          board: "",
-          school: "",
-          percentage: "",
-          fromDate: "",
-          toDate: "",
-          specialization: "",
-          modeOfEducation: "",
-          key: "10th",
-        },
-      ],
+      education: educationList
     },
   });
  
@@ -42,7 +36,11 @@ const EducationDetailsForm = () => {
     name: "education",
   });
  
-  const educationList = watch("education");
+  const watchedEducation = watch("education");
+
+  useEffect(()=>{
+    setEducationList(watchedEducation);
+  },[watchedEducation,setEducationList]);
  
   const handleSelectChange = (e) => {
     const { value } = e.target;
@@ -56,6 +54,7 @@ const EducationDetailsForm = () => {
       modeOfEducation: "",
       key: value,
     });
+    setDropdownHidden("")
   };
  
   const disableDropdown = (value) =>
@@ -63,6 +62,7 @@ const EducationDetailsForm = () => {
  
   const onSubmit = (data) => {
     console.log("Submitted Education Details:", data.education);
+    setEducationList(data.education)
   };
  
   return (
@@ -80,12 +80,14 @@ const EducationDetailsForm = () => {
                 type="text"
                 {...register(`education.${index}.board`, { required: true })}
                 error={errors?.education?.[index]?.board && "Required"}
+                asterisk
               />
               <InputField
                 label={isSchool ? "School" : "College/Institute"}
                 type="text"
                 {...register(`education.${index}.school`, { required: true })}
                 error={errors?.education?.[index]?.school && "Required"}
+                asterisk
               />
  
               {isSchool ? (
@@ -95,18 +97,21 @@ const EducationDetailsForm = () => {
                     type="text"
                     {...register(`education.${index}.percentage`, { required: true })}
                     error={errors?.education?.[index]?.percentage && "Required"}
+                    asterisk
                   />
                   <InputField
                     label="From Date"
                     type="date"
                     {...register(`education.${index}.fromDate`, { required: true })}
                     error={errors?.education?.[index]?.fromDate && "Required"}
+                    asterisk
                   />
                   <InputField
                     label="To Date"
                     type="date"
                     {...register(`education.${index}.toDate`, { required: true })}
                     error={errors?.education?.[index]?.toDate && "Required"}
+                    asterisk
                   />
                 </>
               ) : (
@@ -117,18 +122,21 @@ const EducationDetailsForm = () => {
                     options={educationModeOptions}
                     {...register(`education.${index}.modeOfEducation`, { required: true })}
                     error={errors?.education?.[index]?.modeOfEducation && "Required"}
+                    asterisk
                   />
                   <InputField
                     label="Specialization"
                     type="text"
                     {...register(`education.${index}.specialization`, { required: true })}
                     error={errors?.education?.[index]?.specialization && "Required"}
+                    asterisk
                   />
                   <InputField
                     label="Percentage"
                     type="text"
                     {...register(`education.${index}.percentage`, { required: true })}
                     error={errors?.education?.[index]?.percentage && "Required"}
+                    asterisk
                   />
                 </>
               )}
@@ -173,15 +181,16 @@ const EducationDetailsForm = () => {
       <div className="flex justify-start">
         <select
           onChange={handleSelectChange}
-          defaultValue=""
+          value={dropdownHidden}
           className="mt-1 block px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
         >
           <option value="" disabled hidden>Add Education</option>
-          <option disabled={disableDropdown("12th")} value="12th">12th standard</option>
-          <option disabled={disableDropdown("Diploma")} value="Diploma">Diploma</option>
-          <option disabled={disableDropdown("UG")} value="UG">UG</option>
-          <option disabled={disableDropdown("PG")} value="PG">PG</option>
-          <option disabled={disableDropdown("Others")} value="Others">Others</option>
+          <option hidden={disableDropdown("12th")} value="12th">12th standard</option>
+          <option hidden={disableDropdown("10th")} value="10th">10th standard</option>
+          <option value="Diploma">Diploma</option>
+          <option value="UG">UG</option>
+          <option value="PG">PG</option>
+          <option value="Others">Others</option>
         </select>
       </div>
     </FormWrapper>
