@@ -51,7 +51,7 @@ export default function BackgroundVerificationContent() {
         </span>
       </button>
     ))}
-    <ProgressBar completed={70}/>
+    <ProgressBar completed={40}/>
   </div>  
 </div>
 

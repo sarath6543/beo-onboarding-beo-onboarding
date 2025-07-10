@@ -1,4 +1,4 @@
-import React, { use, useState } from "react";
+import React from "react";
 import FormWrapper from "../../../../beolayer/components/base/Form/FormWrapper";
 import DetailsCard from "../../../../beolayer/components/base/DetailsCard/DetailsCard";
 import usePersonalDetailsStore from "../../../../beolayer/stores/BGV/PersonalDetails/usePersonalDetailsStore";
@@ -8,16 +8,20 @@ import useAadhaaStore from '../../../../beolayer/stores/BGV//PersonalDetails/use
 import useAddressStore from "../../../../beolayer/stores/BGV/PersonalDetails/useAddressStore";
 
 const DocumentationDetailsForm = () => {
-
   const personalDetails = usePersonalDetailsStore();
-  const panCardDetails = usePanCardStore();
-  const aadhaarDetails = useAadhaaStore();
-  const addressDetails = useAddressStore()
   const { experienceList } = useExperienceStore();
-  console.log("Address Details:", addressDetails);
- // console.log(personalDetails.firstName, "nameeeeeee");
+  console.log(experienceList,"exp list ")
+    console.log(personalDetails,"perrrrr list ")
 
-   const personalDetailsColumns = [
+  const handleView = () => {
+    alert("View clicked");
+  };
+
+  const handleSave = () => {
+    console.log("Save clicked");
+  };
+
+  const personalDetailsColumns = [
     [
       { label: "First Name", value: personalDetails.firstName },
       { label: "Father’s Name", value: personalDetails.fathersName },
@@ -40,98 +44,95 @@ const DocumentationDetailsForm = () => {
     ],
   ];
 
-  const aadhaarDetailsColumns = [
-    [{label: "Aadhar Card Number", value: aadhaarDetails.aadharNumber }],
-    [{label: "Name as it appears on Aadhar", value: aadhaarDetails.aadharName }]
-  ];
-
-  const addresDetailsColumns = [
-    [
-      { label: "Address Line 1", value: addressDetails.addressLine1 },
-      { label: "City", value: addressDetails.city },
-    ],
-    [
-      { label: "Address Line 2", value: addressDetails.addressLine2 },
-      { label: "Country", value: addressDetails.country },
-    ],
-    [
-      { label: "Address Line 3", value: addressDetails.addressLine3 },
-      { label: "State", value: addressDetails.state },
-    ],
-    [
-      { label: "Landmark", value: addressDetails.landmark },
-      { label: "Duration of Stay From", value: addressDetails.DurationOfStay },
-    ],
-  ]
-
-  const panCardDetailsColumns = [
-    [{label: "PAN Card Number", value: panCardDetails.panNumber }],
-    [{label: "Name as it appears on PAN Card", value: panCardDetails.panName }]
-  ];
-
-  const handleView = () => {
-    alert("View clicked");
-  };
-  const handleSave = () => {};
-
   return (
     <FormWrapper columns={1} onSave={handleSave}>
       <div className="p-4 space-y-6">
         <DetailsCard
           title="Personal Details"
           columns={personalDetailsColumns}
-          photoUrl="https://via.placeholder.com/60"
-          onViewClick={handleView}
-        />
-         <DetailsCard
-          title="PanCard Details"
-          columns={panCardDetailsColumns}
-          photoUrl="https://via.placeholder.com/60"
-          onViewClick={handleView}
-        />
-        <DetailsCard
-          title="Aadhaar Details"
-          columns={aadhaarDetailsColumns}
-          photoUrl="https://via.placeholder.com/60"
-          onViewClick={handleView}
+          images={[
+            {
+              label: "Photo",
+              url: personalDetails.photoPreviewUrl || "https://via.placeholder.com/60",
+              onViewClick: handleView,
+            },
+          ]}
         />
         <DetailsCard
-          title="Address Details"
-          columns={addresDetailsColumns}
-          photoUrl="https://via.placeholder.com/60"
-          onViewClick={handleView}
+          title="PAN Card Details"
+          columns={[
+            [{ label: "PAN Number", value: personalDetails.panNumber }],
+          ]}
+          images={[
+            {
+              label: "PAN Card",
+              url: personalDetails.panFilePreviewUrl || "https://via.placeholder.com/60",
+              onViewClick: handleView,
+            },
+          ]}
         />
-          {experienceList.map((exp, index) => {
-          const experienceColumns = [
-            [
-              { label: "Company Name", value: exp.companyName },
-              { label: "Employee Id", value: exp.employeeId },
-              { label: "Designation", value: exp.designation },
-            ],
-            [
-              { label: "Location", value: exp.location },
-              { label: "Mode of Employment", value: exp.modeOfEmployement },
-              { label: "Start Date", value: exp.startDate },
-            ],
-            [
-              { label: "Last Working Date", value: exp.lastWorkingDate },
-            ],
-          ];
 
-          return (
-            <DetailsCard
-              key={index}
-              title={`Experience ${index + 1}`}
-              columns={experienceColumns}
-              photoUrl="https://via.placeholder.com/60"
-              onViewClick={handleView}
-            />
-          );
-        })}
+{experienceList.map((exp, index) => {
+  const relievingLetterUrl =
+    exp.relievingPreviewUrl ||
+    (exp.relievingFile instanceof File
+      ? URL.createObjectURL(exp.relievingFile)
+      : null);
+
+  const salarySlipUrl =
+    exp.salaryPreviewUrl ||
+    (exp.salaryFile instanceof File
+      ? URL.createObjectURL(exp.salaryFile)
+      : null);
+
+  const experienceColumns = [
+    [
+      { label: "Company Name", value: exp.companyName },
+      { label: "Employee Id", value: exp.employeeId },
+      { label: "Designation", value: exp.designation },
+    ],
+    [
+      { label: "Location", value: exp.location },
+      { label: "Mode of Employment", value: exp.modeOfEmployement },
+      { label: "Start Date", value: exp.startDate },
+    ],
+    [
+      { label: "Last Working Date", value: exp.lastWorkingDate },
+    ],
+  ];
+
+  const experienceImages = [];
+
+  if (relievingLetterUrl) {
+    experienceImages.push({
+      label: "Relieving Letter",
+      url: relievingLetterUrl,
+      onViewClick: () => window.open(relievingLetterUrl, "_blank"),
+    });
+  }
+
+  if (salarySlipUrl) {
+    experienceImages.push({
+      label: "Salary Slip",
+      url: salarySlipUrl,
+      onViewClick: () => window.open(salarySlipUrl, "_blank"),
+    });
+  }
+
+  return (
+    <DetailsCard
+      key={index}
+      title={`Experience ${index + 1}`}
+      columns={experienceColumns}
+      images={experienceImages}
+    />
+  );
+})}
+
+
       </div>
     </FormWrapper>
   );
 };
 
 export default DocumentationDetailsForm;
-

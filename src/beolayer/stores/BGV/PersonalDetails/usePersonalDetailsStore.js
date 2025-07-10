@@ -1,46 +1,28 @@
-import {create} from "zustand";
+import { create } from "zustand";
+
 const usePersonalDetailsStore = create((set) => ({
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    fathersName: "",
-    dob: "",
-    nationality: "",
-    placeOfBirth: "",
-    gender: "",
-    maritalStatus: "",
-    email: "",
-    pin: "",
-    mobile: "",
-    alternateMobileNumber: "",
-    photo: "",
-    bloodGroup: "",
-    photoFile: null,
-    setPersonalDetailsField: (name, value) =>
+  firstName: "",
+  middleName: "",
+  lastName: "",
+  fathersName: "",
+  dob: "",
+  nationality: "",
+  placeOfBirth: "",
+  gender: "",
+  maritalStatus: "",
+  email: "",
+  pin: "",
+  mobile: "",
+  alternateMobileNumber: "",
+  photoFile: null,
+  photoPreviewUrl: "", // <-- Add this
+  bloodGroup: "",
+
+  setPersonalDetailsField: (field, value) =>
     set((state) => ({
       ...state,
-      [name]: value,
-    })),
-    resetPersonalDetails: () =>
-    set(() => ({
-      firstName: "",
-      middleName: "",
-      lastName: "",
-      fathersName: "",
-      dob: "",
-      nationality: "",
-      placeOfBirth: "",
-      gender: "",
-      maritalStatus: "",
-      email: "",
-      pin: "",
-      mobile: "",
-      alternateMobileNumber: "",
-      photo: "",
-      bloodGroup: "",
-      photoFile: null,
+      [field]: value,
     })),
 }));
- 
 
 export default usePersonalDetailsStore;
