@@ -5,23 +5,6 @@ import InputField from '../../../../beolayer/components/base/InputField/InputFie
 import usePersonalDetailsStore from '../../../../beolayer/stores/BGV/PersonalDetails/usePersonalDetailsStore'
 
 const PersonalDeatilsForm = () => {
-  // const [formData,setFormData] = useState({
-  //   firstName:"",
-  //   middleName:"",
-  //   lastName:"",
-  //   fathersName:"",
-  //   dob:"",
-  //   nationality:"",
-  //   placeOfBirth:"",
-  //   gender:"",
-  //   MaritalStatus:"",
-  //   email:"",
-  //   pin:"",
-  //   mobile:"",
-  //   alternateMobile:"",
-  //   photo:"",
-  //   bloodGroup:"",
-  // });
 
   const { firstName, middleName, lastName, fathersName, dob, nationality, placeOfBirth, gender, maritalStatus, email, pin, mobile, alternateMobileNumber, photoFile, bloodGroup, setPersonalDetailsField } = usePersonalDetailsStore();
   const {
@@ -228,16 +211,25 @@ console.log("inside experince details")
       error={errors.bloodGroup?.message}
       />
 
-      <InputField
-        label="Upload Photo"
-        type="upload"
-        {...register("photoFile", { required: "Photo is required" })}
-        onChange={(e) => setValue("photoFile", e.target.files)}
-        name="photoFile"
-        asterisk
-        value={watchedFile?.[0] || ""}
-        error={errors.photoFile?.message}
-      />
+     <InputField
+  label="Upload Photo"
+  type="upload"
+  {...register("photoFile", { required: "Photo is required" })}
+  onChange={(e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const previewUrl = URL.createObjectURL(file);
+      setValue("photoFile", [file]);
+      setPersonalDetailsField("photoFile", file);
+      setPersonalDetailsField("photoPreviewUrl", previewUrl); // Save preview URL
+    }
+  }}
+  name="photoFile"
+  asterisk
+  value={watchedFile?.[0] || ""}
+  error={errors.photoFile?.message}
+/>
+
     </FormWrapper>
   )
 }

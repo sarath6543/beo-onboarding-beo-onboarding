@@ -1,36 +1,35 @@
-import { create } from 'zustand'
- 
+// stores/useExperienceStore.js
+import { create } from "zustand";
+
 const useExperienceStore = create((set) => ({
   experienceList: [
     {
-      companyName: '',
-      employeeId: '',
-      designation: '',
-      location: '',
-      modeOfEmployement: '',
-      startDate: '',
-      lastWorkingDate: '',
+      companyName: "",
+      employeeId: "",
+      designation: "",
+      location: "",
+      modeOfEmployement: "",
+      startDate: "",
+      lastWorkingDate: "",
+      salaryFile: null,
+      salaryPreviewUrl: "",
+      relievingFile: null,
+      relievingPreviewUrl: "",
+      isCurrentOrg: false,
     },
   ],
-  addExperience: () =>
-    set((state) => ({
-      experienceList: [
-        ...state.experienceList,
-        {
-          companyName: '',
-          employeeId: '',
-          designation: '',
-          location: '',
-          modeOfEmployement: '',
-          startDate: '',
-          lastWorkingDate: '',
-        },
-      ],
+
+  setExperienceList: (newList) =>
+    set(() => ({
+      experienceList: newList,
     })),
-  removeExperience: (index) =>
-    set((state) => ({
-      experienceList: state.experienceList.filter((_, i) => i !== index),
-    })),
-  setExperienceList: (newList) => set({ experienceList: newList }),
-}))
-export default useExperienceStore
+
+updateExperienceField: (index, field, value) =>
+  set((state) => {
+    const updated = [...state.experienceList];
+    updated[index] = { ...updated[index], [field]: value };
+    return { experienceList: updated };
+  }),
+}));
+
+export default useExperienceStore;
