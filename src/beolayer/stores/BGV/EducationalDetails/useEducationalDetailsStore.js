@@ -10,7 +10,7 @@ export const useEducationStore = create((set) => ({
       toDate: "",
       specialization: "",
       modeOfEducation: "",
-      key: "10th",
+      key: "10th Standard",
     },
   ],
 
@@ -33,3 +33,4 @@ export const useEducationStore = create((set) => ({
 
   setFormDataList: (list) => set({ formDataList: list }),
 }));  
+ export default useEducationStore;
