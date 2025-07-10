@@ -1,11 +1,14 @@
-import React from 'react';
-import { useForm, useFieldArray } from 'react-hook-form';
-import FormWrapper from '../../../../beolayer/components/base/Form/FormWrapper';
+import React, { useState } from 'react'
+import FormWrapper from '../../../../beolayer/components/base/Form/FormWrapper'
 import InputField from '../../../../beolayer/components/base/InputField/InputField';
 import useEducationStore from '../../../../beolayer/stores/BGV/EducationalDetails/useEducationalDetailsStore';
 import { useFieldArray, useForm } from 'react-hook-form';
 
 
+const educationModeOptions = [
+    {key:"Online",value:"online"},
+    {key:"Offline",value:"offline"},
+]
 
 const EducationDetailsForm = () => {
 
@@ -21,20 +24,16 @@ const EducationDetailsForm = () => {
     control,
     name: "education",
   });
+   console.log(getValues());
    
   const onSubmit = (data) => {
     console.log("Saving Education Details:", data.education);
     setEducationList(data.education);
+    
+    
   };
 
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "education",
-  });
-
-  const educationList = watch("education");
-
-  const handleSelectChange = (e) => {
+    const handleSelectChange = (e) => {
     const { value } = e.target;
     append({
             board:"",
@@ -68,12 +67,13 @@ const EducationDetailsForm = () => {
                     <p className='text-xl font-medium'>{field.key}</p>
                         <FormWrapper columns={3}>    
                             <InputField
-                                label={isSchoolLevel ? "Board" : "University"}
+                                label="board"
                                 type="text"
                                 {...register(`education.${index}.board`, {
                                     required: `${isSchoolLevel ? "Board":"University"} is required`,
                                 })}
                                 error={errors.education?.[index]?.board?.message}
+                               
                                 asterisk
                             />
                             <InputField
@@ -83,6 +83,7 @@ const EducationDetailsForm = () => {
                                     required :`${isSchoolLevel ? "School" : "College/Institute"} is required`
                                 })}
                                 error={errors?.education?.[index]?.school?.message}
+                              
                                 asterisk
                             />
                             {isSchoolLevel ?
@@ -95,6 +96,7 @@ const EducationDetailsForm = () => {
                                         required :`Percentage is required`
                                     })}
                                     error={errors?.education?.[index]?.percentage?.message}
+                                    
                                     asterisk
                                 />
                                 <InputField
@@ -104,6 +106,7 @@ const EducationDetailsForm = () => {
                                         required :`From date is required`
                                     })}
                                     error={errors?.education?.[index]?.fromDate?.message}
+                                    
                                     asterisk
                                 />
                                 <InputField
@@ -113,6 +116,7 @@ const EducationDetailsForm = () => {
                                         required :`To date is required`
                                     })}
                                     error={errors?.education?.[index]?.toDate?.message}
+                                   
                                     asterisk
                                 /> 
                             </>
@@ -127,6 +131,7 @@ const EducationDetailsForm = () => {
                                         required :`Mode of Education is required`
                                     })}
                                     error={errors?.education?.[index]?.modeOfEducation?.message}
+                                    
                                     options={educationModeOptions}
                                     asterisk
                                 />
@@ -137,6 +142,7 @@ const EducationDetailsForm = () => {
                                         required :`Specialization is required`
                                     })}
                                     error={errors?.education?.[index]?.specialization?.message}
+                                   
                                     asterisk
                                 />
                                 <InputField
@@ -146,6 +152,7 @@ const EducationDetailsForm = () => {
                                         required :`Specialization is required`
                                     })}
                                     error={errors?.education?.[index]?.precentage?.message}
+                                   
                                     asterisk
                                 /> 
                             </>
@@ -157,6 +164,7 @@ const EducationDetailsForm = () => {
                                         required :`Specialization is required`
                                     })}
                                 error={errors?.education?.[index]?.precentage?.message}
+                                name=""
                                 asterisk
                             />  
                         </FormWrapper>
@@ -213,269 +221,4 @@ const EducationDetailsForm = () => {
   )
 }
 
-            <hr />
-          </div>
-        );
-      })}
-
-      <div className="flex justify-start">
-        <select
-          onChange={handleSelectChange}
-          defaultValue=""
-          className="mt-1 block px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-        >
-          <option value="" disabled hidden>Add Education</option>
-          <option disabled={disableDropdown("12th")} value="12th">12th standard</option>
-          <option disabled={disableDropdown("Diploma")} value="Diploma">Diploma</option>
-          <option disabled={disableDropdown("UG")} value="UG">UG</option>
-          <option disabled={disableDropdown("PG")} value="PG">PG</option>
-          <option disabled={disableDropdown("Others")} value="Others">Others</option>
-        </select>
-      </div>
-    </FormWrapper>
-  );
-};
-
-export default EducationDetailsForm;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useState } from 'react'
-// import FormWrapper from '../../../../beolayer/components/base/Form/FormWrapper'
-// import InputField from '../../../../beolayer/components/base/InputField/InputField';
-
-// const educationModeOptions = [
-//     {key:"Online",value:"online"},
-//     {key:"Offline",value:"offline"},
-// ]
-
-
-// const EducationDetailsForm = () => {
-
-//     const [formDataList,setFormDataList] = useState([
-//         {
-//         board:"",
-//         school:"",
-//         percentage:"",
-//         fromDate:"",
-//         toDate:"",
-//         specialization:'',
-//         modeOfEducation:"",
-//         key:"10th"
-//         },
-//     ]);
-
-//     const handleSelectChange = (e) => {
-//     const { value } = e.target;
-//     setFormDataList((prev) => [
-//         ...prev,
-//         {
-//         board: "",
-//         school: "",
-//         percentage: "",
-//         fromDate: "",
-//         toDate: "",
-//         specialization:'',
-//         key: value
-//         }
-//     ]);
-//     };
-
-//     const handleInputChange = (e, index) => {
-//     const { name, value } = e.target;
-//     setFormDataList((prev) => {
-//         const updated = [...prev];
-//         updated[index][name] = value;
-//         return updated;
-//     });
-//     };
-
-//     const handleDeleteForm =(removeForm) =>{
-//       setFormDataList((prev)=> prev.filter((_,index)=> index !==removeForm))
-//     }
-
-//     const disableDropdown = (value) => {
-//         return formDataList.some(item => item.key === value);
-//     };
-
-//     const handleSave = () => {
-//         console.log("Saving educational details:", formDataList);
-//     };
-
-
-//   return (
-//     <FormWrapper columns={1} onSave={handleSave}> 
-//        {formDataList.map((formData,index)=>{
-//         const list = formData.key === "10th" || formData.key === "12th"
-//         return (
-//         <>
-//             <p className='text-xl font-medium'>{formData.key}</p>
-//                 <FormWrapper columns={3}>    
-//                     <InputField
-//                         label={list ? "board" : "university"}
-//                         type="text"
-//                         value={formData.board}
-//                         onChange={(e) => handleInputChange(e, index)}
-//                         name="board"
-//                         asterisk
-//                     />
-//                     <InputField
-//                         label={list ? "School" : "College/Institute"}
-//                         type="text"
-//                         value={formData.school}
-//                         onChange={(e) => handleInputChange(e, index)}
-//                         name="school"
-//                         asterisk
-//                     />
-//                     {list ?
-//                     ( 
-//                     <>
-//                         <InputField
-//                             label="Percentage"
-//                             type="text"
-//                             value={formData.percentage}
-//                             onChange={(e) => handleInputChange(e, index)}
-//                             name="percentage"
-//                             asterisk
-//                         />
-//                         <InputField
-//                             label="From Date"
-//                             type="date"
-//                             value={formData.fromDate}
-//                             onChange={(e) => handleInputChange(e, index)}
-//                             name="fromDate"
-//                             asterisk
-//                         />
-//                         <InputField
-//                             label="To Date"
-//                             type="date"
-//                             value={formData.toDate}
-//                             onChange={(e) => handleInputChange(e, index)}
-//                             name="toDate"
-//                             asterisk
-//                         /> 
-//                     </>
-//                     )
-//                 :
-//                     (
-//                     <>
-//                         <InputField
-//                             label="Mode of Education"
-//                             type="dropdown"
-//                             value={formData.modeOfEducation}
-//                             onChange={(e) => handleInputChange(e, index)}
-//                             name="modeOfEducation"
-//                             options={educationModeOptions}
-//                             asterisk
-//                         />
-//                         <InputField
-//                             label="Specialization"
-//                             type="text"
-//                             value={formData.specialization}
-//                             onChange={(e) => handleInputChange(e, index)}
-//                             name="specialization"
-//                             asterisk
-//                         />
-//                         <InputField
-//                             label="Percentage"
-//                             type="text"
-//                             value={formData.percentage}
-//                             onChange={(e) => handleInputChange(e, index)}
-//                             name="percentage"
-//                             asterisk
-//                         /> 
-//                     </>
-//                     )}
-//                     <InputField
-//                         label="Certificate"
-//                         type="upload"
-//                         value={formData.toDate}
-//                         onChange={(e) => handleInputChange(e, index)}
-//                         name=""
-//                         asterisk
-//                     />  
-//                 </FormWrapper>
-               
-//                 {formDataList.length > 1 &&
-//                     <>
-//                         <div className="flex justify-end">
-//                         <button
-//                             className="px-4 py-2 rounded transition-colors duration-300 text-base bg-red-200 hover:bg-red-500 hover:text-white" 
-//                             onClick={()=>handleDeleteForm(index)}
-//                         >Delete -</button>
-//                         </div>
-//                     </>  
-//                 }
-
-//                 <div className="my-4 me-6 flex justify-end">
-//                     <label className="flex items-center space-x-2">
-//                         <span className="text-sm">Click if This is your highest education qualification</span>
-//                         <input
-//                         className="w-4 h-5"
-//                         type="checkbox"
-//                         // checked={}
-//                         // onChange={}
-//                         />
-//                     </label>
-//                 </div>
-
-//              <hr />    
-//         </>
-//        )})}
-
-//             <div className="flex justify-start">     
-//             <select 
-//                 onChange={handleSelectChange}
-//                 defaultValue=""
-//                 className="mt-1 block px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-//             >
-//                 <option value="" disabled hidden>Add Education</option>
-//                 <option disabled={disableDropdown("12th")} value="12th">12th standard</option>
-//                 <option disabled={disableDropdown("Diploma")} value="Diploma">Diploma</option>
-//                 <option disabled={disableDropdown("UG")} value="UG">UG</option>
-//                 <option disabled={disableDropdown("PG")} value="PG">PG</option>
-//                 <option disabled={disableDropdown("Others")} value="Others">Others</option>
-//             </select>
-//             </div>
-//     </FormWrapper>
-//   )
-// }
-
-// export default EducationDetailsForm
+export default EducationDetailsForm
