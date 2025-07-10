@@ -7,11 +7,17 @@ import usePanCardStore from '../../../../beolayer/stores/BGV/PersonalDetails/use
 import useAadhaaStore from '../../../../beolayer/stores/BGV//PersonalDetails/useAadharDetailsStore'
 import useAddressStore from "../../../../beolayer/stores/BGV/PersonalDetails/useAddressStore";
 
+
 const DocumentationDetailsForm = () => {
   const personalDetails = usePersonalDetailsStore();
+  const panCardDetails = usePanCardStore();
+  const aadhaarDetails = useAadhaaStore();
   const { experienceList } = useExperienceStore();
+  const addressDetails = useAddressStore()
+  const {formDataCurrent, formDataPermanent,sameAsCurrent} = useAddressStore();
+
   console.log(experienceList,"exp list ")
-    console.log(personalDetails,"perrrrr list ")
+  console.log(personalDetails,"perrrrr list ")
 
   const handleView = () => {
     alert("View clicked");
@@ -44,6 +50,16 @@ const DocumentationDetailsForm = () => {
     ],
   ];
 
+  const panCardDetailsColumns = [
+    [{ label: "PAN Number", value: panCardDetails.panNumber }],
+    [{ label: "Name as it appears on PAN Card", value: panCardDetails.panName }],
+  ]
+
+  const aadhaarDetailsColumns =[
+    [{ label: "Aadhaar Number", value: aadhaarDetails.aadharNumber }],
+    [{ label: "Name as it appears on Aadhaar Card", value: aadhaarDetails.aadharName }],
+  ]
+
   return (
     <FormWrapper columns={1} onSave={handleSave}>
       <div className="p-4 space-y-6">
@@ -60,13 +76,22 @@ const DocumentationDetailsForm = () => {
         />
         <DetailsCard
           title="PAN Card Details"
-          columns={[
-            [{ label: "PAN Number", value: personalDetails.panNumber }],
-          ]}
+          columns={panCardDetailsColumns}
           images={[
             {
               label: "PAN Card",
-              url: personalDetails.panFilePreviewUrl || "https://via.placeholder.com/60",
+              url: panCardDetails.panFilePreviewUrl || "https://via.placeholder.com/60",
+              onViewClick: handleView,
+            },
+          ]}
+        />
+        <DetailsCard
+          title="Aadhaar Card Details"
+          columns={aadhaarDetailsColumns}
+          images={[
+            {
+              label: "Aadhaar Card",
+              url: aadhaarDetails.aadharFilePreviewUrl || "https://via.placeholder.com/60",
               onViewClick: handleView,
             },
           ]}
