@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
-import useExperienceStore from "../../../../beolayer/stores/BGV/EducationalDetails/useExperienceDetailsStore";
 import FormWrapper from "../../../../beolayer/components/base/Form/FormWrapper";
 import InputField from "../../../../beolayer/components/base/InputField/InputField";
+import useExperienceStore from "../../../../beolayer/stores/BGV/ExperienceDetails/useExperienceDetailsStore";
 
 const ExperienceDetailsForm = () => {
   const { experienceList, setExperienceList } = useExperienceStore();
@@ -12,6 +12,7 @@ const ExperienceDetailsForm = () => {
     control,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -23,6 +24,13 @@ const ExperienceDetailsForm = () => {
     control,
     name: "experiences",
   });
+
+  // ✅ Sync form data to store whenever form values change
+  const watchedExperiences = watch("experiences");
+
+  useEffect(() => {
+    setExperienceList(watchedExperiences);
+  }, [watchedExperiences, setExperienceList]);
 
   const onSubmit = (data) => {
     console.log("Saving Experience Details:", data.experiences);
@@ -84,26 +92,26 @@ const ExperienceDetailsForm = () => {
               label="From Date"
               type="date"
               asterisk
-              {...register(`experiences.${index}.fromDate`, {
+              {...register(`experiences.${index}.startDate`, {
                 required: "From Date is required",
               })}
-              error={errors.experiences?.[index]?.fromDate?.message}
+              error={errors.experiences?.[index]?.startDate?.message}
             />
             <InputField
               label="To Date"
               type="date"
               asterisk
-              {...register(`experiences.${index}.toDate`, {
+              {...register(`experiences.${index}.lastWorkingDate`, {
                 required: "To Date is required",
               })}
-              error={errors.experiences?.[index]?.toDate?.message}
+              error={errors.experiences?.[index]?.lastWorkingDate?.message}
             />
             <InputField
               label="Relieving / Experience letter"
               type="upload"
               name="relievingLetterFile"
               asterisk
-              onChange={(e) => setValue("relievingLetterFile", e.target.files)}
+              onChange={(e) => setValue(`experiences.${index}.relievingLetterFile`, e.target.files)}
               {...register(`experiences.${index}.relievingLetterFile`, {
                 required: "Relieving letter file is required",
               })}
@@ -115,7 +123,7 @@ const ExperienceDetailsForm = () => {
               type="upload"
               name="salarySlipFile"
               asterisk
-              onChange={(e) => setValue("salarySlipFile", e.target.files)}
+              onChange={(e) => setValue(`experiences.${index}.salarySlipFile`, e.target.files)}
               {...register(`experiences.${index}.salarySlipFile`, {
                 required: "Salary Slip is required",
               })}
@@ -165,6 +173,7 @@ const ExperienceDetailsForm = () => {
               lastWorkingDate: "",
               relievingLetterFile: null,
               salarySlipFile: null,
+              isCurrentOrg: false,
             })
           }
         >

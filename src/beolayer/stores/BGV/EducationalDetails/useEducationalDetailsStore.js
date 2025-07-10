@@ -1,41 +1,35 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
-const useEducationStore = create((set)=>({
-    educationList : [
-        {
-            board:"",
-            school:"",
-            precentage:"",
-            fromDate:"",
-            toDate:"",
-            certificate:"",
-            specialization:"",
-            modeOfEducation:"",
-            key:"10th Standard"
-        }
-    ],
+export const useEducationStore = create((set) => ({
+  formDataList: [
+    {
+      board: "",
+      school: "",
+      percentage: "",
+      fromDate: "",
+      toDate: "",
+      specialization: "",
+      modeOfEducation: "",
+      key: "10th",
+    },
+  ],
 
-    addEducation : ()=>set((state) => ({
-        educationList : [
-            ...state.educationList,
-            {
-                board:"",
-                school:"",
-                precentage:"",
-                fromDate:"",
-                toDate:"",
-                certificate:"",
-                specialization:"",
-                modeOfEducation:"",
-                key:""
-            }
-        ],
+  addEducation: (newEntry) =>
+    set((state) => ({
+      formDataList: [...state.formDataList, newEntry],
     })),
 
-    removeEducation : (index) => set((state)=> ({
-        educationList: state.educationList.filter((_, i) => i !== index),
-    })),
-    setEducationList: (newList) => set({ educationList: newList }),
-}))
+  updateField: (index, name, value) =>
+    set((state) => {
+      const updated = [...state.formDataList];
+      updated[index][name] = value;
+      return { formDataList: updated };
+    }),
 
-export default useEducationStore;
+  deleteEducation: (indexToRemove) =>
+    set((state) => ({
+      formDataList: state.formDataList.filter((_, i) => i !== indexToRemove),
+    })),
+
+  setFormDataList: (list) => set({ formDataList: list }),
+}));  
