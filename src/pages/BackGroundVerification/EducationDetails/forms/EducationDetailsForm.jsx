@@ -14,7 +14,7 @@ const EducationDetailsForm = () => {
 
     const { educationList, setEducationList } = useEducationStore();
 
-    const { register ,control , handleSubmit, formState: { errors }, } = useForm({
+    const { register ,control ,getValues, handleSubmit, formState: { errors }, } = useForm({
         defaultValues:{
             education : educationList
         },
@@ -24,12 +24,10 @@ const EducationDetailsForm = () => {
     control,
     name: "education",
   });
-
+   
   const onSubmit = (data) => {
     console.log("Saving Education Details:", data.education);
     setEducationList(data.education);
-    
-    
   };
 
     const handleSelectChange = (e) => {
@@ -40,7 +38,7 @@ const EducationDetailsForm = () => {
             precentage:"",
             fromDate:"",
             toDate:"",
-            certificate:"",
+            certificate:null,
             specialization:"",
             modeOfEducation:"",
             key:value
@@ -72,7 +70,6 @@ const EducationDetailsForm = () => {
                                     required: `${isSchoolLevel ? "Board":"University"} is required`,
                                 })}
                                 error={errors.education?.[index]?.board?.message}
-                                name="board"
                                 asterisk
                             />
                             <InputField
@@ -82,7 +79,6 @@ const EducationDetailsForm = () => {
                                     required :`${isSchoolLevel ? "School" : "College/Institute"} is required`
                                 })}
                                 error={errors?.education?.[index]?.school?.message}
-                              name="school"
                                 asterisk
                             />
                             {isSchoolLevel ?
@@ -95,7 +91,6 @@ const EducationDetailsForm = () => {
                                         required :`Percentage is required`
                                     })}
                                     error={errors?.education?.[index]?.percentage?.message}
-                                    name="percentage"
                                     asterisk
                                 />
                                 <InputField
@@ -105,7 +100,6 @@ const EducationDetailsForm = () => {
                                         required :`From date is required`
                                     })}
                                     error={errors?.education?.[index]?.fromDate?.message}
-                                    name="fromDate"
                                     asterisk
                                 />
                                 <InputField
@@ -115,7 +109,6 @@ const EducationDetailsForm = () => {
                                         required :`To date is required`
                                     })}
                                     error={errors?.education?.[index]?.toDate?.message}
-                                    name="toDate"
                                     asterisk
                                 /> 
                             </>
@@ -130,7 +123,6 @@ const EducationDetailsForm = () => {
                                         required :`Mode of Education is required`
                                     })}
                                     error={errors?.education?.[index]?.modeOfEducation?.message}
-                                    name="modeOfEducation"
                                     options={educationModeOptions}
                                     asterisk
                                 />
@@ -141,7 +133,6 @@ const EducationDetailsForm = () => {
                                         required :`Specialization is required`
                                     })}
                                     error={errors?.education?.[index]?.specialization?.message}
-                                    name="specialization"
                                     asterisk
                                 />
                                 <InputField
@@ -151,7 +142,6 @@ const EducationDetailsForm = () => {
                                         required :`Specialization is required`
                                     })}
                                     error={errors?.education?.[index]?.precentage?.message}
-                                    name="precentage"
                                     asterisk
                                 /> 
                             </>
@@ -163,7 +153,6 @@ const EducationDetailsForm = () => {
                                         required :`Specialization is required`
                                     })}
                                 error={errors?.education?.[index]?.precentage?.message}
-                                name=""
                                 asterisk
                             />  
                         </FormWrapper>
