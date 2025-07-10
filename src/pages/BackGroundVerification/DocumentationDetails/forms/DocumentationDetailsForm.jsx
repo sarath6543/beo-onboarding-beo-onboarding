@@ -3,11 +3,18 @@ import FormWrapper from "../../../../beolayer/components/base/Form/FormWrapper";
 import DetailsCard from "../../../../beolayer/components/base/DetailsCard/DetailsCard";
 import usePersonalDetailsStore from "../../../../beolayer/stores/BGV/PersonalDetails/usePersonalDetailsStore";
 import useExperienceStore from "../../../../beolayer/stores/BGV/ExperienceDetails/useExperienceDetailsStore";
+import usePanCardStore from '../../../../beolayer/stores/BGV/PersonalDetails/usePanCardStore'
+import useAadhaaStore from '../../../../beolayer/stores/BGV//PersonalDetails/useAadharDetailsStore'
+import useAddressStore from "../../../../beolayer/stores/BGV/PersonalDetails/useAddressStore";
 
 const DocumentationDetailsForm = () => {
 
   const personalDetails = usePersonalDetailsStore();
-    const { experienceList } = useExperienceStore();
+  const panCardDetails = usePanCardStore();
+  const aadhaarDetails = useAadhaaStore();
+  const addressDetails = useAddressStore()
+  const { experienceList } = useExperienceStore();
+  console.log("Address Details:", addressDetails);
  // console.log(personalDetails.firstName, "nameeeeeee");
 
    const personalDetailsColumns = [
@@ -33,6 +40,35 @@ const DocumentationDetailsForm = () => {
     ],
   ];
 
+  const aadhaarDetailsColumns = [
+    [{label: "Aadhar Card Number", value: aadhaarDetails.aadharNumber }],
+    [{label: "Name as it appears on Aadhar", value: aadhaarDetails.aadharName }]
+  ];
+
+  const addresDetailsColumns = [
+    [
+      { label: "Address Line 1", value: addressDetails.addressLine1 },
+      { label: "City", value: addressDetails.city },
+    ],
+    [
+      { label: "Address Line 2", value: addressDetails.addressLine2 },
+      { label: "Country", value: addressDetails.country },
+    ],
+    [
+      { label: "Address Line 3", value: addressDetails.addressLine3 },
+      { label: "State", value: addressDetails.state },
+    ],
+    [
+      { label: "Landmark", value: addressDetails.landmark },
+      { label: "Duration of Stay From", value: addressDetails.DurationOfStay },
+    ],
+  ]
+
+  const panCardDetailsColumns = [
+    [{label: "PAN Card Number", value: panCardDetails.panNumber }],
+    [{label: "Name as it appears on PAN Card", value: panCardDetails.panName }]
+  ];
+
   const handleView = () => {
     alert("View clicked");
   };
@@ -48,12 +84,24 @@ const DocumentationDetailsForm = () => {
           onViewClick={handleView}
         />
          <DetailsCard
-          title="PanCard  Details"
-          columns={personalDetailsColumns}
+          title="PanCard Details"
+          columns={panCardDetailsColumns}
           photoUrl="https://via.placeholder.com/60"
           onViewClick={handleView}
         />
-                {experienceList.map((exp, index) => {
+        <DetailsCard
+          title="Aadhaar Details"
+          columns={aadhaarDetailsColumns}
+          photoUrl="https://via.placeholder.com/60"
+          onViewClick={handleView}
+        />
+        <DetailsCard
+          title="Address Details"
+          columns={addresDetailsColumns}
+          photoUrl="https://via.placeholder.com/60"
+          onViewClick={handleView}
+        />
+          {experienceList.map((exp, index) => {
           const experienceColumns = [
             [
               { label: "Company Name", value: exp.companyName },
@@ -87,124 +135,3 @@ const DocumentationDetailsForm = () => {
 
 export default DocumentationDetailsForm;
 
-// import React, { useState } from 'react'
-// import FormWrapper from '../../../../beolayer/components/base/Form/FormWrapper'
-// import InputField from '../../../../beolayer/components/base/InputField/InputField';
-// import usePanCardStore from '../../../../beolayer/stores/BGV/PersonalDetails/usePanCardStore';
-
-// const DocumentationDetailsForm = () => {
-//       const { panNumber, panName, panFile } = usePanCardStore();
-//       console.log(panNumber, panName, panFile,"from store ");
-
-//     const [formData,setFormData] = useState({
-//             aadhaar:"",
-//             pan:"",
-//             photo:"",
-//             tenth:"",
-//             twelfth:"",
-//             diploma:"",
-//             payslip:"",
-//             experience:"",
-//             diploma2:""
-//         });
-
-//     const handleChange = (e) => {
-//         const { name, value } = e.target;
-//         setFormData((prev) => ({ ...prev, [name]: value }));
-//     };
-
-//     const handleSave = () => {
-//         console.log("Saving document details:", formData);
-//     };
-
-//   return (
-//     <FormWrapper columns={1} onSave={handleSave}>
-//         <p className='text-xl font-medium'>Personal</p>
-//         <FormWrapper columns={3}>
-//             <InputField
-//                     label="Aadhaar"
-//                     type="upload"
-//                     value={formData.aadhaar}
-//                     onChange={handleChange}
-//                     name="aadhaar"
-//                     asterisk
-//                 />
-//                 <InputField
-//                     label="Pan"
-//                     type="upload"
-//                     value={formData.pan}
-//                     onChange={handleChange}
-//                     name="pan"
-//                     asterisk
-//                 />
-//                 <InputField
-//                     label="Photo"
-//                     type="upload"
-//                     value={formData.photo}
-//                     onChange={handleChange}
-//                     name="photo"
-//                     asterisk
-//                 />
-//         </FormWrapper>
-
-//         <p className='mt-6 text-xl font-medium'>Education</p>
-//             <FormWrapper columns={3}>
-//                 <InputField
-//                     label="10th"
-//                     type="upload"
-//                     value={formData.tenth}
-//                     onChange={handleChange}
-//                     name="tenth"
-//                     asterisk
-//                 />
-//                 <InputField
-//                     label="12th"
-//                     type="upload"
-//                     value={formData.twelfth}
-//                     onChange={handleChange}
-//                     name="twelfth"
-//                     asterisk
-//                 />
-//                 <InputField
-//                     label="Diploma"
-//                     type="upload"
-//                     value={formData.diploma}
-//                     onChange={handleChange}
-//                     name="diploma"
-//                     asterisk
-//                 />
-//             </FormWrapper>
-
-//         <p className='mt-6 text-xl font-medium'>Experience</p>
-//             <FormWrapper columns={3}>
-//                 <InputField
-//                     label="Last 3 month's payslip"
-//                     type="upload"
-//                     value={formData.payslip}
-//                     onChange={handleChange}
-//                     name="payslip"
-//                     asterisk
-//                 />
-//                 <InputField
-//                     label="Relieving/ Experience letter"
-//                     type="upload"
-//                     value={formData.experience}
-//                     onChange={handleChange}
-//                     name="experience"
-//                     asterisk
-//                 />
-//                 <InputField
-//                     label="Diploma"
-//                     type="upload"
-//                     value={formData.diploma2}
-//                     onChange={handleChange}
-//                     name="diploma2"
-//                     asterisk
-//                 />
-//             </FormWrapper>
-
-//     </FormWrapper>
-//   )
-// }
-
-// export default DocumentationDetailsForm
