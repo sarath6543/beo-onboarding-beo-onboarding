@@ -30,12 +30,12 @@ export const LoginForm = () => {
 
       <form onSubmit={handleLogin}>
         <div className="text-center mb-9">
-          <p className="font-bold text-[45px] tracking-[3px]">ONBOARDING</p>
+          <p className="font-bold text-[45px] tracking-[3px]">  {t("login.title")}</p>
         </div>
 
 
         <label className="block mb-4 text-sm font-medium text-gray-700">
-          {t("Username")}
+          {t("login.username")}
           <input
           placeholder="Enter Your Username"
             type="email"
@@ -48,7 +48,7 @@ export const LoginForm = () => {
 
       
         <label className="block mb-4 text-sm font-medium text-gray-700">
-            {t("password")}
+            {t("login.password")}
             <input
               placeholder="Enter Your Password"
               type="password"
@@ -71,11 +71,11 @@ export const LoginForm = () => {
                 className="h-4 w-4 text-blue-600"
               />
               <label htmlFor="remember" style={{fontSize:"14px",fontWeight:400}} className="ml-2">
-                Remember me
+                {t("login.rememberMe")}
               </label>
             </div>
             <a href="Forgot" style={{fontSize:"14px",fontWeight:400}} className="hover:underline">
-              Forgot password
+              {t("login.forgotPassword")}
             </a>
           </div>
   
@@ -90,30 +90,35 @@ export const LoginForm = () => {
             type="submit"
             disabled={loading}
           >
-            {loading ? t("logging_in") : t("login")}
+            {loading ? t("logging_in") : t("login.login")}
           </button>
         </div>
 
 
   
-        <div className="mt-6 text-center">
-          <span>{t("language")}: </span>
-          <button
-            type="button"
-            onClick={() => switchLanguage("en")}
-            className="text-blue-600 hover:underline mx-2"
-          >
-            EN
-          </button>
-          |
-          <button
-            type="button"
-            onClick={() => switchLanguage("de")}
-            className="text-blue-600 hover:underline mx-2"
-          >
-            DE
-          </button>
-        </div>
+<div className="mt-6 text-center">
+  <span>{t("login.language")}: </span>
+  <button
+    type="button"
+    onClick={() => switchLanguage("en")}
+    className={`mx-2 hover: ${
+      i18n.language === "en" ? "text-gray font-medium" : "text-black"
+    }`}
+  >
+    EN
+  </button>
+  |
+  <button
+    type="button"
+    onClick={() => switchLanguage("de")}
+    className={`mx-2 hover: ${
+      i18n.language === "de" ? "text-gray font-medium" : "text-black"
+    }`}
+  >
+    DE
+  </button>
+</div>
+
       </form>
   );
 };

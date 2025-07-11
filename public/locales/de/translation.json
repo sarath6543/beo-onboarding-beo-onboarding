@@ -1,10 +1,11 @@
 {
-  "login": "Login",
-  "email": "Email",
-  "password": "Passwort",
-  "loading": "Laden...",
-  "invalid_credentials": "ungültige_Anmeldeinformationen",
-  "language": "Sprache",
-  "or": "oder",
-  "forgot_password": "Passwort vergessen"
+ "login":{
+  "title":"ONBOARDING",
+  "username":"Benutzername",
+  "password":"Passwort",
+  "login":"Login",
+  "forgotPassword":"Passwort vergessen?",
+  "rememberMe":"Erinnere dich an mich",
+  "language":"Sprache"
+ }
 }
