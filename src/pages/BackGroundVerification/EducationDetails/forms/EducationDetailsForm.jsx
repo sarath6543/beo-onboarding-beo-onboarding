@@ -15,7 +15,7 @@ const EducationDetailsForm = () => {
 
   const [dropdownHidden, setDropdownHidden] = useState("")
 
-  const {educationList, setEducationList} = useEducationStore()
+  const {educationList, setEducationList, updateEducation} = useEducationStore()
 
   const {
     control,
@@ -35,12 +35,21 @@ const EducationDetailsForm = () => {
     control,
     name: "education",
   });
- 
-  const watchedEducation = watch("education");
 
   useEffect(()=>{
-    setEducationList(watchedEducation);
-  },[watchedEducation,setEducationList]);
+    const subscription = watch((value)=>{
+      if(value.education){
+        setEducationList(value.education)
+      }
+    });
+    return ()=> subscription.unsubscribe();
+  },[watch,setEducationList]);
+ 
+  // const watchedEducation = watch("education");
+
+  // useEffect(()=>{
+  //   setEducationList(watchedEducation);
+  // },[watchedEducation,setEducationList]);
  
   const handleSelectChange = (e) => {
     const { value } = e.target;
@@ -52,6 +61,8 @@ const EducationDetailsForm = () => {
       toDate: "",
       specialization: "",
       modeOfEducation: "",
+      certificate:null,
+      certificateFilePreviewUrl:"",
       key: value,
     });
     setDropdownHidden("")
@@ -68,6 +79,7 @@ const EducationDetailsForm = () => {
   return (
     <FormWrapper columns={1} onSave={handleSubmit(onSubmit)}>
       {fields.map((field, index) => {
+        const watchedCertificateFile = watch(`education.${index}.certificate`);
         const isSchool = field.key === "10th" || field.key === "12th";
  
         return (
@@ -121,6 +133,8 @@ const EducationDetailsForm = () => {
                     type="dropdown"
                     options={educationModeOptions}
                     {...register(`education.${index}.modeOfEducation`, { required: true })}
+                    value={watch(`education.${index}.modeOfEducation`)}
+                    onChange={(e) => setValue(`education.${index}.modeOfEducation`, e.target.value)}
                     error={errors?.education?.[index]?.modeOfEducation && "Required"}
                     asterisk
                   />
@@ -144,8 +158,21 @@ const EducationDetailsForm = () => {
               <InputField
                 label="Certificate"
                 type="upload"
+                 {...register(`education.${index}.certificate`,{ required: "Certificate is required"})}
+                    onChange={(e) => {
+                    const file = e.target.files[0];
+                    if(file){
+                        const previewUrl = URL.createObjectURL(file);
+                        setValue(`education.${index}.certificate`, file);
+                        setValue(`education.${index}.certificateFilePreviewUrl`, previewUrl);
+                        updateEducation(index, "certificate",file);
+                        updateEducation(index, "certificateFilePreviewUrl",previewUrl);
+                    }
+                  }}
                 name={`education.${index}.certificate`}
-                onChange={(e) => setValue(`education.${index}.certificate`, e.target.files[0])}
+                value={watchedCertificateFile || ""}
+                error={errors.education?.[index]?.certificate?.message} 
+                placeholder={watchedCertificateFile?.name || "Choose relieving letter"}
                 asterisk
               />
             </FormWrapper>

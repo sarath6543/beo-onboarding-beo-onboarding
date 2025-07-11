@@ -7,7 +7,7 @@ const DetailsCard = ({ title, columns, images = [] }) => {
 
       <div className="flex flex-wrap gap-6">
         {columns.map((col, colIdx) => (
-          <div key={colIdx} className="min-w-[180px] flex-1">
+          <div key={colIdx} className="min-w-[320px] flex-1">
             {col.map((field, idx) => (
               <div key={idx} className="mb-4">
                 <div className="text-xs text-gray-500">{field.label}</div>
