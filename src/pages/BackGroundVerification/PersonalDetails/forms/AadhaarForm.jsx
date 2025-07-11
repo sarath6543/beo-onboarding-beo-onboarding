@@ -12,7 +12,7 @@ const AadhaarForm = () => {
     aadharNumber: aadharNumber,
     aadharName: aadharName,
     aadharFile: aadharFile ? [aadharFile] : null,
-}
+    }
     });
 
  useEffect(() => {
@@ -31,50 +31,59 @@ const AadhaarForm = () => {
     const onSubmit = (data) => {
         const file = data.aadharFile?.[0] || null;
         console.log("Saving Aadhar card details:", {
-            aadhaarNumber: data.aadhaarNumber,
-            aadhaarName: data.aadhaarName,
-            aadhaarFile: file,
+            aadharNumber: data.aadharNumber,
+            aadharName: data.aadharName,
+            aadharFile: file,
         });
         // resetAadharForm();
         // reset(); // optional
     };
- const watchedFile = watch("aadhaarFile");
+
+ const watchedFile = watch("aadharFile");
+
     return (
         <FormWrapper columns={3} onSave={handleSubmit(onSubmit)}>
 
-           <InputField
-  label="Aadhaar Card Number"
-  type="text"
-  {...register("aadharNumber", { required: "Aadhar Number is required" })}
-  value={watch("aadharNumber")}
-  name="aadharNumber"
-  onChange={(e) => setValue("aadharNumber", e.target.value)}
-  asterisk
-  error={errors.aadharNumber?.message}
-/>
+                    <InputField
+            label="Aadhaar Card Number"
+            type="text"
+            {...register("aadharNumber", { required: "Aadhar Number is required" })}
+            value={watch("aadharNumber")}
+            name="aadharNumber"
+            onChange={(e) => setValue("aadharNumber", e.target.value)}
+            asterisk
+            error={errors.aadharNumber?.message}
+            />
 
-<InputField
-  label="Aadhaar Card Name"
-  type="text"
-  {...register("aadharName", { required: "Aadhar Name is required" })}
-  value={watch("aadharName")}
-  name="aadharName"
-  onChange={(e) => setValue("aadharName", e.target.value)}
-  asterisk
-  error={errors.aadharName?.message}
-/>
+            <InputField
+            label="Aadhaar Card Name"
+            type="text"
+            {...register("aadharName", { required: "Aadhar Name is required" })}
+            value={watch("aadharName")}
+            name="aadharName"
+            onChange={(e) => setValue("aadharName", e.target.value)}
+            asterisk
+            error={errors.aadharName?.message}
+            />
 
-<InputField
-  label="Upload Aadhar"
-  type="upload"
-  {...register("aadharFile", { required: "Aadhar file is required" })}
-  onChange={(e) => setValue("aadharFile", e.target.files)}
-  name="aadharFile"
-  asterisk
-  value={watch("aadharFile")?.[0] || ""}
-  error={errors.aadharFile?.message}
-/>
-
+            <InputField
+            label="Upload Aadhar"
+            type="upload"
+            {...register("aadharFile", { required: "Aadhaar file is required" })}
+                    onChange={(e) => {
+                    const file = e.target.files[0];
+                    if(file){
+                        const previewUrl = URL.createObjectURL(file);
+                        setValue("aadharFile",[file]);
+                        setAadharField("aadharFile",file)
+                        setAadharField("aadharFilePreviewUrl",previewUrl)
+                    }
+                    }}
+            name="aadharFile"
+            asterisk
+            value={watchedFile?.[0] || ""}
+            error={errors.aadharFile?.message}
+            />
         </FormWrapper>
     )
 }

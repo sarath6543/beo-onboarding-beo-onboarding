@@ -81,7 +81,15 @@ export default function PANCardForm() {
         label="Upload PAN"
         type="upload"
         {...register("panFile", { required: "PAN file is required" })}
-        onChange={(e) => setValue("panFile", e.target.files)}
+        onChange={(e) => {
+          const file = e.target.files[0];
+          if(file){
+            const previewUrl = URL.createObjectURL(file);
+            setValue("panFile",[file]);
+            setPanField("panFile",file)
+            setPanField("panFilePreviewUrl",previewUrl)
+          }
+        }}
         name="panFile"
         asterisk
         value={watchedFile?.[0] || ""}
