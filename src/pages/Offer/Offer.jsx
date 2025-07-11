@@ -97,14 +97,14 @@ const Offer = () => {
         <TopBar />
       </div>
 
-      <div className="mt-20 bg-[#DADADA] flex flex-col justify-center items-center h-20 text-white text-center px-6">
+      <div className="mt-20 bg-[#DBDBDB] flex flex-col justify-center items-center h-20 text-white text-center px-6">
         <p className="text-2xl font-light mb-1">Review & Accept Offer</p>
         <p className="text-lg md:text-xl leading-7 max-w-xl">
           Your joining date with BEO is
         </p>
       </div>
 
-      <div className="bg-white pt-4 pl-5">
+      <div className="bg-white pt-2 pl-5">
         <div className="max-w-6xl mx-auto">
           <div
             className="text-sm text-black cursor-pointer flex items-center mb-1"
@@ -116,17 +116,17 @@ const Offer = () => {
             Back
           </div>
         </div>
-        <hr className="border-t border-gray-300 w-full" />
+        <hr className="border-t border-gray-100 w-full" />
       </div>
 
-      <div className="bg-white font-sans min-h-[60vh] px-6 md:px-8 py-8 pb-40 sm:pb-24">
+      <div className="bg-white font-sans min-h-[40vh] px-6 md:px-8 py-8 pb-40 sm:pb-24">
         <div className="max-w-6xl mx-auto">
           {/* PDF Viewer */}
-          <div className="max-h-[344px] overflow-y-auto rounded-xl shadow-md border border-gray-300 p-5 bg-white mb-8">
-            <Document file={samplePDF} onLoadSuccess={onDocumentLoadSuccess} >
-              <Page pageNumber={pageNumber} width={1100} renderTextLayer={false}/>
+          <div className="max-h-[280px] overflow-y-auto rounded-xl shadow-md border border-gray-100 p-5 bg-white mb-8 ">
+            <Document file={samplePDF} onLoadSuccess={onDocumentLoadSuccess}  >
+              <Page pageNumber={pageNumber} scale={.8} width={1100} renderTextLayer={false} />
             </Document>
-          
+
           </div>
 
           {/* Form */}
@@ -162,63 +162,63 @@ const Offer = () => {
                   Upload Sign
                 </label>
 
-{/* Upload Box (Always Visible) */}
-<div
-  className="border border-gray-300 rounded-lg p-4 text-sm text-gray-700 flex flex-col items-center justify-center bg-white relative overflow-hidden mx-auto"
-  style={{
-    width: "100%",
-    maxWidth: "600px",        // same max width as PDF viewer
-    minHeight: "200px",       // fixed height for the box (adjust as needed)
-  }}
->
-  {!uploadedFile && (
-    <label className="flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 w-full h-full transition-all duration-300">
-      <FontIcon
-        iconName="Upload"
-        color="#000"
-        size="50px"
-        display="inline"
-        verticalAlign="text-bottom"
-        margin="0.25rem"
-      />
-      Click to upload
-    </label>
-  )}
+                {/* Upload Box (Always Visible) */}
+                <div
+                  className="border border-gray-300 rounded-lg p-4 text-sm text-gray-700 flex flex-col items-center justify-center bg-white relative overflow-hidden mx-auto"
+                  style={{
+                    width: "100%",
+                    maxWidth: "600px",        // same max width as PDF viewer
+                    minHeight: "200px",       // fixed height for the box (adjust as needed)
+                  }}
+                >
+                  {!uploadedFile && (
+                    <label className="flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 w-full h-full transition-all duration-300">
+                      <FontIcon
+                        iconName="Upload"
+                        color="#000"
+                        size="50px"
+                        display="inline"
+                        verticalAlign="text-bottom"
+                        margin="0.25rem"
+                      />
+                      Click to upload
+                    </label>
+                  )}
 
-  {/* File Name */}
-  {uploadedFile && !previewOpen && (
-    <p className="text-sm text-center break-words">{uploadedFile.name}</p>
-  )}
+                  {/* File Name */}
+                  {uploadedFile && !previewOpen && (
+                    <p className="text-sm text-center break-words">{uploadedFile.name}</p>
+                  )}
 
-  {/* File Preview */}
-  {uploadedFile && previewOpen && (
-    <div className="w-full h-full flex items-center justify-center">
-      {uploadedFile.type === "application/pdf" ? (
-        <iframe
-          src={getPreviewUrl()}
-          title="PDF Preview"
-          className="w-full h-full rounded"
-          style={{ objectFit: "contain" }}
-        />
-      ) : (
-        <img
-          src={getPreviewUrl()}
-          alt="Preview"
-          className="max-w-full max-h-full object-contain rounded"
-        />
-      )}
-    </div>
-  )}
+                  {/* File Preview */}
+                  {uploadedFile && previewOpen && (
+                    <div className="w-full h-full flex items-center justify-center">
+                      {uploadedFile.type === "application/pdf" ? (
+                        <iframe
+                          src={getPreviewUrl()}
+                          title="PDF Preview"
+                          className="w-full h-full rounded"
+                          style={{ objectFit: "contain" }}
+                        />
+                      ) : (
+                        <img
+                          src={getPreviewUrl()}
+                          alt="Preview"
+                          className="max-w-full max-h-full object-contain rounded"
+                        />
+                      )}
+                    </div>
+                  )}
 
-  {/* Single Hidden Input - always present */}
-  <input
-    type="file"
-    accept=".pdf,.jpg,.jpeg,.png"
-    onChange={handleFileChange}
-    ref={fileInputRef}
-    className="absolute inset-0 opacity-0 cursor-pointer"
-  />
-</div>
+                  {/* Single Hidden Input - always present */}
+                  <input
+                    type="file"
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    onChange={handleFileChange}
+                    ref={fileInputRef}
+                    className="absolute inset-0 opacity-0 cursor-pointer"
+                  />
+                </div>
 
 
                 {/* Footer Row: file type + buttons */}
