@@ -121,8 +121,19 @@ const EducationDetailsForm = () => {
                   <InputField
                     label="To Date"
                     type="date"
-                    {...register(`education.${index}.toDate`, { required: true })}
-                    error={errors?.education?.[index]?.toDate && "Required"}
+                    {...register(`education.${index}.toDate`, { 
+                      required: "Required",
+                      validate: (toDate) => {
+                        const fromDate = getValues(`education.${index}.fromDate`);
+                        if(!fromDate || !toDate)
+                          return true;
+                        const from = new Date(fromDate);
+                        const to = new Date(toDate); 
+                        const diff = (to - from) / (1000 * 60 * 60* 24)
+                        return diff >= 180 || "Duration must be at least 6 months";
+                      }
+                     })}
+                    error={errors?.education?.[index]?.toDate?.message}
                     asterisk
                   />
                 </>
