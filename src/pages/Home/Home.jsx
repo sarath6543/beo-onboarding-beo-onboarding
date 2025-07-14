@@ -93,10 +93,16 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="mt-5 bg-white p-4 rounded-lg shadow-md h-[120px]">
+            <div className="mt-5 bg-white p-4 rounded-lg shadow-md h-[160px]">
               <strong>Important news</strong>
               <p className="text-sm mt-1">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry...
+                 Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry...
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry...
+                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry...
               </p>
             </div>

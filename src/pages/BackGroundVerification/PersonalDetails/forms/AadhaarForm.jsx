@@ -51,6 +51,21 @@ const AadhaarForm = () => {
         <Popup show={isOpen} onClose={() => setIsOpen(false)} title="Aadhar Details">
             <p>this is a sample pop-up</p>
         </Popup>
+                    <InputField
+            label="Aadhaar Card Number"
+            type="text"
+            {...register("aadharNumber", { required: "Aadhar Number is required",
+                   pattern: {
+      value: /^[A-Z]{5}[0-9]{4}[A-Z]$/,
+      message: "Aadhar Number must be 12 characters",
+    },
+             })}
+            value={watch("aadharNumber")}
+            name="aadharNumber"
+            onChange={(e) => setValue("aadharNumber", e.target.value)}
+            asterisk
+            error={errors.aadharNumber?.message}
+            />
 
             <FormWrapper columns={3} onSave={handleSubmit(onSubmit)}>
     

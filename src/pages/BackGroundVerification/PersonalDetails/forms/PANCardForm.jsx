@@ -70,16 +70,22 @@ export default function PANCardForm() {
 
     <Toast />
       <FormWrapper columns={3} onSave={handleSubmit(onSubmit, onError)}>
-        <InputField
-          label="PAN Number"
-          type="text"
-          {...register("panNumber", { required: "PAN Number is required" })}
-          value={watch("panNumber")}
-          onChange={(e) => setValue("panNumber", e.target.value)}
-          name="panNumber"
-          asterisk
-          error={errors.panNumber?.message}
-        />
+<InputField
+  label="PAN Number"
+  type="text"
+  {...register("panNumber", {
+    required: "PAN Number is required",
+    pattern: {
+      value: /^[A-Z]{5}[0-9]{4}[A-Z]$/,
+      message: "PAN must be 10 characters (e.g., AAAAA1234A)",
+    },
+  })}
+  value={watch("panNumber")}
+  onChange={(e) => setValue("panNumber", e.target.value.toUpperCase())}
+  name="panNumber"
+  asterisk
+  error={errors.panNumber?.message}
+/>
   
         <InputField
           label="Name on PAN"

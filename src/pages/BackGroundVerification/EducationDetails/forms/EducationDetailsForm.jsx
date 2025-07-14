@@ -177,7 +177,7 @@ const EducationDetailsForm = () => {
               />
             </FormWrapper>
  
-            {fields.length > 1 && (
+            {fields.length > 1 &&  field.key !== "10th"  && (
               <div className="flex justify-end">
                 <button
                   type="button"
