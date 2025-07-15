@@ -82,10 +82,10 @@ const DocumentationDetailsForm = () => {
     { label: "Duration of Stay From", value: formData.DurationOfStay },
   ],
   ];
-  const addressDetailsColumns = [
-    ...createAddressColumns(addressDetails.formDataCurrent),
-    ...createAddressColumns(addressDetails.formDataPermanent),
-  ];
+ const addressDetailsColumns = [
+  { sectionTitle: "Current Address", data: createAddressColumns(addressDetails.formDataCurrent) },
+  { sectionTitle: "Permanent Address", data: createAddressColumns(addressDetails.formDataPermanent) },
+];
 
   return (
     <FormWrapper columns={1} onSave={handleSave}>
@@ -124,10 +124,10 @@ const DocumentationDetailsForm = () => {
           ]}
         />
 
-        <DetailsCard
-          title="address Details"
-          columns={addressDetailsColumns}
-        />
+      <DetailsCard
+  title="Address Details"
+  columns={addressDetailsColumns}
+/>
         
 
 {experienceList.map((exp, index) => {
