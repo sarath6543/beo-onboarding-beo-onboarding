@@ -6,12 +6,22 @@ import useExperienceStore from "../../../../beolayer/stores/BGV/ExperienceDetail
 import usePanCardStore from '../../../../beolayer/stores/BGV/PersonalDetails/usePanCardStore'
 import useAadhaaStore from '../../../../beolayer/stores/BGV//PersonalDetails/useAadharDetailsStore'
 import useAddressStore from "../../../../beolayer/stores/BGV/PersonalDetails/useAddressStore";
+import useEducationStore from '../../../../beolayer/stores/BGV/EducationalDetails/useEducationalDetailsStore'
+
 
 const DocumentationDetailsForm = () => {
   const personalDetails = usePersonalDetailsStore();
-  const { experienceList } = useExperienceStore();
-  console.log(experienceList,"exp list ")
-    console.log(personalDetails,"perrrrr list ")
+  const panCardDetails = usePanCardStore();
+  const aadhaarDetails = useAadhaaStore();
+  const { experienceList } = useExperienceStore(); 
+  const { educationList } = useEducationStore()
+  const  addressDetails  = useAddressStore()
+  // const {formDataCurrent, formDataPermanent,sameAsCurrent} = useAddressStore();
+
+  // console.log(educationList,"education");
+  // console.log(experienceList,"exp list ")
+  // console.log(personalDetails,"perrrrr list ")
+  // console.log(addressDetails,"addressssss")
 
   const handleView = () => {
     alert("View clicked");
@@ -44,6 +54,39 @@ const DocumentationDetailsForm = () => {
     ],
   ];
 
+  const panCardDetailsColumns = [
+    [{ label: "PAN Number", value: panCardDetails.panNumber }],
+    [{ label: "Name as it appears on PAN Card", value: panCardDetails.panName }],
+  ];
+
+  const aadhaarDetailsColumns =[
+    [{ label: "Aadhaar Number", value: aadhaarDetails.aadharNumber }],
+    [{ label: "Name as it appears on Aadhaar Card", value: aadhaarDetails.aadharName }],
+  ];
+
+  const createAddressColumns = (formData) => [
+  [
+    { label: "Address Line 1", value: formData.addressLine1 },
+    { label: "City", value: formData.city },
+  ],
+  [
+    { label: "Address Line 2", value: formData.addressLine2 },
+    { label: "Country", value: formData.country },
+  ],
+  [
+    { label: "Address Line 3", value: formData.addressLine3 },
+    { label: "State", value: formData.state },
+  ],
+  [
+    { label: "Landmark", value: formData.landmark },
+    { label: "Duration of Stay From", value: formData.DurationOfStay },
+  ],
+  ];
+ const addressDetailsColumns = [
+  { sectionTitle: "Current Address", data: createAddressColumns(addressDetails.formDataCurrent) },
+  { sectionTitle: "Permanent Address", data: createAddressColumns(addressDetails.formDataPermanent) },
+];
+
   return (
     <FormWrapper columns={1} onSave={handleSave}>
       <div className="p-4 space-y-6">
@@ -60,17 +103,32 @@ const DocumentationDetailsForm = () => {
         />
         <DetailsCard
           title="PAN Card Details"
-          columns={[
-            [{ label: "PAN Number", value: personalDetails.panNumber }],
-          ]}
+          columns={panCardDetailsColumns}
           images={[
             {
               label: "PAN Card",
-              url: personalDetails.panFilePreviewUrl || "https://via.placeholder.com/60",
+              url: panCardDetails.panFilePreviewUrl || "https://via.placeholder.com/60",
               onViewClick: handleView,
             },
           ]}
         />
+        <DetailsCard
+          title="Aadhaar Card Details"
+          columns={aadhaarDetailsColumns}
+          images={[
+            {
+              label: "Aadhaar Card",
+              url: aadhaarDetails.aadharFilePreviewUrl || "https://via.placeholder.com/60",
+              onViewClick: handleView,
+            },
+          ]}
+        />
+
+      <DetailsCard
+  title="Address Details"
+  columns={addressDetailsColumns}
+/>
+        
 
 {experienceList.map((exp, index) => {
   const relievingLetterUrl =
@@ -125,6 +183,53 @@ const DocumentationDetailsForm = () => {
       title={`Experience ${index + 1}`}
       columns={experienceColumns}
       images={experienceImages}
+    />
+  );
+})}
+
+{/*  */}
+
+{educationList.map((exp, index) => {
+  const certificateUrl = 
+    exp.certificateFilePreviewUrl ||
+    (exp.certificate instanceof File
+      ? URL.createObjectURL(exp.certificate)
+      : null);
+
+  const isSchool = exp.key === "10th" || exp.key === "12th";
+  const experienceColumns = [
+    [
+      { label: (isSchool ? "Board" : "University"), value: exp.board },
+      { label: (isSchool ? "From Date" : "modeOfEducation"), value: (isSchool ? exp.fromDate : exp.modeOfEducation ) },
+      
+    ],
+    [
+      { label: (isSchool ? "School" : "College/Institute"), value: exp.school },
+      { label: (isSchool ? "To Date" : "Specialization"), value: (isSchool ? exp.toDate : exp.specialization ) },
+     
+    ],
+    [
+      { label: "Percentage/CGPA", value: exp.percentage },
+    ],
+  ];
+
+  const certificateImages = [];
+
+  if (certificateUrl) {
+    certificateImages.push({
+      label: "Certificate",
+      url: certificateUrl,
+      onViewClick: () => window.open(certificateUrl, "_blank"),
+    });
+  }
+
+
+  return (
+    <DetailsCard
+      key={index}
+      title={exp.key}
+      columns={experienceColumns}
+      images={certificateImages}
     />
   );
 })}

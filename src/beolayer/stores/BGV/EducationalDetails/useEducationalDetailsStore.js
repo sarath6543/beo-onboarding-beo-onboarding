@@ -10,6 +10,8 @@ import { create } from 'zustand';
       toDate: "",
       specialization: "",
       modeOfEducation: "",
+      certificate:null,
+      certificateFilePreviewUrl:"",
       key: "10th",
     },
   ],
