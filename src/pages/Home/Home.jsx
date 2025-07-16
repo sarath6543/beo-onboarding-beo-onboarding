@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import image_test from "../../assets/image_test.png";
+import image_test from "../../assets/image_test.svg";
 import PageLayout from "../../beolayer/layout/PageLayout";
 import StepItem from "../../beolayer/components/base/Step/StepItem";
 
@@ -40,11 +40,11 @@ const Home = () => {
 
   return (
     <PageLayout title="Onboarding">
-      <div className="p-8 font-[Segoe UI]">
+      <div className="font-[Segoe UI]">
         <div className="flex flex-wrap gap-5 mt-5">
           {/* Left Box */}
           <div className="bg-white rounded-lg p-5 shadow-md flex-1 min-w-[280px]">
-            <h3 className="mb-4 text-lg font-semibold">Let's Get You Settled In!</h3>
+            <h3 className="mb-4 text-xl font-semibold">Let's Get You Settled In!</h3>
             <ul className="list-none p-0 m-0 space-y-4">
               {steps.map((step, index) => (
                 <StepItem
@@ -71,7 +71,7 @@ const Home = () => {
                     <img
                       src={tile.image}
                       alt={tile.title}
-                      className="max-w-full h-[100px] object-contain mb-2"
+                      className="max-w-full object-contain mb-2"
                     />
                     <h4>{tile.title}</h4>
                   </div>
