@@ -53,8 +53,8 @@ const AadhaarForm = () => {
     return (
         <>
 
-        <Popup show={isOpen} onClose={() => setIsOpen(false)} title="Aadhar Details">
-            <p>this is a sample pop-up</p>
+        <Popup type={"validation"} show={isOpen} onClose={() => setIsOpen(false)} >
+           
         </Popup>
                     
 
