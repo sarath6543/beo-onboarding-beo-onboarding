@@ -55,8 +55,29 @@ const ExperienceDetailsForm = () => {
   }, [watch, setExperienceList]);
 
   const onSubmit = (data) => {
-    console.log("Saved experience list:", data.experiences);
+    // console.log("Saved experience list:", data.experiences);
+    // setExperienceList(data.experiences);
+
+
+    const experiences = [...data.experiences];
+    experiences.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+
+    for (let i = 1; i < experiences.length; i++) {
+      const prevEnd = new Date(experiences[i - 1].lastWorkingDate);
+      const currentStart = new Date(experiences[i].startDate);
+      const gapInMonths =
+        (currentStart.getFullYear() - prevEnd.getFullYear()) * 12 +
+        (currentStart.getMonth() - prevEnd.getMonth());
+
+      if (gapInMonths > 3) {
+        console.log(
+          `Gap of ${gapInMonths} months found between experience ${i} and ${i + 1}`
+        );
+      }
+    }
+
     setExperienceList(data.experiences);
+    console.log("Saved experience list:", data.experiences);
   };
 
   return (

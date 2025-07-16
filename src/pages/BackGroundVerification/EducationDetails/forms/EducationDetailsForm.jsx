@@ -3,6 +3,7 @@ import FormWrapper from '../../../../beolayer/components/base/Form/FormWrapper';
 import InputField from '../../../../beolayer/components/base/InputField/InputField';
 import useEducationStore from '../../../../beolayer/stores/BGV/EducationalDetails/useEducationalDetailsStore';
 import { useFieldArray, useForm } from 'react-hook-form';
+import { toast } from "react-toastify";
  
  
  
@@ -75,14 +76,19 @@ const EducationDetailsForm = () => {
     console.log("Submitted Education Details:", data.education);
     setEducationList(data.education)
   };
+    const onError = (errors) => {
+      const firstError = Object.values(errors)[0];
+      toast.error(firstError?.message || "Please check the form and try again.");
+    };
  
   return (
-    <FormWrapper columns={1} onSave={handleSubmit(onSubmit)}>
+    <FormWrapper columns={1}>
       {fields.map((field, index) => {
         const watchedCertificateFile = watch(`education.${index}.certificate`);
         const isSchool = field.key === "10th" || field.key === "12th";
  
         return (
+          
           <div key={field.id}>
             <p className="text-xl font-medium">{field.key}</p>
  
@@ -216,21 +222,33 @@ const EducationDetailsForm = () => {
         );
       })}
  
-      <div className="flex justify-start">
-        <select
-          onChange={handleSelectChange}
-          value={dropdownHidden}
-          className="mt-1 block px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-        >
-          <option value="" disabled hidden>Add Education</option>
-          <option hidden={disableDropdown("12th")} value="12th">12th standard</option>
-          <option hidden={disableDropdown("10th")} value="10th">10th standard</option>
-          <option value="Diploma">Diploma</option>
-          <option value="UG">UG</option>
-          <option value="PG">PG</option>
-          <option value="Others">Others</option>
-        </select>
-      </div>
+<div className="flex justify-between items-center w-full">
+  <div>
+    <select
+      onChange={handleSelectChange}
+      value={dropdownHidden}
+      className="mt-1 block px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+    >
+      <option value="" disabled hidden>Add Education</option>
+      <option hidden={disableDropdown("12th")} value="12th">12th standard</option>
+      <option hidden={disableDropdown("10th")} value="10th">10th standard</option>
+      <option value="Diploma">Diploma</option>
+      <option value="UG">UG</option>
+      <option value="PG">PG</option>
+      <option value="Others">Others</option>
+    </select>
+  </div>
+
+  <div>
+    <button
+      onClick={handleSubmit(onSubmit, onError)}
+      className="bg-white text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors duration-300 text-base border border-[#DADADA]"
+    >
+      Save
+    </button>
+  </div>
+</div>
+
     </FormWrapper>
   );
 };

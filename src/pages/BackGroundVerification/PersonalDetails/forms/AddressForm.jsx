@@ -3,6 +3,7 @@ import { useForm, Controller, useWatch } from 'react-hook-form';
 import FormWrapper from '../../../../beolayer/components/base/Form/FormWrapper';
 import InputField from '../../../../beolayer/components/base/InputField/InputField';
 import useAddressStore from '../../../../beolayer/stores/BGV/PersonalDetails/useAddressStore';
+import { toast } from "react-toastify";
 
 const AddressForm = () => {
   const {
@@ -79,6 +80,10 @@ useEffect(() => {
     DurationOfStay: { required: "Duration of Stay is required" },
 
   };
+  const onError = (errors) => {
+      const firstError = Object.values(errors)[0];
+      toast.error(firstError?.message || "Please check the form and try again.");
+    };
 
   const renderAddressFields = (prefix, disabled = false) => (
     <>
@@ -122,7 +127,8 @@ useEffect(() => {
   );
 
   return (
-    <FormWrapper columns={3} onSave={handleSubmit(onSubmit)}>
+     <>
+    <FormWrapper columns={3} >
       <p className="text-lg font-medium col-span-3">Current Address</p>
       {renderAddressFields("current")}
 
@@ -168,6 +174,15 @@ useEffect(() => {
       <p className="text-lg font-medium col-span-3">Permanent Address</p>
       {renderAddressFields("permanent", watchedSameAsCurrent)}
     </FormWrapper>
+       <div className="flex justify-end mt-6">
+        <button
+          onClick={handleSubmit(onSubmit, onError)}
+          className="bg-white text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors duration-300 text-base border border-[#DADADA]"
+        >
+          Save
+        </button>
+      </div>
+      </>
   );
 };
 

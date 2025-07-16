@@ -4,6 +4,7 @@ import FormWrapper from '../../../../beolayer/components/base/Form/FormWrapper'
 import InputField from '../../../../beolayer/components/base/InputField/InputField';
 import useAadharDetailsStore from '../../../../beolayer/stores/BGV/PersonalDetails/useAadharDetailsStore';
 import Popup from '../../../../beolayer/components/base/pop-up/Popup';
+import { toast } from "react-toastify";
 
 const AadhaarForm = () => {
 
@@ -44,6 +45,10 @@ const AadhaarForm = () => {
     };
 
  const watchedFile = watch("aadharFile");
+  const onError = (errors) => {
+      const firstError = Object.values(errors)[0];
+      toast.error(firstError?.message || "Please check the form and try again.");
+    };
 
     return (
         <>
@@ -53,14 +58,14 @@ const AadhaarForm = () => {
         </Popup>
                     
 
-            <FormWrapper columns={3} onSave={handleSubmit(onSubmit)}>
+            <FormWrapper columns={3} >
     
                 <InputField
                 label="Aadhaar Card Number"
                 type="text"
                 {...register("aadharNumber", { required: "Aadhar Number is required",
                 pattern: {
-                    value: /^[A-Z]{5}[0-9]{4}[A-Z]$/,
+                    value: /^\d{12}$/,
                     message: "Aadhar Number must be 12 characters",
                 },
                 })}
@@ -101,6 +106,14 @@ const AadhaarForm = () => {
                 error={errors.aadharFile?.message}
                 />
             </FormWrapper>
+              <div className="flex justify-end mt-6">
+        <button
+          onClick={handleSubmit(onSubmit, onError)}
+          className="bg-white text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors duration-300 text-base border border-[#DADADA]"
+        >
+          Save
+        </button>
+      </div>
         </>
     )
 }
