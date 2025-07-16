@@ -1,0 +1,9 @@
+    /* styles.css */
+    .container {
+        background-color: lightblue;
+        padding: 20px;
+      }
+      .header {
+        color: navy;
+        font-size: 24px;
+      }  
