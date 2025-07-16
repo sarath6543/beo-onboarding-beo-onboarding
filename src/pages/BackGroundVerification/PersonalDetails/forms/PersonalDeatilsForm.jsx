@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import FormWrapper from '../../../../beolayer/components/base/Form/FormWrapper'
 import InputField from '../../../../beolayer/components/base/InputField/InputField'
 import usePersonalDetailsStore from '../../../../beolayer/stores/BGV/PersonalDetails/usePersonalDetailsStore'
+import { toast } from "react-toastify";
 
 const PersonalDeatilsForm = () => {
 
@@ -84,8 +85,13 @@ console.log("inside experince details")
     setFile(e.target.files[0]);
   };
   const watchedFile = watch("photoFile");
+    const onError = (errors) => {
+      const firstError = Object.values(errors)[0];
+      toast.error(firstError?.message || "Please check the form and try again.");
+    };
   return (
-    <FormWrapper columns={3} onSave={handleSubmit(onSubmit)}>
+      <>
+    <FormWrapper columns={3}>
 
 
       <InputField
@@ -229,8 +235,19 @@ console.log("inside experince details")
   value={watchedFile?.[0] || ""}
   error={errors.photoFile?.message}
 />
-
+  
+    
     </FormWrapper>
+  
+     <div className="flex justify-end mt-6">
+        <button
+          onClick={handleSubmit(onSubmit, onError)}
+          className="bg-white text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors duration-300 text-base border border-[#DADADA]"
+        >
+          Save
+        </button>
+      </div>
+      </>
   )
 }
 
