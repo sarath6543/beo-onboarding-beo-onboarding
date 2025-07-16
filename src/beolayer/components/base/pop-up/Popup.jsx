@@ -22,8 +22,8 @@ const Popup = ({ onClose, show, title, type, children }) => {
               >
                 &times;
               </button>
-              <h2 className="text-2xl font-semibold mb-4">{title}</h2>
-              <div className="text-sm text-gray-700 text-center">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim iure tempore doloribus quasi voluptate officia </div>
+              <h2 className="text-2xl font-semibold mb-4">{title ? title : ""}</h2>
+              <div className="text-sm text-gray-700 text-center">{children ? children : "warning"} </div>
               <textarea
                 onChange={(e)=>setTextBox(e.target.value)}
                 className="w-full mt-4 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-1 resize-none text-sm text-gray-800"
@@ -64,9 +64,14 @@ const Popup = ({ onClose, show, title, type, children }) => {
                   {title ? title : "Discard Changes"}
                 </h2>
                 <div className="text-sm text-gray-700 text-center">
-                  You have unused changes. If you leave now, all changes will be lost.
-                  <br />
-                  Are you sure you want to discard them?
+                 {children ? (children) : (
+                    <>
+                      You have unused changes. If you leave now, all changes will be lost.
+                      <br />
+                      Are you sure you want to discard them?
+                    </>
+                  )}
+
                 </div>
 
                 <div className='flex justify-end gap-6 mt-6'>
