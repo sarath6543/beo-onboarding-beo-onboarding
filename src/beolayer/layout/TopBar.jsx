@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import beo_logo from "../../assets/beo_logo.png";
 
-export default function TopBar() {
+export default function TopBar({ isMobile, onToggleSidebar }) {
   const [showLogout, setShowLogout] = useState(false);
 
   const toggleLogout = () => setShowLogout((prev) => !prev);
