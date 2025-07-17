@@ -1,22 +1,19 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-//import './styles.css';
-import review_icon from'../../../../assets/review_icon.svg'
 
-
-const StepItem = ({label, status, path }) => {
+const StepItem = ({ icon, label, status, path }) => {
   const navigate = useNavigate();
 
   const getStatusClasses = () => {
     switch (status?.toLowerCase()) {
       case 'completed':
-        return 'bg-green-300 text-green-900';
+        return 'bg-green-500 text-white';
       case 'inprogress':
-        return 'bg-orange-300  text-orange-900';
+        return 'bg-orange-500 text-white';
       case 'yet to start':
-        return 'bg-gray-300  text-black-900';
+        return 'bg-gray-500 text-white';
       default:
-        return 'bg-gray-300  text-black-900';
+        return 'bg-gray-300 text-white';
     }
   };
 
@@ -26,15 +23,13 @@ const StepItem = ({label, status, path }) => {
       onClick={() => navigate(path)}
     >
       {/* Icon */}
-      <div className="rounded-full w-12 h-12 bg-black text-[20px] mr-4 flex justify-center items-center">
-      <img src={review_icon} alt="" />
-        </div>
+      <div className="text-[20px] mr-3">{icon}</div>
 
       {/* Content */}
       <div className="flex-1 flex flex-col pb-4">
-        <span className="text-base text-[22px] mb-1">{label}</span>
+        <span className="text-base font-medium mb-1">{label}</span>
         <span
-          className={`inline-flex items-center rounded-full px-4 py-2 text-xs font-medium w-fit ${getStatusClasses()}`}
+          className={`text-xs py-1 px-3 rounded-full capitalize w-fit ${getStatusClasses()}`}
         >
           {status}
         </span>
