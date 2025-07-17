@@ -49,6 +49,36 @@ const DetailsCard = ({ title, heading, columns, images = [] }) => {
                     ))}
                   </div>
                 ))}
+
+                {/*  */}
+              <div className="flex justify-end w-full lg:w-auto">  
+                <div className="flex flex-wrap gap-4">
+                  {Array.isArray(section.img) && section.img.length > 0 && (
+                    <div className="flex flex-row gap-8 items-center min-w-[120px]">
+                      {section.img.map((img, index) => (
+                        // <div key={index} className="flex flex-col items-center min-w-[120px]">
+                        <div key={index} className="mb-4 flex flex-col items-center">
+                          <div className="text-xs text-gray-500 mb-1">{img.label}</div>
+                            <img
+                              src={img.url}
+                              alt={img.label || `Image ${index + 1}`}
+                              className="w-16 h-16 rounded-md object-cover mb-2 border border-gray-300"
+                            />
+                            {img.onViewClick && (
+                              <button
+                                onClick={img.onViewClick}
+                                className="text-xs px-3 py-1 border border-gray-400 rounded hover:bg-gray-100 transition"
+                              >
+                                View 👁
+                              </button>
+                            )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+                  {/*  */}
               </div>
             </div>
           ))}

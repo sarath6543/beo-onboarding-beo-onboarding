@@ -22,12 +22,7 @@ const DocumentationDetailsForm = () => {
   // console.log(experienceList,"exp list ")
   // console.log(personalDetails,"perrrrr list ")
   // console.log(addressDetails,"addressssss")
-
-  const educationImages = [];
-    console.log(educationImages,"edu file");
     
-  const experienceImages = [];
-
   const handleView = () => {
     alert("View clicked");
   };
@@ -111,9 +106,25 @@ const DocumentationDetailsForm = () => {
       ];
   };
 
-  const educationDetailsColumns = educationList.map((edu) => (
-    { sectionTitle: edu.key, data: createEducationColumns(edu) }
-  ));
+  const educationDetailsColumns = educationList.map((edu) => {
+    const certificateUrl =
+      edu.certificateFilePreviewUrl ||
+      (edu.certificate instanceof File ? URL.createObjectURL(edu.certificate) : null);
+
+    const sectionImages = certificateUrl
+      ? [{
+          label: `${edu.key} Certificate`,
+          url: certificateUrl,
+          onViewClick: () => window.open(certificateUrl, "_blank"),
+        }]
+      : [];
+
+    return {
+      sectionTitle: edu.key,
+      data: createEducationColumns(edu),
+      img: sectionImages,
+    };
+  });
  
   //  experience column creation
   const createExperienceColumns = (exp) => {
@@ -134,9 +145,37 @@ const DocumentationDetailsForm = () => {
   ];
   };
 
-  const experienceDetailsColumns = experienceList.map((exp,index) => (
-    { sectionTitle: `Experience ${index+1}`, data: createExperienceColumns(exp) }
-  ));
+  const experienceDetailsColumns = experienceList.map((exp,index) => {
+    const relievingLetterUrl =
+        exp.relievingPreviewUrl ||
+        (exp.relievingFile instanceof File ? URL.createObjectURL(exp.relievingFile): null);
+
+    const salarySlipUrl =
+        exp.salaryPreviewUrl ||
+          (exp.salaryFile instanceof File ? URL.createObjectURL(exp.salaryFile): null);
+
+    const experienceImages = [];
+
+    if (relievingLetterUrl) {
+      experienceImages.push({
+        label: "Relieving Letter",
+        url: relievingLetterUrl,
+        onViewClick: () => window.open(relievingLetterUrl, "_blank"),
+    });}
+
+    if (salarySlipUrl) {
+      experienceImages.push({
+        label: "Salary Slip",
+        url: salarySlipUrl,
+        onViewClick: () => window.open(salarySlipUrl, "_blank"),
+    });}
+
+    return {
+      sectionTitle : `Experience ${index+1}`,
+      data: createExperienceColumns(exp),
+      img: experienceImages
+    }
+  });
 
   return (
     <FormWrapper columns={1} onSave={handleSave}>
@@ -182,7 +221,7 @@ const DocumentationDetailsForm = () => {
 
 {/* Experience details */}
 
-      {experienceList.forEach((exp) => {
+      {/* {experienceList.forEach((exp) => {
           const relievingLetterUrl =
             exp.relievingPreviewUrl ||
             (exp.relievingFile instanceof File
@@ -209,37 +248,20 @@ const DocumentationDetailsForm = () => {
                 onViewClick: () => window.open(salarySlipUrl, "_blank"),
             });}
 
-        })}
+        })} */}
 
       <DetailsCard
         title="Experience Details"
         columns={experienceDetailsColumns}
-        images={experienceImages}
       />
   
 
 {/* Education Details */}
 
-        {educationList.forEach((edu) => {
-          const certificateUrl =
-            edu.certificateFilePreviewUrl ||
-            (edu.certificate instanceof File
-              ? URL.createObjectURL(edu.certificate)
-              : null);
-
-          if (certificateUrl) {
-            educationImages.push({
-              label: `${edu.key} Certificate`,
-              url: certificateUrl,
-              onViewClick: () => window.open(certificateUrl, "_blank"),
-            });
-          }
-        })}
 
       <DetailsCard
         title="Education Details"
         columns={educationDetailsColumns}
-        images={educationImages}
       />
 
       </div>
