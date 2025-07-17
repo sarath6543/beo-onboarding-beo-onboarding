@@ -41,7 +41,7 @@ const AadhaarForm = () => {
         });
         // resetAadharForm();
         // reset(); // optional
-        setIsOpen(true)
+        setIsOpen(true)  // pop-up opening
     };
 
  const watchedFile = watch("aadharFile");
