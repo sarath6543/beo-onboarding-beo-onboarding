@@ -23,6 +23,11 @@ const DocumentationDetailsForm = () => {
   // console.log(personalDetails,"perrrrr list ")
   // console.log(addressDetails,"addressssss")
 
+  const educationImages = [];
+    console.log(educationImages,"edu file");
+    
+  const experienceImages = [];
+
   const handleView = () => {
     alert("View clicked");
   };
@@ -82,10 +87,56 @@ const DocumentationDetailsForm = () => {
     { label: "Duration of Stay From", value: formData.DurationOfStay },
   ],
   ];
- const addressDetailsColumns = [
-  { sectionTitle: "Current Address", data: createAddressColumns(addressDetails.formDataCurrent) },
-  { sectionTitle: "Permanent Address", data: createAddressColumns(addressDetails.formDataPermanent) },
-];
+  const addressDetailsColumns = [
+    { sectionTitle: "Current Address", data: createAddressColumns(addressDetails.formDataCurrent) },
+    { sectionTitle: "Permanent Address", data: createAddressColumns(addressDetails.formDataPermanent) },
+  ];
+
+    //  education column creation
+  const createEducationColumns = (edu) => {
+
+    const isSchool = edu.key === "10th" || edu.key === "12th";
+    return[
+      [
+        { label: (isSchool ? "Board" : "University"), value: edu.board },
+        { label: (isSchool ? "From Date" : "modeOfEducation"), value: (isSchool ? edu.fromDate : edu.modeOfEducation ) },
+      ],
+      [
+        { label: (isSchool ? "School" : "College/Institute"), value: edu.school },
+        { label: (isSchool ? "To Date" : "Specialization"), value: (isSchool ? edu.toDate : edu.specialization ) },
+      ],
+      [
+        { label: "Percentage/CGPA", value: edu.percentage },
+      ],
+      ];
+  };
+
+  const educationDetailsColumns = educationList.map((edu) => (
+    { sectionTitle: edu.key, data: createEducationColumns(edu) }
+  ));
+ 
+  //  experience column creation
+  const createExperienceColumns = (exp) => {
+  return [
+    [
+      { label: "Company Name", value: exp.companyName },
+      { label: "Employee Id", value: exp.employeeId },
+      { label: "Designation", value: exp.designation },
+    ],
+    [
+      { label: "Location", value: exp.location },
+      { label: "Mode of Employment", value: exp.modeOfEmployement },
+      { label: "Start Date", value: exp.startDate },
+    ],
+    [
+      { label: "Last Working Date", value: exp.lastWorkingDate },
+    ],
+  ];
+  };
+
+  const experienceDetailsColumns = experienceList.map((exp,index) => (
+    { sectionTitle: `Experience ${index+1}`, data: createExperienceColumns(exp) }
+  ));
 
   return (
     <FormWrapper columns={1} onSave={handleSave}>
@@ -125,115 +176,71 @@ const DocumentationDetailsForm = () => {
         />
 
       <DetailsCard
-  title="Address Details"
-  columns={addressDetailsColumns}
-/>
-        
+        title="Address Details"
+        columns={addressDetailsColumns}
+      />
 
-{experienceList.map((exp, index) => {
-  const relievingLetterUrl =
-    exp.relievingPreviewUrl ||
-    (exp.relievingFile instanceof File
-      ? URL.createObjectURL(exp.relievingFile)
-      : null);
+{/* Experience details */}
 
-  const salarySlipUrl =
-    exp.salaryPreviewUrl ||
-    (exp.salaryFile instanceof File
-      ? URL.createObjectURL(exp.salaryFile)
-      : null);
+      {experienceList.forEach((exp) => {
+          const relievingLetterUrl =
+            exp.relievingPreviewUrl ||
+            (exp.relievingFile instanceof File
+              ? URL.createObjectURL(exp.relievingFile)
+              : null);
 
-  const experienceColumns = [
-    [
-      { label: "Company Name", value: exp.companyName },
-      { label: "Employee Id", value: exp.employeeId },
-      { label: "Designation", value: exp.designation },
-    ],
-    [
-      { label: "Location", value: exp.location },
-      { label: "Mode of Employment", value: exp.modeOfEmployement },
-      { label: "Start Date", value: exp.startDate },
-    ],
-    [
-      { label: "Last Working Date", value: exp.lastWorkingDate },
-    ],
-  ];
+          const salarySlipUrl =
+            exp.salaryPreviewUrl ||
+              (exp.salaryFile instanceof File
+                ? URL.createObjectURL(exp.salaryFile)
+                : null);
 
-  const experienceImages = [];
+            if (relievingLetterUrl) {
+              experienceImages.push({
+                label: "Relieving Letter",
+                url: relievingLetterUrl,
+                onViewClick: () => window.open(relievingLetterUrl, "_blank"),
+            });}
 
-  if (relievingLetterUrl) {
-    experienceImages.push({
-      label: "Relieving Letter",
-      url: relievingLetterUrl,
-      onViewClick: () => window.open(relievingLetterUrl, "_blank"),
-    });
-  }
+            if (salarySlipUrl) {
+              experienceImages.push({
+                label: "Salary Slip",
+                url: salarySlipUrl,
+                onViewClick: () => window.open(salarySlipUrl, "_blank"),
+            });}
 
-  if (salarySlipUrl) {
-    experienceImages.push({
-      label: "Salary Slip",
-      url: salarySlipUrl,
-      onViewClick: () => window.open(salarySlipUrl, "_blank"),
-    });
-  }
+        })}
 
-  return (
-    <DetailsCard
-      key={index}
-      title={`Experience ${index + 1}`}
-      columns={experienceColumns}
-      images={experienceImages}
-    />
-  );
-})}
+      <DetailsCard
+        title="Experience Details"
+        columns={experienceDetailsColumns}
+        images={experienceImages}
+      />
+  
 
-{/*  */}
+{/* Education Details */}
 
-{educationList.map((exp, index) => {
-  const certificateUrl = 
-    exp.certificateFilePreviewUrl ||
-    (exp.certificate instanceof File
-      ? URL.createObjectURL(exp.certificate)
-      : null);
+        {educationList.forEach((edu) => {
+          const certificateUrl =
+            edu.certificateFilePreviewUrl ||
+            (edu.certificate instanceof File
+              ? URL.createObjectURL(edu.certificate)
+              : null);
 
-  const isSchool = exp.key === "10th" || exp.key === "12th";
-  const experienceColumns = [
-    [
-      { label: (isSchool ? "Board" : "University"), value: exp.board },
-      { label: (isSchool ? "From Date" : "modeOfEducation"), value: (isSchool ? exp.fromDate : exp.modeOfEducation ) },
-      
-    ],
-    [
-      { label: (isSchool ? "School" : "College/Institute"), value: exp.school },
-      { label: (isSchool ? "To Date" : "Specialization"), value: (isSchool ? exp.toDate : exp.specialization ) },
-     
-    ],
-    [
-      { label: "Percentage/CGPA", value: exp.percentage },
-    ],
-  ];
+          if (certificateUrl) {
+            educationImages.push({
+              label: `${edu.key} Certificate`,
+              url: certificateUrl,
+              onViewClick: () => window.open(certificateUrl, "_blank"),
+            });
+          }
+        })}
 
-  const certificateImages = [];
-
-  if (certificateUrl) {
-    certificateImages.push({
-      label: "Certificate",
-      url: certificateUrl,
-      onViewClick: () => window.open(certificateUrl, "_blank"),
-    });
-  }
-
-
-  return (
-    <DetailsCard
-      key={index}
-      title={exp.key}
-      columns={experienceColumns}
-      images={certificateImages}
-    />
-  );
-})}
-
+      <DetailsCard
+        title="Education Details"
+        columns={educationDetailsColumns}
+        images={educationImages}
+      />
 
       </div>
     </FormWrapper>
