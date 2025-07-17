@@ -10,16 +10,16 @@ const Home = () => {
   const steps = [
     { label: "Review & Accept offer", status: "Completed", path: "/offer" },
     {
-      label: "BGV document submission",
+      label: "BGV Document Submission",
       status: "InProgress",
       path: "/back-ground-verification-main",
     },
     {
-      label: "Pre joining formalities",
+      label: "Pre Joining Formalities",
       status: "Yet to start",
       path: "/formalities",
     },
-    { label: "Your day 1", status: "Yet to start", path: "/day1" },
+    { label: "Your Day 1", status: "Yet to start", path: "/day1" },
   ];
 
   const tiles = [
