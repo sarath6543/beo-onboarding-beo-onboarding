@@ -4,8 +4,11 @@ import FormWrapper from '../../../../beolayer/components/base/Form/FormWrapper'
 import InputField from '../../../../beolayer/components/base/InputField/InputField'
 import usePersonalDetailsStore from '../../../../beolayer/stores/BGV/PersonalDetails/usePersonalDetailsStore'
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
+
 
 const PersonalDeatilsForm = () => {
+  const { t, i18n } = useTranslation();
 
   const { firstName, middleName, lastName, fathersName, dob, nationality, placeOfBirth, gender, maritalStatus, email, pin, mobile, alternateMobileNumber, photoFile, bloodGroup, setPersonalDetailsField } = usePersonalDetailsStore();
   const {
@@ -95,7 +98,7 @@ console.log("inside experince details")
 
 
       <InputField
-        label="First Name"
+        label={t("personal_Details.personal_Details.first_name")}
         type="text"
         {...register("firstName", { required: "First Name is required" })}
         value={watch("firstName")}
@@ -106,7 +109,7 @@ console.log("inside experince details")
       />
 
       <InputField
-        label="Middle Name"
+        label={t("personal_Details.personal_Details.middle_name")}
         type="text"
         {...register("middleName", { required: "Middle Name is required" })}
         value={watch("middleName")}
@@ -117,7 +120,7 @@ console.log("inside experince details")
       />
 
       <InputField
-        label="Last Name"
+        label={t("personal_Details.personal_Details.last_name")}
         type="text"
         {...register("lastName", { required: "Last Name is required" })}
         value={watch("lastName")}
@@ -128,7 +131,7 @@ console.log("inside experince details")
       />
 
       <InputField
-        label="Father's Name"
+        label={t("personal_Details.personal_Details.fathers_name")}
         type="text"
         {...register("fathersName", { required: "Father's Name is required" })}
         value={watch("fathersName")}
@@ -139,7 +142,7 @@ console.log("inside experince details")
       />
 
       <InputField
-        label="Date Of Birth"
+        label={t("personal_Details.personal_Details.dob")}
         type="date"
         {...register("dob", { required: "Date Of Birth is required" })}
         value={watch("dob")}
@@ -150,7 +153,7 @@ console.log("inside experince details")
       />
 
       <InputField
-        label="Nationality"
+        label={t("personal_Details.personal_Details.nationality")}
         type="dropdown"
         {...register("nationality", { required: "Nationality is required" })}
         value={watch("nationality")}
@@ -162,7 +165,7 @@ console.log("inside experince details")
       />
 
       <InputField
-        label="Place Of Birth"
+        label={t("personal_Details.personal_Details.birth_place")}
         type="text"
         {...register("placeOfBirth", { required: "Place Of Birth is required" })}
         value={watch("placeOfBirth")}
@@ -173,7 +176,7 @@ console.log("inside experince details")
       />
 
       <InputField
-        label="Gender"
+        label={t("personal_Details.personal_Details.gender")}
         type="dropdown"
         {...register("gender", { required: "Gender is required" })}
         value={watch("gender")}
@@ -185,7 +188,7 @@ console.log("inside experince details")
         error={errors.gender?.message}
       />
       <InputField
-        label="Marital Status"
+        label={t("personal_Details.personal_Details.marital_status")}
         type="dropdown"
         {...register("maritalStatus", { required: "Marital Status is required" })}
         value={watch("maritalStatus")}
@@ -196,7 +199,7 @@ console.log("inside experince details")
         error={errors.maritalStatus?.message}
       />
       <InputField
-        label="Alternate Mobile Number"
+        label={t("personal_Details.personal_Details.alt_mobile")}
         type="text"
         {...register("alternateMobileNumber", { required: "Alternate Mobile Number is required" })}
         value={watch("alternateMobileNumber")}
@@ -206,7 +209,7 @@ console.log("inside experince details")
         error={errors.alternateMobileNumber?.message}
       />
       <InputField
-      label="Blood Group"
+      label={t("personal_Details.personal_Details.blood_group")}
       type="dropdown"
       {...register("bloodGroup", { required: "Blood Group is required" })}
       value={watch("bloodGroup")}
@@ -218,7 +221,7 @@ console.log("inside experince details")
       />
 
      <InputField
-  label="Upload Photo"
+  label={t("personal_Details.personal_Details.photo")}
   type="upload"
   {...register("photoFile", { required: "Photo is required" })}
   onChange={(e) => {

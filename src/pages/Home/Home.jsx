@@ -3,35 +3,38 @@ import { useNavigate } from "react-router-dom";
 import image_test from "../../assets/image_test.svg";
 import PageLayout from "../../beolayer/layout/PageLayout";
 import StepItem from "../../beolayer/components/base/Step/StepItem";
+import { useTranslation } from "react-i18next";
+
 
 const Home = () => {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   const steps = [
-    { label: "Review & Accept offer", status: "Completed", path: "/offer" },
+    { label: t("home.review"), status: "Completed", path: "/offer" },
     {
-      label: "BGV Document Submission",
+      label: t("home.BGV_Submission"),
       status: "InProgress",
       path: "/back-ground-verification-main",
     },
     {
-      label: "Pre Joining Formalities",
+      label: t("home.Pre_Joining"),
       status: "Yet to start",
       path: "/formalities",
     },
-    { label: "Your Day 1", status: "Yet to start", path: "/day1" },
+    { label: t("home.Day_1"), status: "Yet to start", path: "/day1" },
   ];
 
   const tiles = [
     {
-      title: "Your Onboarding Process",
+      title: t("home.process"),
       image: image_test,
       path: "/onboarding",
     },
-    { title: "Policies", image: image_test, path: "/policies" },
-    { title: "Know your Buddy", image: image_test, path: "/buddy" },
-    { title: "Locations", image: image_test, path: "/locations" },
-    { title: "Life at BEO", image: image_test, path: "/life-at-beo" },
+    { title: t("home.policies"), image: image_test, path: "/policies" },
+    { title: t("home.buddy"), image: image_test, path: "/buddy" },
+    { title: t("home.Locations"), image: image_test, path: "/locations" },
+    { title: t("home.Life_at_BEO"), image: image_test, path: "/life-at-beo" },
   ];
 
   const handleTileClick = (tile) => {
@@ -39,12 +42,12 @@ const Home = () => {
   };
 
   return (
-    <PageLayout title="Onboarding">
+    <PageLayout title={t("home.title")}>
       <div className="font-[Segoe UI]">
         <div className="flex flex-wrap gap-5 mt-5">
           {/* Left Box */}
           <div className="bg-white rounded-lg p-5 shadow-md flex-1 min-w-[280px]">
-            <h3 className="mb-4 text-xl font-semibold">Let's Get You Settled In!</h3>
+            <h3 className="mb-4 text-xl font-semibold">{t("home.sub_title")}</h3>
             <ul className="list-none p-0 m-0 space-y-4">
               {steps.map((step, index) => (
                 <StepItem
@@ -94,7 +97,7 @@ const Home = () => {
             </div>
 
             <div className="mt-5 bg-white p-4 rounded-lg shadow-md h-[160px]">
-              <strong>Important news</strong>
+              <strong>{t("home.news")}</strong>
               <p className="text-sm mt-1">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry...

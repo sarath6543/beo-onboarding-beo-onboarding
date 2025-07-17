@@ -1,11 +1,55 @@
 {
  "login":{
-  "title":"ONBOARDING",
-  "username":"Benutzername",
-  "password":"Passwort",
-  "login":"Login",
-  "forgotPassword":"Passwort vergessen?",
-  "rememberMe":"Erinnere dich an mich",
-  "language":"Sprache"
- }
+    "title":"ONBOARDING",
+    "username":"Benutzername",
+    "password":"Passwort",
+    "login":"Login",
+    "forgotPassword":"Passwort vergessen?",
+    "rememberMe":"Erinnere dich an mich",
+    "language":"Sprache"
+ },
+"home":{
+    "title":"Onboarding",
+    "sub_title":"Lassen Sie sich bei uns nieder!",
+    "review": "Angebot prüfen & annehmen",
+    "BGV_Submission": "BGV-Dokumenteinreichung",
+    "Pre_Joining": "Vorbereitende Formalitäten",
+    "Day_1": "Ihr erster Tag",
+    "Completed": "Abgeschlossen",
+    "InProgress": "In Bearbeitung",
+    "Yet_to_start": "Noch nicht begonnen",
+    "process": "Ihr Onboarding-Prozess",
+    "policies": "Richtlinien",
+    "Life_at_BEO": "Leben bei BEO",
+    "Locations": "Standorte",
+    "buddy": "Lernen Sie Ihren Buddy kennen",
+    "news": "Wichtige Neuigkeiten",
+    "view more": "Mehr anzeigen"
+},
+"personal_Details":{
+    "personal_Details":{
+        "personal_details": "Persönliche Angaben",
+        "first_name": "Vorname",
+        "middle_name": "Zweiter Vorname",
+        "last_name": "Nachname",
+        "fathers_name": "Name des Vaters",
+        "dob": "Geburtsdatum",
+        "nationality": "Staatsangehörigkeit",
+        "birth_place": "Geburtsort",
+        "gender": "Geschlecht",
+        "marital_status": "Familienstand",
+        "alt_mobile": "Alternative Handynummer",
+        "blood_group": "Blutgruppe",
+        "photo": "Foto hochladen"
+    },
+    "pan":{
+
+    },
+    "aadhar":{
+
+    },
+    "aaddress":{
+
+    }
+   }
 }
