@@ -15,6 +15,11 @@ export default defineConfig({
     host: true, // or use '0.0.0.0'
     port: 5173,
   },
+  resolve: {
+        alias: [
+          {find: '@', replacement: '/src'}
+        ]
+      }
 });
 
 // import { defineConfig } from 'vite'

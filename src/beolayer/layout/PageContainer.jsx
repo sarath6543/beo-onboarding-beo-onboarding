@@ -6,11 +6,10 @@ export default function PageContainer({ title, children }) {
   const isHomePage = location.pathname === '/';
 
   return (
-    <section className="flex-1 p-5 bg-[#E6E6E6] overflow-y-auto min-h-0 h-full">
+    <section className="flex-1 px-[40px] py-5 bg-[#E6E6E6] overflow-y-auto min-h-0 h-full ">
      
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-2xl font-semibold">{title}</h2>
-
+        <h2 className="text-3xl font-normal">{title}</h2>
  
         {!isHomePage && (
           <div className="text-sm text-gray-600">
@@ -20,7 +19,7 @@ export default function PageContainer({ title, children }) {
         </div>
         )}
       </div>
-     
+
 
       {children}
     </section>
