@@ -1,10 +1,19 @@
 import React, { useState } from "react";
 import beo_logo from "../../assets/beo_logo.png";
+import { useTranslation } from "react-i18next";
+
 
 export default function TopBar() {
+
+  const { t, i18n } = useTranslation();
+
   const [showLogout, setShowLogout] = useState(false);
 
   const toggleLogout = () => setShowLogout((prev) => !prev);
+
+  const switchLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
 
   return (
     <header
@@ -67,13 +76,42 @@ export default function TopBar() {
 
         {/* Logout dropdown */}
         {showLogout && (
-          <div className="absolute right-0 mt-12 w-32 bg-white text-black shadow-lg rounded z-50">
+          <div className="absolute right-0 mt-25 w-32 bg-white text-black shadow-lg rounded z-50">
             <button
               onClick={() => alert("Logged out")}
-              className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+              className=" block w-full text-center px-4 py-2 hover:bg-gray-100"
             >
               Log out
             </button>
+
+            <div className="relative group text-center px-4 py-2 hover:bg-gray-100 cursor-pointer">
+              Language
+              <div className="absolute w-60 right-32 px-6 top-0 hidden group-hover:block bg-white text-black shadow-lg rounded z-50">
+                <div className="text-center py-2">
+                  <span>{t("login.language")}: </span>
+                  <button
+                    type="button"
+                    onClick={() => switchLanguage("en")}
+                    className={`mx-2 ${
+                      i18n.language === "en" ? "text-gray-700 font-medium" : "text-black"
+                    } hover:text-blue-500`}
+                  >
+                    EN
+                  </button>
+                  |
+                  <button
+                    type="button"
+                    onClick={() => switchLanguage("de")}
+                    className={`mx-2 ${
+                      i18n.language === "de" ? "text-gray-700 font-medium" : "text-black"
+                    } hover:text-blue-500`}
+                  >
+                    DE
+                  </button>
+                </div>
+              </div>
+            </div>
+
           </div>
         )}
       </div>

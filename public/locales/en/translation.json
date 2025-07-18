@@ -1,11 +1,56 @@
 {
  "login":{
-  "title":"ONBOARDING",
-  "username":"User Name",
-  "password":"Password",
-  "login":"Login",
-  "forgotPassword":"Forgot Password?",
-  "rememberMe":"Remember Me",
-  "language":"Language"
- }
+    "title":"ONBOARDING",
+    "username":"User Name",
+    "password":"Password",
+    "login":"Login",
+    "forgotPassword":"Forgot Password?",
+    "rememberMe":"Remember Me",
+    "language":"Language"
+ },
+ "home":{
+    "title":"Onboarding",
+    "sub_title":"Let's Get You Settled In !",
+    "review":"Review & Accept Offer",
+    "BGV_Submission":"BGV Document Submission",
+    "Pre_Joining":"Pre Joining Formalities",
+    "Day_1":"Your Day 1",
+    "Completed":"Completed",
+    "InProgress":"InProgress",
+    "Yet_to_start":"Yet to start",
+    "process":"Your Onboarding Process",
+    "policies":"Policies",
+    "Life_at_BEO":"Life at BEO",
+    "Locations":"Locations",
+    "buddy":"Know your Buddy",
+    "news":"Important news",
+    "view more":"view more"
+   },
+   "personal_Details":{
+    "personal_Details":{
+        "personal_details":"Personal Details",
+        "first_name":"First Name",
+        "middle_name":"Middle Name",
+        "last_name":"Last Name",
+        "fathers_name":"Father's Name",
+        "dob":"Date Of Birth",
+        "nationality":"Nationality",
+        "birth_place":"Place Of Birth",
+        "gender":"Gender",
+        "marital_status":"Marital Status",
+        "alt_mobile":"Alternate Mobile Number",
+        "blood_group":"Blood Group",
+        "photo":"Upload Photo"
+
+    },
+    "pan":{
+
+    },
+    "aadhar":{
+
+    },
+    "aaddress":{
+
+    }
+   }
 }
