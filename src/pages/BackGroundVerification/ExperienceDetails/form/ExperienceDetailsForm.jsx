@@ -6,11 +6,6 @@ import useExperienceStore from "../../../../beolayer/stores/BGV/ExperienceDetail
 import Popup from "../../../../beolayer/components/base/pop-up/Popup";
 
 const ExperienceDetailsForm = () => {
- 
-  const modeOfEmployementOptions = [
-    { key: "Full-time", value: "full-time" },
-    { key: "Part-time", value: "part-time" }
-  ];
 
   const [gapMessage,setGapMessage] = useState("")
   const [isOpen,setIsOpen] = useState(false)
@@ -138,7 +133,7 @@ const ExperienceDetailsForm = () => {
                 />
                 <InputField
                   label="Mode of Employment"
-                  type="dropdown"
+                  type="text"
                   asterisk
                   {...register(`experiences.${index}.modeOfEmployement`, {
                     required: "Mode of Employment is required",
@@ -147,7 +142,6 @@ const ExperienceDetailsForm = () => {
                   value={watch(`experiences.${index}.modeOfEmployement`)}
                   name={`experiences.${index}.modeOfEmployement`}
                   error={errors.experiences?.[index]?.modeOfEmployement?.message}
-                  options={modeOfEmployementOptions}
                 />
                 <InputField
                   label="From Date"

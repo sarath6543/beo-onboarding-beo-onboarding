@@ -1,53 +1,85 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import image_test from "../../assets/image_test.svg";
+import image_test from "@/assets/image_test.svg";
+import buddy from "@/assets/know-your-buddy.svg";
 import PageLayout from "../../beolayer/layout/PageLayout";
 import StepItem from "../../beolayer/components/base/Step/StepItem";
-import { useTranslation } from "react-i18next";
-
 
 const Home = () => {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
 
   const steps = [
-    { label: t("home.review"), status: "Completed", path: "/offer" },
+    { label: "Review & Accept offer", status: "Completed", path: "/offer" },
     {
-      label: t("home.BGV_Submission"),
+      label: "BGV Document Submission",
       status: "InProgress",
       path: "/back-ground-verification-main",
     },
     {
-      label: t("home.Pre_Joining"),
+      label: "Pre Joining Formalities",
       status: "Yet to start",
       path: "/formalities",
     },
-    { label: t("home.Day_1"), status: "Yet to start", path: "/day1" },
+    { label: "Your Day 1", status: "Yet to start", path: "/day1" },
   ];
 
   const tiles = [
     {
-      title: t("home.process"),
+      title: "Your Onboarding Process",
       image: image_test,
       path: "/onboarding",
+      text:"view more",
+      icon:image_test,      
     },
-    { title: t("home.policies"), image: image_test, path: "/policies" },
-    { title: t("home.buddy"), image: image_test, path: "/buddy" },
-    { title: t("home.Locations"), image: image_test, path: "/locations" },
-    { title: t("home.Life_at_BEO"), image: image_test, path: "/life-at-beo" },
+    { 
+      title: "Policies", 
+      image: image_test, 
+      path: "/policies",
+      text:"view more",
+      icon:image_test, 
+    },
+    
+    { 
+      title: "Locations", 
+      image: image_test, 
+      path: "/locations", 
+      text:"view more",
+      icon:image_test, 
+    },
+    { 
+      title: "Life at BEO", 
+      image: image_test, 
+      path: "/life-at-beo",
+      text:"view more",
+      icon:image_test,  
+
+    },
+    { 
+      title: "Know your Buddy", 
+      image: buddy, 
+      path: "/buddy",
+      text:"view more",
+      icon:image_test,  
+    },
   ];
 
-  const handleTileClick = (tile) => {
-    if (tile.path) navigate(tile.path);
-  };
+const handleTileClick = (tile) => {
+  if (!tile.path) return;
+
+  if (tile.external) {
+    window.open(tile.path, "_blank", "noopener,noreferrer");
+  } else {
+    navigate(tile.path);
+  }
+};
 
   return (
-    <PageLayout title={t("home.title")}>
-      <div className="font-[Segoe UI]">
+    <PageLayout title="Onboarding">
+      <div className="">
         <div className="flex flex-wrap gap-5 mt-5">
           {/* Left Box */}
-          <div className="bg-white rounded-lg p-5 shadow-md flex-1 min-w-[280px]">
-            <h3 className="mb-4 text-xl font-semibold">{t("home.sub_title")}</h3>
+          <div className="border-gray-300 border bg-white rounded-2xl p-5 shadow-md flex-1 min-w-[280px]">
+            <h3 className="mb-4 text-2xl font-normal">Let's Get You Settled In!</h3>
             <ul className="list-none p-0 m-0 space-y-4">
               {steps.map((step, index) => (
                 <StepItem
@@ -68,7 +100,7 @@ const Home = () => {
                 {tiles.slice(0, 4).map((tile, index) => (
                   <div
                     key={index}
-                    className="bg-white rounded-lg p-4 shadow-md text-center cursor-pointer flex flex-col justify-center"
+                    className="border-gray-300 border bg-white rounded-2xl p-2 shadow-md text-center cursor-pointer flex flex-col justify-center"
                     onClick={() => handleTileClick(tile)}
                   >
                     <img
@@ -76,37 +108,35 @@ const Home = () => {
                       alt={tile.title}
                       className="max-w-full object-contain mb-2"
                     />
-                    <h4>{tile.title}</h4>
+                    <h3 className="pb-2 text-xl font-normal">{tile.title}</h3>
+                    <h1 className="pb-4 font-light">{tile.text}</h1>                                    
                   </div>
                 ))}
               </div>
 
               <div className="flex-1 min-w-[280px]">
                 <div
-                  className="bg-white rounded-lg p-4 shadow-md text-center cursor-pointer flex flex-col justify-center h-full"
+                  className="bg-[#EDEEF0] rounded-2xl shadow-md text-center cursor-pointer flex flex-col justify-center h-full relative"
                   onClick={() => handleTileClick(tiles[4])}
                 >
                   <img
                     src={tiles[4].image}
                     alt={tiles[4].title}
-                    className="max-w-full h-[100px] object-contain mb-2"
-                  />
-                  <h4>{tiles[4].title}</h4>
+                    className="max-w-full object-contain absolute bottom-0 rounded-b-2xl"/>
+                  <h3 className="absolute left-0 right-0">{tiles[4].title}</h3>
+                  <h1 className="absolute left-0 right-0 pt-6">{tiles[4].text}</h1>
                 </div>
               </div>
             </div>
 
-            <div className="mt-5 bg-white p-4 rounded-lg shadow-md h-[160px]">
-              <strong>{t("home.news")}</strong>
-              <p className="text-sm mt-1">
+            <div className="mt-5 bg-white p-4 rounded-2xl shadow-md">
+              <h3 className="font-normal">Important news</h3>
+              <p className="text-sm font-light mt-1 text-gray-500">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry...
                  Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry...
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry...
-                 Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry...
+                industry...               
+                
               </p>
             </div>
           </div>

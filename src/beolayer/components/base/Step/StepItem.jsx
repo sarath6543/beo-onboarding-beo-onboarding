@@ -22,7 +22,7 @@ const StepItem = ({label, status, path }) => {
 
   return (
     <li
-      className="flex items-start justify-between p-4 mb-2 bg-white border-b-[1.5px] border-gray-200 cursor-pointer hover:bg-gray-100 transition"
+      className="flex items-start justify-between p-3 mb-2 bg-white border-b-[1.5px] border-gray-200 cursor-pointer hover:bg-gray-100 transition"
       onClick={() => navigate(path)}
     >
       {/* Icon */}
