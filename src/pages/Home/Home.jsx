@@ -30,13 +30,24 @@ const Home = () => {
     },
     { title: "Policies", image: image_test, path: "/policies" },
     { title: "Know your Buddy", image: image_test, path: "/buddy" },
-    { title: "Locations", image: image_test, path: "/locations" },
+   {
+    title: "Locations",
+    image: image_test,
+    path: "https://beo-software.in/",
+    external: true,
+  },
     { title: "Life at BEO", image: image_test, path: "/life-at-beo" },
   ];
 
-  const handleTileClick = (tile) => {
-    if (tile.path) navigate(tile.path);
-  };
+const handleTileClick = (tile) => {
+  if (!tile.path) return;
+
+  if (tile.external) {
+    window.open(tile.path, "_blank", "noopener,noreferrer");
+  } else {
+    navigate(tile.path);
+  }
+};
 
   return (
     <PageLayout title="Onboarding">
