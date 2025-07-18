@@ -120,6 +120,7 @@ const EducationDetailsForm = () => {
         {fields.map((field, index) => {
           const watchedCertificateFile = watch(`education.${index}.certificate`);
           const isSchool = field.key === "10th" || field.key === "12th";
+          const isOther = field.key === "Others"
    
           return (
             
@@ -130,16 +131,16 @@ const EducationDetailsForm = () => {
                 <InputField
                   label={isSchool ? "Board" : "University"}
                   type="text"
-                  {...register(`education.${index}.board`, { required: "required" })}
+                  {...register(`education.${index}.board`, { required: !isOther ? "required" : false})}
                    error={errors?.education?.[index]?.board?.message}
-                  asterisk
+                  asterisk={!isOther}
                 />
                 <InputField
                   label={isSchool ? "School" : "College/Institute"}
                   type="text"
-                  {...register(`education.${index}.school`, { required: true })}
+                  {...register(`education.${index}.school`, { required: !isOther ? true : false })}
                   error={errors?.education?.[index]?.school && "Required"}
-                  asterisk
+                  asterisk={!isOther}
                 />
    
                 {isSchool ? (
@@ -185,25 +186,25 @@ const EducationDetailsForm = () => {
                       label="Mode of Education"
                       type="dropdown"
                       options={educationModeOptions}
-                      {...register(`education.${index}.modeOfEducation`, { required: true })}
+                      {...register(`education.${index}.modeOfEducation`, { required:!isOther ?  true : false})}
                       value={watch(`education.${index}.modeOfEducation`)}
                       onChange={(e) => setValue(`education.${index}.modeOfEducation`, e.target.value)}
                       error={errors?.education?.[index]?.modeOfEducation && "Required"}
-                      asterisk
+                      asterisk={!isOther}
                     />
                     <InputField
                       label="Specialization"
                       type="text"
-                      {...register(`education.${index}.specialization`, { required: true })}
+                      {...register(`education.${index}.specialization`, { required: !isOther ?  true : false })}
                       error={errors?.education?.[index]?.specialization && "Required"}
-                      asterisk
+                      asterisk={!isOther}
                     />
                     <InputField
                       label="Percentage"
                       type="text"
-                      {...register(`education.${index}.percentage`, { required: true })}
+                      {...register(`education.${index}.percentage`, { required: !isOther ? true : false })}
                       error={errors?.education?.[index]?.percentage && "Required"}
-                      asterisk
+                      asterisk={!isOther}
                     />
                   </>
                 )}
@@ -211,7 +212,7 @@ const EducationDetailsForm = () => {
                 <InputField
                   label="Certificate"
                   type="upload"
-                   {...register(`education.${index}.certificate`,{ required: "Certificate is required"})}
+                   {...register(`education.${index}.certificate`,{ required: !isOther ? "Certificate is required" : false})}
                       onChange={(e) => {
                       const file = e.target.files[0];
                       if(file){
@@ -226,7 +227,7 @@ const EducationDetailsForm = () => {
                   value={watchedCertificateFile || ""}
                   error={errors.education?.[index]?.certificate?.message} 
                   placeholder={watchedCertificateFile?.name || "Choose relieving letter"}
-                  asterisk
+                  asterisk={!isOther}
                 />
               </FormWrapper>
    

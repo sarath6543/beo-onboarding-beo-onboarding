@@ -15,11 +15,7 @@ const ExperienceDetailsForm = () => {
   const [gapMessage,setGapMessage] = useState("")
   const [isOpen,setIsOpen] = useState(false)
 
-  const {
-    experienceList,
-    setExperienceList,
-    updateExperienceField,
-  } = useExperienceStore();
+  const { experienceList, setExperienceList, updateExperienceField } = useExperienceStore();
 
   const {
     register,
@@ -92,6 +88,7 @@ const ExperienceDetailsForm = () => {
     console.log("Saved experience list:", data.experiences);
   };
 
+
   return (
     <>
       <Popup type={"validation"} children={gapMessage} show={isOpen} onClose={() => setIsOpen(false)}/>
@@ -100,7 +97,8 @@ const ExperienceDetailsForm = () => {
         {fields.map((field, index) => {
           const watchedSalaryFile = watch(`experiences.${index}.salaryFile`);
           const watchedRelievingFile = watch(`experiences.${index}.relievingFile`);
-  
+          const isCurrentOrg = watch(`experiences.${index}.isCurrentOrg`);
+ 
           return (
             <div key={field.id} className="mb-8">
               <p className="text-xl font-medium mb-6">Experience {index +1}</p>
@@ -117,10 +115,7 @@ const ExperienceDetailsForm = () => {
                 <InputField
                   label="Employee Id"
                   type="text"
-                  asterisk
-                  {...register(`experiences.${index}.employeeId`, {
-                    required: "Employee Id is required",
-                  })}
+                  {...register(`experiences.${index}.employeeId`)}
                   error={errors.experiences?.[index]?.employeeId?.message}
                 />
                 <InputField
@@ -148,6 +143,9 @@ const ExperienceDetailsForm = () => {
                   {...register(`experiences.${index}.modeOfEmployement`, {
                     required: "Mode of Employment is required",
                   })}
+                  onChange={(e) => setValue(`experiences.${index}.modeOfEmployement`, e.target.value)}
+                  value={watch(`experiences.${index}.modeOfEmployement`)}
+                  name={`experiences.${index}.modeOfEmployement`}
                   error={errors.experiences?.[index]?.modeOfEmployement?.message}
                   options={modeOfEmployementOptions}
                 />
@@ -163,9 +161,9 @@ const ExperienceDetailsForm = () => {
                 <InputField
                   label="To Date"
                   type="date"
-                  asterisk
+                  asterisk={!isCurrentOrg}
                   {...register(`experiences.${index}.lastWorkingDate`, {
-                    required: "To Date is required",
+                    required: !isCurrentOrg ?"To Date is required" : false,
                   })}
                   error={errors.experiences?.[index]?.lastWorkingDate?.message}
                 />
@@ -199,7 +197,7 @@ const ExperienceDetailsForm = () => {
                   label="Relieving Letter"
                   type="upload"
                   {...register(`experiences.${index}.relievingFile`, {
-                    required: "Relieving Letter is required",
+                    required: !isCurrentOrg ?"Relieving Letter is required" : false,
                   })}
                   onChange={(e) => {
                     const file = e.target.files[0];
@@ -212,7 +210,7 @@ const ExperienceDetailsForm = () => {
                     }
                   }}
                   name={`experiences.${index}.relievingFile`}
-                  asterisk
+                  asterisk={!isCurrentOrg}
                   value={watchedRelievingFile || ""}
                   placeholder={watchedRelievingFile?.name || "Choose relieving letter"}
                   error={errors.experiences?.[index]?.relievingFile?.message}

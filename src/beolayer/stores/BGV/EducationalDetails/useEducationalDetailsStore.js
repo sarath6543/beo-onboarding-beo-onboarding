@@ -12,6 +12,7 @@ import { create } from 'zustand';
       modeOfEducation: "",
       certificate:null,
       certificateFilePreviewUrl:"",
+      isHighest:"",
       key: "10th",
     },
   ],

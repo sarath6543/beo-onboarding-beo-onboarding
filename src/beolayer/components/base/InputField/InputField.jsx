@@ -65,7 +65,6 @@ const InputField = ({
             onChange={onChange}
             name={name}
             value={value}
-            required={required}
             disabled={disabled}
           >
             <option value="" disabled hidden>
