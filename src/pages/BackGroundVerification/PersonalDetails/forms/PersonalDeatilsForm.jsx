@@ -59,7 +59,7 @@ console.log("inside experince details")
   ]
 
   const maritalStatusOptions = [
-    { key: "Single", value: "single" },
+    { key: "Single", value: "Single" },
     { key: "Married ", value: "Married " },
   ]
     const bloodGroupOptions = [

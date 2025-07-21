@@ -3,6 +3,8 @@ import { useForm, Controller, useWatch } from 'react-hook-form';
 import FormWrapper from '../../../../beolayer/components/base/Form/FormWrapper';
 import InputField from '../../../../beolayer/components/base/InputField/InputField';
 import useAddressStore from '../../../../beolayer/stores/BGV/PersonalDetails/useAddressStore';
+import Toast from '../../../../beolayer/components/base/Toast/Toast';
+
 import { toast } from "react-toastify";
 
 const AddressForm = () => {
@@ -80,10 +82,34 @@ useEffect(() => {
     DurationOfStay: { required: "Duration of Stay is required" },
 
   };
+
+  const getFirstErrorMessage = (errorObj) => {
+    for (const key in errorObj) {
+      const value = errorObj[key];
+
+      if (value?.message) {
+        return value.message;
+      }
+
+      if (typeof value === "object") {
+        const nested = getFirstErrorMessage(value);
+        if (nested) return nested;
+      }
+    }
+
+    return null;
+  };
+
   const onError = (errors) => {
-      const firstError = Object.values(errors)[0];
-      toast.error(firstError?.message || "Please check the form and try again.");
-    };
+    const message = getFirstErrorMessage(errors);
+    toast.error(message || "Please check the form and try again.");
+  };
+  // const onError = (errors) => {a
+  //     const firstError = Object.values(errors)[0];
+  //     console.log(errors,"error");
+      
+  //     toast.error(firstError?.message || "Please check the form and try again.");
+  //   };
 
   const renderAddressFields = (prefix, disabled = false) => (
     <>
@@ -127,7 +153,8 @@ useEffect(() => {
   );
 
   return (
-     <>
+  <>
+    <Toast />
     <FormWrapper columns={3} >
       <p className="text-lg font-medium col-span-3">Current Address</p>
       {renderAddressFields("current")}

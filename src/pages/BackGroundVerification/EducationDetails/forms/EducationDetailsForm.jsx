@@ -105,10 +105,26 @@ const EducationDetailsForm = () => {
     setEducationList(data.education)
   };
 
+  const getFirstErrorMessage = (errorObj) => {
+      for (const key in errorObj) {
+        const value = errorObj[key];
+  
+        if (value?.message) {
+          return value.message;
+        }
+  
+        if (typeof value === "object") {
+          const nested = getFirstErrorMessage(value);
+          if (nested) return nested;
+        }
+      }
+  
+      return null;
+    };
+  
     const onError = (errors) => {
-      console.log("Validation errors:", errors);
-      const firstError = Object.values(errors)[0];
-      toast.error(firstError?.message || "Please check the form and try again.");
+      const message = getFirstErrorMessage(errors);
+      toast.error(message || "Please check the form and try again.");
     };
  
   return (
