@@ -4,8 +4,15 @@ import FormWrapper from "../../../../beolayer/components/base/Form/FormWrapper";
 import InputField from "../../../../beolayer/components/base/InputField/InputField";
 import useExperienceStore from "../../../../beolayer/stores/BGV/ExperienceDetails/useExperienceDetailsStore";
 import Popup from "../../../../beolayer/components/base/pop-up/Popup";
+import { toast } from "react-toastify";
+import Toast from '../../../../beolayer/components/base/Toast/Toast';
 
 const ExperienceDetailsForm = () => {
+  
+  const modeOfEducationOptions = [
+    { key: "Full-time", value: "Full-time" },
+    { key: "Part-time", value: "Part-time " },
+  ]
 
   const [gapMessage,setGapMessage] = useState("")
   const [isOpen,setIsOpen] = useState(false)
@@ -79,16 +86,39 @@ const ExperienceDetailsForm = () => {
       }
     }
 
-    setExperienceList(data.experiences);
+  setExperienceList(data.experiences);
     console.log("Saved experience list:", data.experiences);
   };
+
+  const getFirstErrorMessage = (errorObj) => {
+      for (const key in errorObj) {
+        const value = errorObj[key];
+  
+        if (value?.message) {
+          return value.message;
+        }
+  
+        if (typeof value === "object") {
+          const nested = getFirstErrorMessage(value);
+          if (nested) return nested;
+        }
+      }
+  
+      return null;
+    };
+  
+    const onError = (errors) => {
+      const message = getFirstErrorMessage(errors);
+      toast.error(message || "Please check the form and try again.");
+    };
 
 
   return (
     <>
       <Popup type={"validation"} children={gapMessage} show={isOpen} onClose={() => setIsOpen(false)}/>
+      <Toast />
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form >
         {fields.map((field, index) => {
           const watchedSalaryFile = watch(`experiences.${index}.salaryFile`);
           const watchedRelievingFile = watch(`experiences.${index}.relievingFile`);
@@ -133,7 +163,7 @@ const ExperienceDetailsForm = () => {
                 />
                 <InputField
                   label="Mode of Employment"
-                  type="text"
+                  type="dropdown"
                   asterisk
                   {...register(`experiences.${index}.modeOfEmployement`, {
                     required: "Mode of Employment is required",
@@ -142,6 +172,7 @@ const ExperienceDetailsForm = () => {
                   value={watch(`experiences.${index}.modeOfEmployement`)}
                   name={`experiences.${index}.modeOfEmployement`}
                   error={errors.experiences?.[index]?.modeOfEmployement?.message}
+                  options={modeOfEducationOptions}
                 />
                 <InputField
                   label="From Date"
@@ -268,6 +299,7 @@ const ExperienceDetailsForm = () => {
           <button
             type="submit"
             className="bg-[#DADADA] text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors duration-300 text-base"
+            onClick={handleSubmit(onSubmit, onError)}
           >
             Save
           </button>
