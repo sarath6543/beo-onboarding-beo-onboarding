@@ -131,24 +131,6 @@ useEffect(() => {
     <FormWrapper columns={3} >
       <p className="text-lg font-medium col-span-3">Current Address</p>
       {renderAddressFields("current")}
-
-      {/* <div className="my-4 col-span-3">
-        <Controller
-          name="sameAsCurrent"
-          control={control}
-          render={({ field }) => (
-            <label className="flex items-center space-x-1">
-              <span className="text-sm">Permanent address is same as current address</span>
-              <input
-                type="checkbox"
-                className="w-4 h-5"
-                checked={field.value}
-                onChange={(e) => field.onChange(e.target.checked)}
-              />
-            </label>
-          )}
-        />
-      </div> */}
       <div className="my-4 col-span-3">
   <Controller
     name="sameAsCurrent"
@@ -161,7 +143,7 @@ useEffect(() => {
         */}
         <input
           type="checkbox"
-          className="w-4 h-5"
+          className="w-4 h-5 "
           checked={field.value}
           onChange={(e) => field.onChange(e.target.checked)}
         />
