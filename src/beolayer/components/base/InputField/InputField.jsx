@@ -51,7 +51,8 @@ const InputField = ({
             <input
               type="text"
               readOnly
-              value={value?.name || ""}
+              // value={value?.name || ""}
+              value={value?.name || value || ""}
               className="w-3/4 px-4 py-2 text-sm text-gray-700 focus:outline-none"
               placeholder="Upload file..."
             />

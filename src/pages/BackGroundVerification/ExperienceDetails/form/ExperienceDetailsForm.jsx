@@ -259,7 +259,7 @@ const ExperienceDetailsForm = () => {
                 <div className="flex justify-end mb-8">
                   <button
                     type="button"
-                    className="px-4 py-2 rounded transition-colors duration-300 text-base bg-red-200 hover:bg-red-500 hover:text-white"
+                    className="px-4 py-2 rounded transition-colors duration-300 text-base bg-[#DADADA] hover:bg-red-500 hover:text-white"
                     onClick={() => remove(index)}
                   >
                     Delete -
