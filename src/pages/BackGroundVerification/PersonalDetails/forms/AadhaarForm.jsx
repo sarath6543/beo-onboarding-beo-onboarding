@@ -10,13 +10,12 @@ const AadhaarForm = () => {
 
     const  [isOpen,setIsOpen] = useState(false)
 
-    const { aadharNumber, aadharName, aadharFile, aadharFilePreviewUrl, setAadharField } = useAadharDetailsStore();
+    const { aadharNumber, aadharName, aadharFile, setAadharField } = useAadharDetailsStore();
     const { register, handleSubmit, watch, setValue, reset, formState: { errors } } = useForm({
        defaultValues: {
     aadharNumber: aadharNumber,
     aadharName: aadharName,
     aadharFile: aadharFile ? [aadharFile] : null,
-    aadharFilePreviewUrl: aadharFilePreviewUrl,
     }
     });
 
@@ -97,7 +96,6 @@ const AadhaarForm = () => {
                         if(file){
                             const previewUrl = URL.createObjectURL(file);
                             setValue("aadharFile",[file]);
-                            setValue("aadharFilePreviewUrl",previewUrl)
                             setAadharField("aadharFile",file)
                             setAadharField("aadharFilePreviewUrl",previewUrl)
                         }

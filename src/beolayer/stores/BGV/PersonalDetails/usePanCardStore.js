@@ -4,7 +4,7 @@ const usePanCardStore = create((set) => ({
   panNumber: "",
   panName: "",
   panFile: null,
-  panFilePreviewUrl: "",
+    panFilePreviewUrl: "https://www.gstatic.com/webp/gallery/1.webp",
 
   setPanField: (name, value) =>
     set((state) => ({
@@ -17,7 +17,7 @@ const usePanCardStore = create((set) => ({
       panNumber: "",
       panName: "",
       panFile: null,
-      panFilePreviewUrl: "",
+        panFilePreviewUrl: "",
     }),
 }));
 
