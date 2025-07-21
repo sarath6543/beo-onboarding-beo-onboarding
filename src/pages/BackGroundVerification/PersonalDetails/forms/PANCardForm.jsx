@@ -13,6 +13,7 @@ export default function PANCardForm() {
     panFile,
     panFilePreviewUrl,
     setPanField,
+    resetPanForm,
   } = usePanCardStore();
 
   const {
@@ -27,7 +28,6 @@ export default function PANCardForm() {
       panNumber: panNumber || "",
       panName: panName || "",
       panFile: panFile ? [panFile] : null,
-      panFilePreviewUrl: panFilePreviewUrl
     },
   });
 

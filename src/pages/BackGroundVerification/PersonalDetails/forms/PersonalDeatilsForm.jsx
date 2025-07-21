@@ -1,36 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import FormWrapper from '../../../../beolayer/components/base/Form/FormWrapper'
 import InputField from '../../../../beolayer/components/base/InputField/InputField'
 import usePersonalDetailsStore from '../../../../beolayer/stores/BGV/PersonalDetails/usePersonalDetailsStore'
 import { toast } from "react-toastify";
 
-  const options = [
-    { key: "Male", value: "male" },
-    { key: "Female", value: "female" }
-  ];
-  const nationalityOptions = [
-    { key: "India", value: "india" }
-  ]
-  const maritalStatusOptions = [
-    { key: "Single", value: "Single" },
-    { key: "Married ", value: "Married " },
-  ]
-  const bloodGroupOptions = [
-    { key: "A+", value: "A+" },
-    { key: "A-", value: "A-" },
-    { key: "B+", value: "B+" },
-    { key: "B-", value: "B-" },
-    { key: "O+", value: "O+" },
-    { key: "O-", value: "O-" },
-    { key: "AB+", value: "AB+" },
-    { key: "AB-", value: "AB-" },
-  ]
-
-
 const PersonalDeatilsForm = () => {
 
-  const { firstName, middleName, lastName, fathersName, dob, nationality, placeOfBirth, gender, maritalStatus, email, pin, mobile, alternateMobileNumber, photoFile, photoPreviewUrl, bloodGroup, setPersonalDetailsField } = usePersonalDetailsStore();
+  const { firstName, middleName, lastName, fathersName, dob, nationality, placeOfBirth, gender, maritalStatus, email, pin, mobile, alternateMobileNumber, photoFile, bloodGroup, setPersonalDetailsField } = usePersonalDetailsStore();
   const {
     register,
     handleSubmit,
@@ -55,7 +32,6 @@ const PersonalDeatilsForm = () => {
       alternateMobileNumber: alternateMobileNumber,
       bloodGroup: bloodGroup,
       photoFile: photoFile ? [photoFile] : null,
-      photoPreviewUrl: photoPreviewUrl
     },
   })
 
@@ -73,6 +49,31 @@ const PersonalDeatilsForm = () => {
   const onSubmit = (data) => {
 console.log("inside experince details")
   };
+  const options = [
+    { key: "Male", value: "male" },
+    { key: "Female", value: "female" }
+  ];
+
+  const nationalityOptions = [
+    { key: "India", value: "india" }
+  ]
+
+  const maritalStatusOptions = [
+    { key: "Single", value: "Single" },
+    { key: "Married ", value: "Married " },
+  ]
+    const bloodGroupOptions = [
+      { key: "A+", value: "A+" },
+      { key: "A-", value: "A-" },
+      { key: "B+", value: "B+" },
+      { key: "B-", value: "B-" },
+      { key: "O+", value: "O+" },
+      { key: "O-", value: "O-" },
+      { key: "AB+", value: "AB+" },
+      { key: "AB-", value: "AB-" },
+    ]
+
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -83,13 +84,11 @@ console.log("inside experince details")
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
-
   const watchedFile = watch("photoFile");
-
-  const onError = (errors) => {
-    const firstError = Object.values(errors)[0];
-    toast.error(firstError?.message || "Please check the form and try again.");
-  };
+    const onError = (errors) => {
+      const firstError = Object.values(errors)[0];
+      toast.error(firstError?.message || "Please check the form and try again.");
+    };
   return (
       <>
     <FormWrapper columns={3}>
@@ -227,7 +226,6 @@ console.log("inside experince details")
     if (file) {
       const previewUrl = URL.createObjectURL(file);
       setValue("photoFile", [file]);
-      setValue("photoPreviewUrl",previewUrl)
       setPersonalDetailsField("photoFile", file);
       setPersonalDetailsField("photoPreviewUrl", previewUrl); // Save preview URL
     }
