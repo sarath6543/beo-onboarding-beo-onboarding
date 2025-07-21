@@ -26,7 +26,7 @@ const AccordionSection = ({ title, children,icon }) => {
 
       {/* Body */}
       {isOpen && (
-        <div className="bg-white mt-3 rounded-xl shadow-sm overflow-hidden">
+        <div className="bg-white mt-3 rounded-xl shadow-sm ">
           <div className="p-4">{children}</div>
         </div>
       )}
