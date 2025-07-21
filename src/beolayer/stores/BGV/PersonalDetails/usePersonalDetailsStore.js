@@ -23,6 +23,25 @@ const usePersonalDetailsStore = create((set) => ({
       ...state,
       [field]: value,
     })),
+
+  resetPersonalDetailsField: () => set({
+      firstName: "",
+      middleName: "",
+      lastName: "",
+      fathersName: "",
+      dob: "",
+      nationality: "",
+      placeOfBirth: "",
+      gender: "",
+      maritalStatus: "",
+      email: "",
+      pin: "",
+      mobile: "",
+      alternateMobileNumber: "",
+      photoFile: null,
+      photoPreviewUrl: "", 
+      bloodGroup: "",
+    })
 }));
 
 export default usePersonalDetailsStore;

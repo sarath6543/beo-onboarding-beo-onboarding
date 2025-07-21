@@ -4,6 +4,7 @@ const usePanCardStore = create((set) => ({
   panNumber: "",
   panName: "",
   panFile: null,
+  panFilePreviewUrl: "",
 
   setPanField: (name, value) =>
     set((state) => ({
@@ -16,6 +17,7 @@ const usePanCardStore = create((set) => ({
       panNumber: "",
       panName: "",
       panFile: null,
+      panFilePreviewUrl: "",
     }),
 }));
 

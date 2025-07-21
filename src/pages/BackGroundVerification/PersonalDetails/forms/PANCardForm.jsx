@@ -11,8 +11,8 @@ export default function PANCardForm() {
     panNumber,
     panName,
     panFile,
+    panFilePreviewUrl,
     setPanField,
-    resetPanForm,
   } = usePanCardStore();
 
   const {
@@ -27,6 +27,7 @@ export default function PANCardForm() {
       panNumber: panNumber || "",
       panName: panName || "",
       panFile: panFile ? [panFile] : null,
+      panFilePreviewUrl: panFilePreviewUrl
     },
   });
 
@@ -110,6 +111,7 @@ export default function PANCardForm() {
             if (file) {
               const previewUrl = URL.createObjectURL(file);
               setValue("panFile", [file]);
+              setValue("panFilePreviewUrl",previewUrl)
               setPanField("panFile", file);
               setPanField("panFilePreviewUrl", previewUrl);
             }

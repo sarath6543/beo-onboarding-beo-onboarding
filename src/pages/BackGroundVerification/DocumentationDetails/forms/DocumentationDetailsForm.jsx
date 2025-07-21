@@ -23,9 +23,9 @@ const DocumentationDetailsForm = () => {
   // console.log(personalDetails,"perrrrr list ")
   // console.log(addressDetails,"addressssss")
     
-  const handleView = () => {
-    alert("View clicked");
-  };
+  // const handleView = () => {
+  //   alert("View clicked");
+  // };
 
   const handleSave = () => {
     console.log("Save clicked");
@@ -187,7 +187,7 @@ const DocumentationDetailsForm = () => {
             {
               label: "Photo",
               url: personalDetails.photoPreviewUrl || "https://via.placeholder.com/60",
-              onViewClick: handleView,
+              onViewClick: () => window.open(personalDetails.photoPreviewUrl, "_blank"),
             },
           ]}
         />
@@ -198,7 +198,7 @@ const DocumentationDetailsForm = () => {
             {
               label: "PAN Card",
               url: panCardDetails.panFilePreviewUrl || "https://via.placeholder.com/60",
-              onViewClick: handleView,
+              onViewClick: () => window.open(panCardDetails.panFilePreviewUrl, "_blank"),
             },
           ]}
         />
@@ -209,7 +209,7 @@ const DocumentationDetailsForm = () => {
             {
               label: "Aadhaar Card",
               url: aadhaarDetails.aadharFilePreviewUrl || "https://via.placeholder.com/60",
-              onViewClick: handleView,
+              onViewClick: () => window.open(aadhaarDetails.aadharFilePreviewUrl, "_blank"),
             },
           ]}
         />
