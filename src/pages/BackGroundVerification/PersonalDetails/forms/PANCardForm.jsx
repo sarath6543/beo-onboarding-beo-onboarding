@@ -13,7 +13,6 @@ export default function PANCardForm() {
     panFile,
     panFilePreviewUrl,
     setPanField,
-    resetPanForm,
   } = usePanCardStore();
 
   const {
@@ -28,6 +27,7 @@ export default function PANCardForm() {
       panNumber: panNumber || "",
       panName: panName || "",
       panFile: panFile ? [panFile] : null,
+      panFilePreviewUrl: panFilePreviewUrl
     },
   });
 
@@ -111,28 +111,27 @@ export default function PANCardForm() {
         />
 
         {/* Upload PAN */}
-<InputField
-  label="Upload PAN"
-  type="upload"
-  {...register("panFile", {
-    required: "PAN file is required",
-  })}
-  onChange={(e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const previewUrl = URL.createObjectURL(file);
-      setValue("panFile", [file]);
-      setPanField("panFile", file);
-      setPanField("panFilePreviewUrl", previewUrl);
-    }
-  }}
-  name="panFile"
-  asterisk
-  error={errors.panFile?.message}
-  value={watchedFile?.[0] || panFilePreviewUrl}
-/>
-
-
+        <InputField
+          label="Upload PAN"
+          type="upload"
+          {...register("panFile", {
+            required: "PAN file is required",
+          })}
+          onChange={(e) => {
+            const file = e.target.files[0];
+            if (file) {
+              const previewUrl = URL.createObjectURL(file);
+              setValue("panFile", [file]);
+              setValue("panFilePreviewUrl",previewUrl)
+              setPanField("panFile", file);
+              setPanField("panFilePreviewUrl", previewUrl);
+            }
+          }}
+          name="panFile"
+          asterisk
+          value={watchedFile?.[0] || ""}
+          error={errors.panFile?.message}
+        />
       </FormWrapper>
 
       {/* Save Button */}

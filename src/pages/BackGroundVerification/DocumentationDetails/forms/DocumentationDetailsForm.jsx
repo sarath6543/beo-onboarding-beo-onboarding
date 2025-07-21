@@ -17,9 +17,14 @@ const DocumentationDetailsForm = () => {
   const { educationList } = useEducationStore();
   const addressDetails = useAddressStore();
 
-  const handleView = () => {
-    alert("View clicked");
-  };
+  // console.log(educationList,"education");
+  // console.log(experienceList,"exp list ")
+  // console.log(personalDetails,"perrrrr list ")
+  // console.log(addressDetails,"addressssss")
+    
+  // const handleView = () => {
+  //   alert("View clicked");
+  // };
 
   const handleSave = () => {
     console.log("Save clicked");
@@ -173,43 +178,37 @@ const DocumentationDetailsForm = () => {
         <DetailsCard
           title="Personal Details"
           columns={personalDetailsColumns}
-          images={
-            personalDetails.photoPreviewUrl
-              ? [{
-                  label: "Photo",
-                  url: personalDetails.photoPreviewUrl,
-                  onViewClick: handleView,
-                }]
-              : []
-          }
+          images={[
+            {
+              label: "Photo",
+              url: personalDetails.photoPreviewUrl || "https://via.placeholder.com/60",
+              onViewClick: () => window.open(personalDetails.photoPreviewUrl, "_blank"),
+            },
+          ]}
         />
 
         <DetailsCard
           title="PAN Card Details"
           columns={panCardDetailsColumns}
-          images={
-            panCardDetails.panFilePreviewUrl
-              ? [{
-                  label: "PAN Card",
-                  url: panCardDetails.panFilePreviewUrl,
-                  onViewClick: handleView,
-                }]
-              : []
-          }
+          images={[
+            {
+              label: "PAN Card",
+              url: panCardDetails.panFilePreviewUrl || "https://via.placeholder.com/60",
+              onViewClick: () => window.open(panCardDetails.panFilePreviewUrl, "_blank"),
+            },
+          ]}
         />
 
         <DetailsCard
           title="Aadhaar Card Details"
           columns={aadhaarDetailsColumns}
-          images={
-            aadhaarDetails.aadharFilePreviewUrl
-              ? [{
-                  label: "Aadhaar Card",
-                  url: aadhaarDetails.aadharFilePreviewUrl,
-                  onViewClick: handleView,
-                }]
-              : []
-          }
+          images={[
+            {
+              label: "Aadhaar Card",
+              url: aadhaarDetails.aadharFilePreviewUrl || "https://via.placeholder.com/60",
+              onViewClick: () => window.open(aadhaarDetails.aadharFilePreviewUrl, "_blank"),
+            },
+          ]}
         />
 
         <DetailsCard

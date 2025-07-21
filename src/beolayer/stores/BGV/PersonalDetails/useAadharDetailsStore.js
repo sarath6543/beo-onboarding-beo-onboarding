@@ -3,7 +3,8 @@ import {create} from "zustand";
 const useAadharDetailsStore = create((set) => ({
     aadharNumber: "",
     aadharName: "",
-    aadharFile: null,
+    aadharFile: "",
+    aadharFilePreviewUrl :"",
     setAadharField: (name, value) => set((state) => ({
         ...state,
         [name]: value,
