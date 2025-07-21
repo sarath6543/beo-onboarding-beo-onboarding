@@ -170,7 +170,7 @@ useEffect(() => {
         */}
         <input
           type="checkbox"
-          className="w-4 h-5 "
+           className="w-4 h-5 text-[#DADADA] accent-[#DADADA] hover:accent-[#B0B0B0]"
           checked={field.value}
           onChange={(e) => field.onChange(e.target.checked)}
         />
