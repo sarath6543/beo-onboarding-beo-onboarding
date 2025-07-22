@@ -1,148 +1,91 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import image_test from "@/assets/image_test.svg";
-import buddy from "@/assets/know-your-buddy.svg";
-import policy from "@/assets/policies.svg";
-import life from "@/assets/life.svg";
-import location from "@/assets/location.svg";
-import PageLayout from "../../beolayer/layout/PageLayout";
-import StepItem from "../../beolayer/components/base/Step/StepItem";
+import React, { useState } from "react";
+import beo_logo from "../../assets/beo_logo.png";
+import notification from "@/assets/bell.svg";
+import avatar from "@/assets/avatar.svg";
 
-const Home = () => {
-  const navigate = useNavigate();
+export default function TopBar() {
+  const [showLogout, setShowLogout] = useState(false);
 
-  const steps = [
-    { label: "Review & Accept offer", status: "Completed", path: "/offer" },
-    {
-      label: "BGV document submission",
-      status: "InProgress",
-      path: "/back-ground-verification-main",
-    },
-    {
-      label: "Pre joining formalities",
-      status: "Yet to start",
-      path: "/formalities",
-    },
-    { label: "Your day 1", status: "Yet to start", path: "/day1" },
-  ];
-
-  const tiles = [
-    {
-      title: "Your Onboarding Process",
-      image: image_test,
-      path: "/onboarding",
-      text:"view more",
-      icon:image_test,      
-    },
-    { 
-      title: "Policies", 
-      image: policy, 
-      path: "/policies",
-      text:"view more",
-      icon:image_test, 
-    },
-
-    { 
-      title: "Life at BEO", 
-      image: life, 
-      path: "/life-at-beo",
-      text:"view more",
-      icon:image_test,  
-
-    },
-    
-    { 
-      title: "Locations", 
-      image: location, 
-      path: "/locations", 
-      text:"view more",
-      icon:image_test, 
-    },
- 
-    { 
-      title: "Know your Buddy", 
-      image: buddy, 
-      path: "/buddy",
-      text:"view more",
-      icon:image_test,  
-    },
-  ];
-
-  const handleTileClick = (tile) => {
-    if (tile.path) navigate(tile.path);
-  };
+  const toggleLogout = () => setShowLogout((prev) => !prev);
 
   return (
-    <PageLayout title="Onboarding">
-      <div className="">
-        <div className="flex flex-wrap gap-5 mt-5">
-          {/* Left Box */}
-          <div className="border-gray-300 border bg-white rounded-2xl p-5 shadow-md flex-1 min-w-[280px]">
-            <h3 className="mb-4 text-2xl font-normal">Let's Get You Settled In!</h3>
-            <ul className="list-none p-0 m-0 space-y-4">
-              {steps.map((step, index) => (
-                <StepItem
-                  key={index}
-                  icon="📄"
-                  label={step.label}
-                  status={step.status}
-                  path={step.path}
-                />
-              ))}
-            </ul>
-          </div>
-
-          {/* Right Section */}
-          <div className="grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-            <div className="flex flex-wrap gap-5">
-              <div className="grid grid-cols-2 gap-5 flex-2 min-w-[280px]">
-                {tiles.slice(0, 4).map((tile, index) => (
-                  <div
-                    key={index}
-                    className="border-gray-300 border bg-white rounded-2xl p-2 shadow-md text-center cursor-pointer flex flex-col justify-center"
-                    onClick={() => handleTileClick(tile)}
-                  >
-                    <img
-                      src={tile.image}
-                      alt={tile.title}
-                      className="max-w-full object-contain mb-2"
-                    />
-                    <h3 className="pb-2 text-xl font-normal">{tile.title}</h3>
-                    <h1 className="pb-4 font-light">{tile.text}</h1>                                    
-                  </div>
-                ))}
-              </div>
-
-              <div className="flex-1 min-w-[280px]">
-                <div
-                  className="bg-[#EDEEF0] rounded-2xl shadow-md text-center cursor-pointer flex flex-col justify-center h-full relative"
-                  onClick={() => handleTileClick(tiles[4])}
-                >
-                  <img
-                    src={tiles[4].image}
-                    alt={tiles[4].title}
-                    className="max-w-full object-contain absolute bottom-0 rounded-b-2xl"/>
-                  <h3 className="absolute left-0 right-0 mb-6">{tiles[4].title}</h3>
-                  <h1 className="absolute left-0 right-0 pt-6">{tiles[4].text}</h1>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-5 bg-white p-4 rounded-2xl shadow-md">
-              <h3 className="font-normal">Important news</h3>
-              <p className="text-sm font-light mt-1 text-gray-500">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry...
-                 Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry...               
-                
-              </p>
-            </div>
-          </div>
-        </div>
+    <header
+      className="w-full bg-white text-black flex items-center justify-between px-5 relative"
+      style={{ height: 88 }}
+    >
+      <div className="flex items-center space-x-4">
+        {/* {isMobile && (
+          <button
+            onClick={onToggleSidebar}
+            className="text-2xl focus:outline-none"
+            aria-label="Toggle Sidebar"
+          >
+            ☰
+          </button>
+        )} */}
+        <img
+          src= {beo_logo} 
+          alt="Logo"
+          style={{ width: 127, height: 56, objectFit: "contain" }}
+        />
       </div>
-    </PageLayout>
-  );
-};
 
-export default Home;
+      <div className="flex items-center space-x-4 relative">
+   
+        <button
+          className="relative w-8 h-8 flex items-center justify-center text-black focus:outline-none"
+          aria-label="Notifications"
+        >
+          <img
+          src= {notification} 
+          alt="Logo"
+          
+        />
+       
+          <span
+            className="absolute top-1 right-1 block w-2 h-2 bg-red-600 rounded-full"
+            aria-hidden="true"
+          ></span>
+        </button>
+   
+        <button
+          // onClick={toggleLogout}
+          className="w-8 h-8 rounded-full bg-white text-blue-600 flex items-center justify-center focus:outline-none"
+          aria-label="User Menu"
+        >
+         <img
+          src= {avatar} 
+          alt="avatar"
+          
+        />
+        </button>
+
+        {/* Down Arrow */}
+        <svg
+          className="w-4 h-4 text-black cursor-pointer"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          onClick={toggleLogout}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
+        </svg>
+
+        {/* Logout dropdown */}
+        {showLogout && (
+          <div className="absolute right-0 mt-12 w-32 bg-white text-black shadow-lg rounded z-50">
+            <button
+              onClick={() => alert("Logged out")}
+              className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+            >
+              Log out
+            </button>
+          </div>
+        )}
+      </div>
+    </header>
+  );
+}
