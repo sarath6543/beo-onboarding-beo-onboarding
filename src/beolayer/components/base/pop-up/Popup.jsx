@@ -8,6 +8,7 @@ const Popup = ({ onClose, show, title, type, children }) => {
   
   const validation = type === "validation";
   const warning = type === "warning";
+  const viewFile = type === "viewFile";
 
   if (!show) return null;
 
@@ -92,7 +93,39 @@ const Popup = ({ onClose, show, title, type, children }) => {
               </div>
             </div>
           </div>
+          ) : viewFile ? (
+            
+            <div className="fixed inset-0 flex justify-center items-center bg-black bg-black/50 z-50">
+            <div className="bg-white rounded-lg shadow-lg w-full max-w-lg p-6 relative">
+              <button
+                onClick={onClose}
+                className="absolute top-2 right-3 text-gray-500 hover:text-gray-700 text-2xl font-bold"
+              >
+              </button>
+              <h2 className="text-2xl text-center font-semibold mb-4">{title ? (title): "Please Confirm"}</h2>
+              <div className="text-center text-gray-700 text-sm">
+                <img className='rounded' src={children} alt="" />
+              </div>
+              {/* <hr className='border-gray-300 mt-6'/> */}
+              <div className='flex justify-center gap-6 mt-6'>
+                  <button
+                    onClick={onClose}
+                    className="px-7 py-3 text-sm rounded-full border border-gray-300 bg-white text-black hover:bg-gray-100 font-semibold transition"
+                  >
+                  Close
+                  </button>
+
+                  {/* <button
+                    // onClick={onClose}
+                    className="bg-black text-gray-200 hover:text-gray-400 rounded-md py-1 px-3"
+                  >
+                    Submit
+                  </button> */}
+                </div>   
+            </div>
+          </div>
           ) : (
+
             <div className="fixed inset-0 flex justify-center items-center bg-black bg-black/50 z-50">
             <div className="bg-white rounded-lg shadow-lg w-full max-w-lg p-6 relative">
               <button
