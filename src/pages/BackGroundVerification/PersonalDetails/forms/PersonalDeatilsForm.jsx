@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 const PersonalDeatilsForm = () => {
 
-  const { firstName, middleName, lastName, fathersName, dob, nationality, placeOfBirth, gender, maritalStatus, email, pin, mobile, alternateMobileNumber, photoFile, bloodGroup, setPersonalDetailsField } = usePersonalDetailsStore();
+  const { firstName, middleName, lastName, fathersName, dob, nationality, placeOfBirth, gender, maritalStatus, email, pin, mobile, alternateMobileNumber, photoFile, photoPreviewUrl, bloodGroup, setPersonalDetailsField } = usePersonalDetailsStore();
   const {
     register,
     handleSubmit,
@@ -59,7 +59,7 @@ console.log("inside experince details")
   ]
 
   const maritalStatusOptions = [
-    { key: "Single", value: "single" },
+    { key: "Single", value: "Single" },
     { key: "Married ", value: "Married " },
   ]
     const bloodGroupOptions = [
@@ -232,7 +232,7 @@ console.log("inside experince details")
   }}
   name="photoFile"
   asterisk
-  value={watchedFile?.[0] || ""}
+  value={watchedFile?.[0] || photoPreviewUrl}
   error={errors.photoFile?.message}
 />
   

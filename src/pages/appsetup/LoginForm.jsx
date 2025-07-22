@@ -42,7 +42,7 @@ export const LoginForm = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="rounded-[10px] mt-1 block w-full px-6 py-4 border border-black rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            className="rounded-[10px] mt-1 block w-full px-6 py-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black"
           />
         </label>
 
@@ -55,7 +55,7 @@ export const LoginForm = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="rounded-[10px] mt-1 block w-full px-6 py-4 border border-black rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="rounded-[10px] mt-1 block w-full px-6 py-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black"
             />
          </label>
   

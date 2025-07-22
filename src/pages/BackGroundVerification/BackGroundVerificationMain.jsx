@@ -4,7 +4,7 @@ import BackGroundVerificationContent from "./BackGroundVerificationContent/BackG
 
 const BackGroundVerificationMain = () => {
     return (
-        <PageLayout title="BackGround Verification">
+        <PageLayout title="Background Verification">
             <BackGroundVerificationContent />
         </PageLayout>
     );

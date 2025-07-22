@@ -10,7 +10,7 @@ const AadhaarForm = () => {
 
     const  [isOpen,setIsOpen] = useState(false)
 
-    const { aadharNumber, aadharName, aadharFile, setAadharField } = useAadharDetailsStore();
+    const { aadharNumber, aadharName, aadharFile, aadharFilePreviewUrl, setAadharField } = useAadharDetailsStore();
     const { register, handleSubmit, watch, setValue, reset, formState: { errors } } = useForm({
        defaultValues: {
     aadharNumber: aadharNumber,
@@ -41,7 +41,7 @@ const AadhaarForm = () => {
         });
         // resetAadharForm();
         // reset(); // optional
-        setIsOpen(true)
+        setIsOpen(true)  // pop-up opening
     };
 
  const watchedFile = watch("aadharFile");
@@ -102,7 +102,7 @@ const AadhaarForm = () => {
                         }}
                 name="aadharFile"
                 asterisk
-                value={watchedFile?.[0] || ""}
+                value={watchedFile?.[0] || aadharFilePreviewUrl}
                 error={errors.aadharFile?.message}
                 />
             </FormWrapper>

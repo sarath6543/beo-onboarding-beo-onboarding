@@ -176,14 +176,14 @@ const Offer = () => {
                 </label>
 
                 {/* Upload Box (Always Visible) */}
-                <div
-                  className="border border-gray-300 rounded-lg p-4 text-sm text-gray-700 flex flex-col items-center justify-center bg-white relative overflow-hidden mx-auto"
-                  style={{
-                    width: "100%",
-                    maxWidth: "600px",        // same max width as PDF viewer
-                    minHeight: "200px",       // fixed height for the box (adjust as needed)
-                  }}
-                >
+               <div
+  className="border border-gray-300 rounded-lg text-sm text-gray-700 flex items-center justify-center bg-white relative overflow-hidden mx-auto"
+  style={{
+    width: "100%",
+    maxWidth: "600px",
+    height: "200px", // 🔐 Fixed height
+  }}
+>
                   {!uploadedFile && (
                     <label className="flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 w-full h-full transition-all duration-300">
                       <FontIcon
@@ -242,17 +242,17 @@ const Offer = () => {
                     <span className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm">PNG</span>
                     <span className="px-4 py-2 border mr-1 rounded-md text-sm"> &lt; 100 KB</span>            
                   </div>
-                  <div className="flex">
+                  {/* <div className="flex">
                     <button className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm">
                       view
                     </button>
-                  </div>
+                  </div> */}
 
                   {uploadedFile && (
                     <div className="flex gap-2 text-xs">
                       <button
                         type="button"
-                        className="bg-white hover:bg-gray-100 border border-gray-400 text-black px-3 py-1 rounded transition"
+                        className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm"
                         onClick={() => setPreviewOpen((prev) => !prev)}
                       >
                         {previewOpen ? "Hide" : "View"}
@@ -260,7 +260,7 @@ const Offer = () => {
 
                       <button
                         type="button"
-                        className="bg-gray-100 hover:bg-gray-200 border border-gray-400 text-black px-3 py-1 rounded transition"
+                        className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm"
                         onClick={() => fileInputRef.current?.click()}
                       >
                         Add New Sign

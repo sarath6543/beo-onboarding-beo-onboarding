@@ -1,12 +1,50 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import beo_logo from "../../assets/beo_logo.png";
 import notification from "@/assets/bell.svg";
 import avatar from "@/assets/avatar.svg";
-
+import { useTranslation } from "react-i18next";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 export default function TopBar() {
-  const [showLogout, setShowLogout] = useState(false);
+ const [showLogout, setShowLogout] = useState(false);
+  const [showLanguage, setShowLanguage] = useState(false);
+  const { t, i18n } = useTranslation();
+   const navigate = useNavigate();
 
-  const toggleLogout = () => setShowLogout((prev) => !prev);
+  const dropdownRef = useRef(null); // for detecting outside clicks
+
+  const switchLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
+
+  const toggleLogout = () => {
+    setShowLogout((prev) => !prev);
+    setShowLanguage(false);
+  };
+
+  const toggleLanguage = () => {
+    setShowLanguage((prev) => !prev);
+  };
+  const logoutClickHandler = () => {
+    console.log("inside logout");
+      navigate("/app/setup");
+  };
+
+  // ✅ Close on outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+        setShowLogout(false);
+        setShowLanguage(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <header
@@ -76,13 +114,59 @@ export default function TopBar() {
 
         {/* Logout dropdown */}
         {showLogout && (
-          <div className="absolute right-0 mt-12 w-32 bg-white text-black shadow-lg rounded z-50">
+          <div
+              ref={dropdownRef} className="absolute top-full right-0 mt-2 w-40 bg-white rounded-lg shadow-md z-50 animate-fade-slide-down">
             <button
-              onClick={() => alert("Logged out")}
-              className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+              // onClick={() => alert("Logged out")}
+               onClick={logoutClickHandler}
+              className="block w-full text-left px-4 py-2 hover:bg-gray-100 transition"
             >
+              {/* 🔒 Log out */}
               Log out
             </button>
+            <button
+              onClick={toggleLanguage}
+              className="w-full text-left px-4 py-2 hover:bg-gray-100 transition"
+            >
+              {/* 🌐 Language */}
+              Language
+            </button>
+
+            {/* Language Submenu */}
+            {showLanguage && (
+              <div className="mt-1 ml-4 transition-all duration-200">
+                <div className="py-1">
+                  <span className="text-xs text-gray-600">
+                    {t("login.language")}:
+                  </span>
+                </div>
+                <div className="flex gap-2 py-1">
+                  <button
+
+                    onClick={() => switchLanguage("en")}
+                    className={`text-sm ${
+                      i18n.language === "en"
+                        ? "font-semibold text-black"
+                        : "text-gray-700"
+                    } hover:text-black transition`}
+                  >
+                    EN
+                  </button>
+                  <span>|</span>
+                  <button
+
+                    onClick={() => switchLanguage("de")}
+                    className={`text-sm ${
+                      i18n.language === "de"
+                        ? "font-semibold text-black"
+                        : "text-gray-700"
+                    } hover:text-black transition`}
+                  >
+                    DE
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>

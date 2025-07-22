@@ -1,6 +1,6 @@
 import React from "react";
 import FontIcon from "../Icons/FontIcon.jsx";
-
+import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
 const InputField = ({
   label,
   type = "text",
@@ -16,6 +16,8 @@ const InputField = ({
 }) => {
   const isUpload = type === "upload";
   const isDropDown = type === "dropdown";
+
+  const selectedOption = options.find((option) => option.value === value) || null;
 
   return (
     <label className="block mb-4 text-base text-gray-700">
@@ -51,7 +53,8 @@ const InputField = ({
             <input
               type="text"
               readOnly
-              value={value?.name || ""}
+              // value={value?.name || ""}
+              value={value?.name || value || ""}
               className="w-3/4 px-4 py-2 text-sm text-gray-700 focus:outline-none"
               placeholder="Upload file..."
             />
@@ -72,16 +75,54 @@ const InputField = ({
             required={required}
             disabled={disabled}
           >
-            <option value="" disabled hidden>
-              Select
-            </option>
-            {options.map(({ key, value }) => (
-              <option key={value} value={value}>
-                {key}
-              </option>
-            ))}
-          </select>
+            <div className="relative">
+              <ListboxButton
+                className={`flex justify-between block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-left text-sm text-gray-700 shadow-sm
+                  focus:outline-none focus:border-gray-500`}
+              >
+                {selectedOption?.key || "Select"} <FontIcon size="10" iconName={"downIcon"}/>
+              </ListboxButton>
+
+              <ListboxOptions className="absolute z-[5000] mt-1 w-full overflow-visible rounded-md border border-gray-200 bg-white py-1 shadow-lg focus:outline-none">
+                {options.map((option) => (
+                  <ListboxOption
+                    key={option.value}
+                    value={option}
+                    className={({ active, selected }) =>
+                      `cursor-pointer select-none px-4 py-2 text-sm ${
+                        active ? "bg-blue-100 text-blue-900" : ""
+                      } ${selected ? "font-medium" : "font-normal"}`
+                    }
+                  >
+                    {option.key}
+                  </ListboxOption>
+                ))}
+              </ListboxOptions>
+
+            </div>
+          </Listbox>
         </div>
+  
+
+        // <div className="mb-1">
+        //   <select
+        //     className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+        //     onChange={onChange}
+        //     name={name}
+        //     value={value}
+        //     disabled={disabled}
+        //   >
+        //     <option value="" disabled hidden>
+        //       Select
+        //     </option>
+        //     {options.map(({ key, value }) => (
+        //       <option key={value} value={value}>
+        //         {key}
+        //       </option>
+        //     ))}
+        //   </select>
+        // </div>
+
       ) : (
         <input
           type={type}
