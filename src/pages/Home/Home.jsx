@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import image_test from "@/assets/image_test.svg";
 import buddy from "@/assets/know-your-buddy.svg";
 import policy from "@/assets/policies.svg";
@@ -11,51 +10,41 @@ import StepItem from "../../beolayer/components/base/Step/StepItem";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
 
   const steps = [
-    { label: t("home.review"), status: "Completed", path: "/offer" },
+    { label: "Review & Accept offer", status: "Completed", path: "/offer" },
     {
-      label:  t("home.BGV_Submission"),
+      label: "BGV document submission",
       status: "InProgress",
       path: "/back-ground-verification-main",
     },
     {
-      label:  t("home.Pre_Joining"),
+      label: "Pre joining formalities",
       status: "Yet to start",
       path: "/formalities",
     },
-    { label: t("home.Day_1"), status: "Yet to start", path: "/day1" },
+    { label: "Your day 1", status: "Yet to start", path: "/day1" },
   ];
 
   const tiles = [
     {
-      title:  t("home.process"),
+      title: "Your Onboarding Process",
       image: image_test,
       path: "/onboarding",
       text:"view more",
       icon:image_test,      
     },
     { 
-      title: t("home.policies"), 
-      image: image_test, 
       title: "Policies", 
       image: policy, 
       path: "/policies",
       text:"view more",
       icon:image_test, 
     },
-    
+
     { 
-      title: t("home.Locations"), 
-      image: image_test, 
-      path: "/locations", 
-      text:"view more",
-      icon:image_test, 
-    },
-    { 
-      title: t("home.Life_at_BEO"), 
-      image: image_test,  
+      title: "Life at BEO", 
+      image: life, 
       path: "/life-at-beo",
       text:"view more",
       icon:image_test,  
@@ -71,7 +60,7 @@ const Home = () => {
     },
  
     { 
-      title: t("home.buddy"), 
+      title: "Know your Buddy", 
       image: buddy, 
       path: "/buddy",
       text:"view more",
@@ -79,23 +68,17 @@ const Home = () => {
     },
   ];
 
-const handleTileClick = (tile) => {
-  if (!tile.path) return;
-
-  if (tile.external) {
-    window.open(tile.path, "_blank", "noopener,noreferrer");
-  } else {
-    navigate(tile.path);
-  }
-};
+  const handleTileClick = (tile) => {
+    if (tile.path) navigate(tile.path);
+  };
 
   return (
-    <PageLayout title={t("home.title")}>
+    <PageLayout title="Onboarding">
       <div className="">
         <div className="flex flex-wrap gap-5 mt-5">
           {/* Left Box */}
           <div className="border-gray-300 border bg-white rounded-2xl p-5 shadow-md flex-1 min-w-[280px]">
-            <h3 className="mb-4 text-2xl font-normal">{t("home.sub_title")}</h3>
+            <h3 className="mb-4 text-2xl font-normal">Let's Get You Settled In!</h3>
             <ul className="list-none p-0 m-0 space-y-4">
               {steps.map((step, index) => (
                 <StepItem
@@ -146,7 +129,7 @@ const handleTileClick = (tile) => {
             </div>
 
             <div className="mt-5 bg-white p-4 rounded-2xl shadow-md">
-              <h3 className="font-normal">{t("home.news")}</h3>
+              <h3 className="font-normal">Important news</h3>
               <p className="text-sm font-light mt-1 text-gray-500">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry...
