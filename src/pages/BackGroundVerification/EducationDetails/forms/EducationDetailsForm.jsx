@@ -240,7 +240,7 @@ const EducationDetailsForm = () => {
                       }
                     }}
                   name={`education.${index}.certificate`}
-                  value={watchedCertificateFile || ""}
+                  value={watchedCertificateFile || educationList[index].certificateFilePreviewUrl}
                   error={errors.education?.[index]?.certificate?.message} 
                   placeholder={watchedCertificateFile?.name || "Choose relieving letter"}
                   asterisk={!isOther}

@@ -15,7 +15,7 @@ const usePersonalDetailsStore = create((set) => ({
   mobile: "",
   alternateMobileNumber: "",
   photoFile: null,
-  photoPreviewUrl: "", // <-- Add this
+  photoPreviewUrl: "https://www.gstatic.com/webp/gallery/1.webp", // <-- Add this
   bloodGroup: "",
 
   setPersonalDetailsField: (field, value) =>

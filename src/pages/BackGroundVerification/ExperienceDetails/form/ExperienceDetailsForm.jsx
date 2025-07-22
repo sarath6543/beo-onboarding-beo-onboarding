@@ -212,7 +212,7 @@ const ExperienceDetailsForm = () => {
                   }}
                   name={`experiences.${index}.salaryFile`}
                   asterisk
-                  value={watchedSalaryFile || ""}
+                  value={watchedSalaryFile || experienceList[index].salaryPreviewUrl}
                   placeholder={watchedSalaryFile?.name || "Choose salary file"}
                   error={errors.experiences?.[index]?.salaryFile?.message}
                 />
@@ -236,7 +236,7 @@ const ExperienceDetailsForm = () => {
                   }}
                   name={`experiences.${index}.relievingFile`}
                   asterisk={!isCurrentOrg}
-                  value={watchedRelievingFile || ""}
+                  value={watchedRelievingFile || experienceList[index].relievingPreviewUrl}
                   placeholder={watchedRelievingFile?.name || "Choose relieving letter"}
                   error={errors.experiences?.[index]?.relievingFile?.message}
                 />
