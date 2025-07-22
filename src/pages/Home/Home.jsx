@@ -39,26 +39,32 @@ const Home = () => {
     { 
       title: t("home.policies"), 
       image: policy, 
-      path: "/policies",
+      // path: "/policies",
+          url:"https://beo-software.in/",
       text:"view more",
       icon:image_test, 
+       external: true,
     },
 
     { 
       title: t("home.Life_at_BEO"), 
       image: life, 
-      path: "/life-at-beo",
+      // path: "/life-at-beo",
+      url:"https://beo-software.in/life-at-beo.html",
       text:"view more",
       icon:image_test,  
+       external: true,
 
     },
     
     { 
       title: t("home.Locations"), 
       image: location, 
-      path: "/locations", 
+      // path: "/locations", 
+      url:"https://beo-software.in/",
       text:"view more",
       icon:image_test, 
+       external: true,
     },
  
     { 
@@ -70,9 +76,13 @@ const Home = () => {
     },
   ];
 
-  const handleTileClick = (tile) => {
-    if (tile.path) navigate(tile.path);
-  };
+const handleTileClick = (tile) => {
+  if (tile.external && tile.url) {
+    window.open(tile.url, "_blank"); // opens in a new tab
+  } else if (tile.path) {
+    navigate(tile.path);
+  }
+};
 
   return (
     <PageLayout title={t("home.title")}>

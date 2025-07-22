@@ -176,14 +176,14 @@ const Offer = () => {
                 </label>
 
                 {/* Upload Box (Always Visible) */}
-                <div
-                  className="border border-gray-300 rounded-lg p-4 text-sm text-gray-700 flex flex-col items-center justify-center bg-white relative overflow-hidden mx-auto"
-                  style={{
-                    width: "100%",
-                    maxWidth: "600px",        // same max width as PDF viewer
-                    minHeight: "200px",       // fixed height for the box (adjust as needed)
-                  }}
-                >
+               <div
+  className="border border-gray-300 rounded-lg text-sm text-gray-700 flex items-center justify-center bg-white relative overflow-hidden mx-auto"
+  style={{
+    width: "100%",
+    maxWidth: "600px",
+    height: "200px", // 🔐 Fixed height
+  }}
+>
                   {!uploadedFile && (
                     <label className="flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 w-full h-full transition-all duration-300">
                       <FontIcon

@@ -114,7 +114,8 @@ export default function TopBar() {
 
         {/* Logout dropdown */}
         {showLogout && (
-          <div className="absolute top-full right-0 mt-2 w-40 bg-white rounded-lg shadow-md z-50 animate-fade-slide-down">
+          <div
+              ref={dropdownRef} className="absolute top-full right-0 mt-2 w-40 bg-white rounded-lg shadow-md z-50 animate-fade-slide-down">
             <button
               // onClick={() => alert("Logged out")}
                onClick={logoutClickHandler}
