@@ -2,6 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import image_test from "@/assets/image_test.svg";
 import buddy from "@/assets/know-your-buddy.svg";
+import policy from "@/assets/policies.svg";
+import life from "@/assets/life.svg";
+import location from "@/assets/location.svg";
 import PageLayout from "../../beolayer/layout/PageLayout";
 import StepItem from "../../beolayer/components/base/Step/StepItem";
 
@@ -33,27 +36,29 @@ const Home = () => {
     },
     { 
       title: "Policies", 
-      image: image_test, 
+      image: policy, 
       path: "/policies",
       text:"view more",
       icon:image_test, 
     },
-    
-    { 
-      title: "Locations", 
-      image: image_test, 
-      path: "/locations", 
-      text:"view more",
-      icon:image_test, 
-    },
+
     { 
       title: "Life at BEO", 
-      image: image_test, 
+      image: life, 
       path: "/life-at-beo",
       text:"view more",
       icon:image_test,  
 
     },
+    
+    { 
+      title: "Locations", 
+      image: location, 
+      path: "/locations", 
+      text:"view more",
+      icon:image_test, 
+    },
+ 
     { 
       title: "Know your Buddy", 
       image: buddy, 
@@ -88,7 +93,7 @@ const Home = () => {
           </div>
 
           {/* Right Section */}
-          <div className="flex flex-col flex-1 min-w-[280px]">
+          <div className="grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
             <div className="flex flex-wrap gap-5">
               <div className="grid grid-cols-2 gap-5 flex-2 min-w-[280px]">
                 {tiles.slice(0, 4).map((tile, index) => (
@@ -117,7 +122,7 @@ const Home = () => {
                     src={tiles[4].image}
                     alt={tiles[4].title}
                     className="max-w-full object-contain absolute bottom-0 rounded-b-2xl"/>
-                  <h3 className="absolute left-0 right-0">{tiles[4].title}</h3>
+                  <h3 className="absolute left-0 right-0 mb-6">{tiles[4].title}</h3>
                   <h1 className="absolute left-0 right-0 pt-6">{tiles[4].text}</h1>
                 </div>
               </div>

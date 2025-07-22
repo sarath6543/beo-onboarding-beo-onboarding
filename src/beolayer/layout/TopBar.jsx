@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import beo_logo from "../../assets/beo_logo.png";
+import notification from "@/assets/bell.svg";
+import avatar from "@/assets/avatar.svg";
 
 export default function TopBar() {
   const [showLogout, setShowLogout] = useState(false);
@@ -34,21 +36,28 @@ export default function TopBar() {
           className="relative w-8 h-8 flex items-center justify-center text-black focus:outline-none"
           aria-label="Notifications"
         >
-          🔔
+          <img
+          src= {notification} 
+          alt="Logo"
+          
+        />
        
           <span
             className="absolute top-1 right-1 block w-2 h-2 bg-red-600 rounded-full"
             aria-hidden="true"
           ></span>
         </button>
-
    
         <button
           // onClick={toggleLogout}
           className="w-8 h-8 rounded-full bg-white text-blue-600 flex items-center justify-center focus:outline-none"
           aria-label="User Menu"
         >
-          👤
+         <img
+          src= {avatar} 
+          alt="avatar"
+          
+        />
         </button>
 
         {/* Down Arrow */}
