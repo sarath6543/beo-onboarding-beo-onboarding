@@ -69,11 +69,27 @@ const [openImageKey, setOpenImageKey] = useState(null);
                           return (
                             <div key={index} className="mb-4 flex flex-col items-center">
                               <div className="text-xs text-gray-500 mb-1">{img.label}</div>
-                              <img
+                              {img.type === "application/pdf" ? (
+                                // <iframe
+                                //   src={img.url}
+                                //   title="PDF Preview"
+                                //   className="w-16 h-16 rounded border"
+                                // ></iframe>
+                                <div className="w-16 h-16 mb-2 flex items-center justify-center bg-gray-100 border border-gray-300 rounded text-xs text-gray-600">
+                                  PDF
+                                </div>
+                              ) : (
+                                <img
+                                  src={img.url}
+                                  alt={img.label || `Image`}
+                                  className="w-16 h-16 rounded-md object-cover mb-2 border border-gray-300"
+                                />
+                              )}
+                              {/* <img
                                 src={img.url}
                                 alt={img.label || `Image ${index + 1}`}
                                 className="w-16 h-16 rounded-md object-cover mb-2 border border-gray-300"
-                              />
+                              /> */}
                               {img.onViewClick && (
                                 <button
                                   onClick={() => setOpenImageKey(imageKey)}
@@ -84,11 +100,13 @@ const [openImageKey, setOpenImageKey] = useState(null);
                               )}
                               <Popup
                                 type="viewFile"
+                                fileType={img.type || (img.url?.endsWith(".pdf") ? "application/pdf" : "image/*")}
                                 children={img.url}
                                 title={img.label}
                                 show={openImageKey === imageKey}
                                 onClose={() => setOpenImageKey(null)}
                               />
+                             {/* { console.log("Popup received fileType:", img.type, "url:",img.url )} */}
                             </div>
                           );
                         })}
@@ -127,6 +145,7 @@ const [openImageKey, setOpenImageKey] = useState(null);
                       )}
                       <Popup
                         type="viewFile"
+                        fileType={img.type}
                         children={img.url}
                         title={img.label}
                         show={openImageKey === imageKey}

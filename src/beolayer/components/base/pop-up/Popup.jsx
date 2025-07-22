@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import FontIcon from '../Icons/FontIcon.jsx';
 
 
-const Popup = ({ onClose, show, title, type, children }) => {
+const Popup = ({ onClose, show, title, type, fileType, children }) => {
 
   const [textBox,setTextBox] = useState("")
   
@@ -104,8 +104,17 @@ const Popup = ({ onClose, show, title, type, children }) => {
               </button>
               <h2 className="text-2xl text-center font-semibold mb-4">{title ? (title): "Please Confirm"}</h2>
               <div className="text-center text-gray-700 text-sm">
-                <img className='rounded' src={children} alt="" />
+                {fileType === "application/pdf" ? (
+                  <iframe
+                    src={children}
+                    title="PDF Preview"
+                    className="w-full h-[500px] rounded border"
+                  ></iframe>
+                ) : (
+                  <img className="rounded max-h-[500px] mx-auto" src={children} alt="Preview" />
+                )}
               </div>
+
               {/* <hr className='border-gray-300 mt-6'/> */}
               <div className='flex justify-center gap-6 mt-6'>
                   <button

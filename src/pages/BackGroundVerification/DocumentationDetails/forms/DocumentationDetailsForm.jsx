@@ -106,6 +106,7 @@ const DocumentationDetailsForm = () => {
       ? [{
           label: `${edu.key} Certificate`,
           url: certificateUrl,
+          type: edu.certificate?.type || "application/pdf",
           onViewClick: () => window.open(certificateUrl, "_blank"),
         }]
       : [];
@@ -148,6 +149,7 @@ const DocumentationDetailsForm = () => {
       experienceImages.push({
         label: "Relieving Letter",
         url: relievingLetterUrl,
+        type: exp.relievingFile?.type || "application/pdf",
         onViewClick: () => window.open(relievingLetterUrl, "_blank"),
       });
     }
@@ -156,10 +158,11 @@ const DocumentationDetailsForm = () => {
       experienceImages.push({
         label: "Salary Slip",
         url: salarySlipUrl,
+        type: exp.salaryFile?.type || "application/pdf",
         onViewClick: () => window.open(salarySlipUrl, "_blank"),
       });
     }
-
+    // console.log("DEBUG experienceImages:", experienceImages);
     return {
       sectionTitle: `Experience ${index + 1}`,
       data: createExperienceColumns(exp),
