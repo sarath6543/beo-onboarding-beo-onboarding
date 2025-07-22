@@ -5,6 +5,8 @@ import samplePDF from "../../assets/documents/sample.pdf";
 import { pdfjs } from "react-pdf";
 import { Document, Page } from "react-pdf";
 import FontIcon from "../../beolayer/components/base/Icons/FontIcon.jsx";
+import email from "@/assets/email_ico.svg";
+
 
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
@@ -97,14 +99,25 @@ const Offer = () => {
         <TopBar />
       </div>
 
-      <div className="mt-20 bg-[#DBDBDB] flex flex-col justify-center items-center h-20 text-white text-center px-6">
-        <p className="text-2xl font-light mb-1">Review & Accept Offer</p>
-        <p className="text-lg md:text-xl leading-7 max-w-xl">
+      <div className="mt-20 bg-[url('@/assets/review-bg.svg')] bg-cover bg-center h-64 flex flex-col justify-center items-center h-20 text-white  px-6">
+      <div className="flex items-start justify-between items-center">
+        <div className="mr-4 flex justify-center items-center">
+           <img
+              src= {email} 
+              alt="email_ico"      
+            />
+        </div>
+        <div className="flex-1 flex flex-col pb-4">
+        <p className="text-4xl font-light pb-3">Review & Accept Offer</p>
+        <p className="text-lg md:text-xl leading-7 max-w-xl font-light">
           Your joining date with BEO is
         </p>
+        </div>
+      </div>
+       
       </div>
 
-      <div className="bg-white pt-2 pl-5">
+      <div className="bg-white py-4">
         <div className="max-w-6xl mx-auto">
           <div
             className="text-sm text-black cursor-pointer flex items-center mb-1"
@@ -116,13 +129,13 @@ const Offer = () => {
             Back
           </div>
         </div>
-        <hr className="border-t border-gray-100 w-full" />
+        <hr className="border-t border-gray-200 w-full" />
       </div>
 
       <div className="bg-white font-sans min-h-[40vh] px-6 md:px-8 py-8 pb-40 sm:pb-24">
         <div className="max-w-6xl mx-auto">
           {/* PDF Viewer */}
-          <div className="max-h-[280px] overflow-y-auto rounded-xl shadow-md border border-gray-100 p-5 bg-white mb-8 ">
+          <div className="max-h-[280px] overflow-y-auto rounded-xl border border-gray-300 p-5 bg-white mb-8 ">
             <Document file={samplePDF} onLoadSuccess={onDocumentLoadSuccess}  >
               <Page pageNumber={pageNumber} scale={.8} width={1100} renderTextLayer={false} />
             </Document>
@@ -223,7 +236,17 @@ const Offer = () => {
 
                 {/* Footer Row: file type + buttons */}
                 <div className="mt-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs text-gray-600">
-                  <div>📄 PDF, JPG, JPEG, PNG | &lt; 100 KB</div>
+                  <div className="flex">
+                    <span className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm">PDF</span>                
+                    <span className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm">JPEG</span>
+                    <span className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm">PNG</span>
+                    <span className="px-4 py-2 border mr-1 rounded-md text-sm"> &lt; 100 KB</span>            
+                  </div>
+                  <div className="flex">
+                    <button className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm">
+                      view
+                    </button>
+                  </div>
 
                   {uploadedFile && (
                     <div className="flex gap-2 text-xs">
@@ -256,12 +279,12 @@ const Offer = () => {
       </div>
 
       {/* Footer */}
-      <div className="bg-[#F3F3F3] w-full fixed bottom-0 py-2 shadow-inner">
+      <div className="bg-[#F3F3F3] w-full fixed bottom-0 py-2 border-t border-gray-300">
         <div className="max-w-6xl mx-auto px-2 flex flex-col sm:flex-row justify-end gap-5">
-          <button className="px-7 py-3 text-sm rounded-full border border-gray-300 bg-white text-black hover:bg-gray-100 font-semibold transition">
+          <button className="px-7 py-3 text-sm rounded-full border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 font-semibold transition">
             Decline
           </button>
-          <button className="px-7 py-3 text-sm rounded-full bg-yellow-400 text-black hover:bg-yellow-500 transition font-semibold">
+          <button className="px-7 py-3 text-sm rounded-full bg-yellow-400 text-gray-700 hover:bg-yellow-500 transition font-semibold">
             Accept
           </button>
         </div>
