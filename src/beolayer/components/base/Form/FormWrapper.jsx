@@ -53,7 +53,7 @@ const FormWrapper = ({ columns = 2, children }) => {
   }[columns] || "grid-cols-1 sm:grid-cols-2";
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 p-10">
       <div className={`grid gap-4 ${gridColsClass}`}>
         {children}
       </div>

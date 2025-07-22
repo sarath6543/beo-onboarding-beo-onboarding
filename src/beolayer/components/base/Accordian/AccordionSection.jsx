@@ -5,29 +5,40 @@ const AccordionSection = ({ title, children,icon }) => {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <div className="w-full border-2 border-gray-300 rounded-2xl my-2.5 bg-[#DADADA] p-4 box-border">
+    <div className="w-full border-2 md:border-[#CACACA] rounded-2xl my-2.5 bg-[#DADADA] p-4 box-border">
       {/* Header */}
-      <div className="flex justify-between items-center p-3 bg-[#DCACACA] rounded-md">
-            <span className="font-semibold flex">{icon}{title}</span>
-       
 
-        {/* Arrow Toggle Only */}
-        <span
-          onClick={() => setIsOpen(!isOpen)}
-          className="cursor-pointer ml-4"
-        >
-          {isOpen ? (
-            <FontIcon iconName="UpArrow" />
-          ) : (
-            <FontIcon iconName="DownArrow" />
-          )}
-        </span>
-      </div>
+      <div className="grid auto-rows-min grid-cols-2 gap-4 py-3">
+        <div className="flex text-2xl items-center">
+            <span className="mr-4 text-4xl">{icon}</span>
+            <span>{title}</span>             
+        </div>   
+
+  <div className="flex justify-end">
+    {/* Arrow Toggle Only */}
+    <span
+            onClick={() => setIsOpen(!isOpen)}
+            className="cursor-pointer ml-4"
+          >
+            {isOpen ? (
+              <FontIcon iconName="UpArrow" />
+            ) : (
+              <FontIcon iconName="DownArrow" />
+            )}
+          </span>
+
+  </div>
+</div>
+      
+      
+          
+       
+      
 
       {/* Body */}
       {isOpen && (
-        <div className="bg-white mt-3 rounded-xl shadow-sm overflow-hidden">
-          <div className="p-4">{children}</div>
+        <div className="bg-white mt-3 rounded-xl md:border-[#CACACA] overflow-hidden">
+          <div className="">{children}</div>
         </div>
       )}
     </div>
