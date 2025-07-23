@@ -48,7 +48,7 @@ export default function TopBar() {
 
   return (
     <header
-      className="w-full bg-white text-black flex items-center justify-between px-5 relative"
+      className="w-full bg-white text-black flex items-center justify-between px-10 relative"
       style={{ height: 88 }}
     >
       <div className="flex items-center space-x-4">

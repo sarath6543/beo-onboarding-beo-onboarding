@@ -65,24 +65,28 @@ const InputField = ({
             <span className="px-4 py-1 border mr-1 rounded-md text-xs">&lt; 100 KB</span>
           </div>
         </div>
-      ) : isDropDown ? (
-        <div className="mb-1">
-          <select
-            className="mt-1 block w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            onChange={onChange}
-            name={name}
-            value={value}
-            required={required}
+    ) : isDropDown ? (
+      <div className="w-full mt-1 z-50">
+          <Listbox
+            value={selectedOption}
+            onChange={(val) =>
+              onChange({
+                target: {
+                  name,
+                  value: val.value,
+                },
+              })
+            }
             disabled={disabled}
           >
             <div className="relative">
               <ListboxButton
-                className={`flex justify-between block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-left text-sm text-gray-700 shadow-sm
+                className={`flex justify-between block w-full rounded-md border border-gray-400 bg-white px-3 py-2 text-left text-sm text-gray-700
                   focus:outline-none focus:border-gray-500`}
               >
                 {selectedOption?.key || "Select"} <FontIcon size="10" iconName={"downIcon"}/>
               </ListboxButton>
-
+ 
               <ListboxOptions className="absolute z-[5000] mt-1 w-full overflow-visible rounded-md border border-gray-200 bg-white py-1 shadow-lg focus:outline-none">
                 {options.map((option) => (
                   <ListboxOption
@@ -98,12 +102,12 @@ const InputField = ({
                   </ListboxOption>
                 ))}
               </ListboxOptions>
-
+ 
             </div>
           </Listbox>
         </div>
-  
-
+ 
+ 
         // <div className="mb-1">
         //   <select
         //     className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
@@ -122,7 +126,7 @@ const InputField = ({
         //     ))}
         //   </select>
         // </div>
-
+ 
       ) : (
         <input
           type={type}

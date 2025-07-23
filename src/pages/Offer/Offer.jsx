@@ -100,11 +100,11 @@ const Offer = () => {
       </div>
 
       <div className="mt-20 bg-[url('@/assets/review-bg.svg')] bg-cover bg-center h-64 flex flex-col justify-center items-center h-20 text-white  px-6">
-      <div className="flex items-start justify-between items-center">
+      <div className="flex justify-between items-center">
         <div className="mr-4 flex justify-center items-center">
            <img
               src= {email} 
-              alt="email_ico"      
+              alt="email_ico"
             />
         </div>
         <div className="flex-1 flex flex-col pb-4">
