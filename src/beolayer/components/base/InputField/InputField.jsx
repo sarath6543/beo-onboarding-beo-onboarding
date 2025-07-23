@@ -20,7 +20,7 @@ const InputField = ({
   const selectedOption = options.find((option) => option.value === value) || null;
 
   return (
-    <label className="block mb-4 text-base text-gray-700">
+    <label className="block mb-4 text-sm font-medium text-gray-700">
       {label}
       {asterisk && (
         <FontIcon
@@ -36,7 +36,7 @@ const InputField = ({
           <div className="flex w-full border border-gray-400 rounded-md overflow-hidden">
             <button
               type="button"
-              className="w-1/4 bg-gray-500 text-white px-4 py-2 font-light"
+             className="w-1/4 bg-gray-500 text-white px-4 py-2 font-light"
               onClick={() => document.getElementById(name).click()}
             >
               Browse
@@ -59,13 +59,9 @@ const InputField = ({
               placeholder="Upload file..."
             />
           </div>
-          <div className="flex mt-2">
-            <span className="px-4 py-1 mr-1 rounded-md bg-gray-200 text-xs">PNG</span>
-            <span className="px-4 py-1 mr-1 rounded-md bg-gray-200 text-xs">JPG</span>
-            <span className="px-4 py-1 border mr-1 rounded-md text-xs">&lt; 100 KB</span>
-          </div>
+          <p className="text-xs text-gray-500 mt-1">PDF, JPG</p>
         </div>
-    ) : isDropDown ? (
+      ) : isDropDown ? (
       <div className="w-full mt-1 z-50">
           <Listbox
             value={selectedOption}
@@ -135,8 +131,8 @@ const InputField = ({
           onChange={onChange}
           disabled={disabled}
           {...rest}
-          className={`mt-1 block w-full px-4 py-2 border rounded-md focus:outline-none
-    ${error ? 'border-gray-400' : 'border-gray-400'}
+          className={`mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none
+    ${error ? 'border-gray-300' : 'border-gray-300'}
   `}
         />
       )}
