@@ -16,11 +16,11 @@ const InputField = ({
 }) => {
   const isUpload = type === "upload";
   const isDropDown = type === "dropdown";
-
+ 
   const selectedOption = options.find((option) => option.value === value) || null;
-
+ 
   return (
-    <label className="block mb-4 text-sm font-medium text-gray-700">
+    <label className="block mb-4 text-sm font-sm text-gray-700">
       {label}
       {asterisk && (
         <FontIcon
@@ -30,7 +30,7 @@ const InputField = ({
           color="red"
         />
       )}
-
+ 
       {isUpload ? (
         <div className="relative mt-1 w-full">
           <div className="flex w-full border border-gray-400 rounded-md overflow-hidden">
@@ -59,7 +59,11 @@ const InputField = ({
               placeholder="Upload file..."
             />
           </div>
-          <p className="text-xs text-gray-500 mt-1">PDF, JPG</p>
+          <div className="flex mt-2">
+            <span className="px-4 py-1 mr-1 rounded-md bg-gray-200 text-xs">PNG</span>
+            <span className="px-4 py-1 mr-1 rounded-md bg-gray-200 text-xs">JPG</span>
+            <span className="px-4 py-1 border mr-1 rounded-md text-xs">&lt; 100 KB</span>
+          </div>
         </div>
       ) : isDropDown ? (
       <div className="w-full mt-1 z-50">
@@ -77,12 +81,12 @@ const InputField = ({
           >
             <div className="relative">
               <ListboxButton
-                className={`flex justify-between block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-left text-sm text-gray-700 shadow-sm
+                className={`flex justify-between block w-full rounded-md border border-gray-400 bg-white px-3 py-2 text-left text-sm text-gray-700
                   focus:outline-none focus:border-gray-500`}
               >
                 {selectedOption?.key || "Select"} <FontIcon size="10" iconName={"downIcon"}/>
               </ListboxButton>
-
+ 
               <ListboxOptions className="absolute z-[5000] mt-1 w-full overflow-visible rounded-md border border-gray-200 bg-white py-1 shadow-lg focus:outline-none">
                 {options.map((option) => (
                   <ListboxOption
@@ -98,12 +102,12 @@ const InputField = ({
                   </ListboxOption>
                 ))}
               </ListboxOptions>
-
+ 
             </div>
           </Listbox>
         </div>
-  
-
+ 
+ 
         // <div className="mb-1">
         //   <select
         //     className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
@@ -122,7 +126,7 @@ const InputField = ({
         //     ))}
         //   </select>
         // </div>
-
+ 
       ) : (
         <input
           type={type}
@@ -131,16 +135,18 @@ const InputField = ({
           onChange={onChange}
           disabled={disabled}
           {...rest}
-          className={`mt-1 block w-full px-4 py-2 border rounded-md shadow-sm focus:outline-none
-    ${error ? 'border-gray-300' : 'border-gray-300'}
+          className={`mt-1 block w-full px-4 py-2 border rounded-md focus:outline-none
+    ${error ? 'border-gray-400' : 'border-gray-400'}
   `}
         />
       )}
-
-
+ 
+ 
       {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
     </label>
   );
 };
-
+ 
 export default InputField;
+ 
+ 

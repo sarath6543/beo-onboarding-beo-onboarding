@@ -15,11 +15,11 @@ export const LoginForm = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const result = await login(email, password);
-    if (result?.token) {
-      navigate("/"); 
-    }
-   
+    // const result = await login(email, password);
+    // if (result?.token) {
+    //   navigate("/"); 
+    // }
+    navigate("/"); 
   };
 
   const switchLanguage = (lng) => {
