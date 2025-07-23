@@ -10,7 +10,7 @@ const AccordionSection = ({ title, children,icon }) => {
 
       <div className="grid auto-rows-min grid-cols-2 gap-4 py-3">
         <div className="flex text-2xl items-center">
-            <span className="mr-4 text-4xl">{icon}</span>
+            <span className="bg-gray-800 text-white rounded-full mr-4 text-2xl p-2">{icon}</span>
             <span>{title}</span>             
         </div>   
 

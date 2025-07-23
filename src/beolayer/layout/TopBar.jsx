@@ -68,7 +68,7 @@ export default function TopBar() {
         />
       </div>
 
-      <div className="flex items-center space-x-4 relative">
+      <div className="flex items-center gap-4 min-w-[200px] justify-end relative shrink-0">
    
         <button
           className="relative w-8 h-8 flex items-center justify-center text-black focus:outline-none"

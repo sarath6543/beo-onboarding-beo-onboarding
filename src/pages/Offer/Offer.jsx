@@ -99,7 +99,7 @@ const Offer = () => {
         <TopBar />
       </div>
 
-      <div className="mt-20 bg-[url('@/assets/review-bg.svg')] bg-cover bg-center h-64 flex flex-col justify-center items-center h-20 text-white  px-6">
+      <div className="mt-20 bg-[url('@/assets/review-bg.svg')] bg-cover bg-center h-45 flex flex-col justify-center items-center text-white  px-6">
       <div className="flex justify-between items-center">
         <div className="mr-4 flex justify-center items-center">
            <img
@@ -181,7 +181,7 @@ const Offer = () => {
   style={{
     width: "100%",
     maxWidth: "600px",
-    height: "200px", // 🔐 Fixed height
+    height: "150px", // 🔐 Fixed height
   }}
 >
                   {!uploadedFile && (

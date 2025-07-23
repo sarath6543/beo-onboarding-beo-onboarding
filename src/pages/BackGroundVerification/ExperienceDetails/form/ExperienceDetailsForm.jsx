@@ -126,7 +126,7 @@ const ExperienceDetailsForm = () => {
  
           return (
             <div key={field.id} className="mb-8">
-              <p className="text-xl font-medium mb-6 ml-2">Experience {index +1}</p>
+              <p className="text-xl font-medium mb-6 ml-6 mt-6">Experience {index +1}</p>
               <FormWrapper columns={3}>
                 <InputField
                   label="Company Name"
