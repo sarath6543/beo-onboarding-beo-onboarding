@@ -126,7 +126,7 @@ const ExperienceDetailsForm = () => {
  
           return (
             <div key={field.id} className="mb-8">
-              <p className="text-xl font-medium mb-6">Experience {index +1}</p>
+              <p className="text-xl font-medium mb-6 ml-2">Experience {index +1}</p>
               <FormWrapper columns={3}>
                 <InputField
                   label="Company Name"
@@ -256,14 +256,14 @@ const ExperienceDetailsForm = () => {
   
               {/* Delete Button */}
               {fields.length > 1 && (
-                <div className="flex justify-end mb-8">
-                  <button
-                    type="button"
-                    className="px-4 py-2 rounded transition-colors duration-300 text-base bg-[#DADADA] hover:bg-red-500 hover:text-white"
-                    onClick={() => remove(index)}
-                  >
-                    Delete -
-                  </button>
+                <div className="flex justify-end mb-8 pr-4">
+                 <button
+  type="button"
+  className="px-4 py-2 mt-2 bg-[#DADADA] hover:bg-[#000000] hover:text-white rounded"
+  onClick={() => remove(index)}
+>
+  Delete
+</button>
                 </div>
               )}
   
@@ -273,10 +273,10 @@ const ExperienceDetailsForm = () => {
         })}
   
         {/* Add / Save Buttons */}
-        <div className="flex justify-between">
+        <div className="flex justify-between mb-8 px-2">
           <button
             type="button"
-            className="bg-[#DADADA] text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors duration-300 text-base"
+            className="bg-white text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors duration-300 text-base border border-[#DADADA]"
             onClick={() =>
               append({
                 companyName: "",
@@ -296,13 +296,12 @@ const ExperienceDetailsForm = () => {
           >
             ADD +
           </button>
-          <button
-            type="submit"
-            className="bg-[#DADADA] text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors duration-300 text-base"
-            onClick={handleSubmit(onSubmit, onError)}
-          >
-            Save
-          </button>
+         <button
+        onClick={handleSubmit(onSubmit, onError)}
+        className="bg-white text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors duration-300 text-base border border-[#DADADA]"
+      >
+        Save
+      </button>
         </div>
       </form>
     </>
