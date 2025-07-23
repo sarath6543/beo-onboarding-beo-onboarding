@@ -3,31 +3,49 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import image_test from "@/assets/image_test.svg";
+import pre_join from "@/assets/pre_joining.png";
+import bgv from "@/assets/bgv.png";
+import day1 from "@/assets/day_one.png";
 import buddy from "@/assets/know-your-buddy.svg";
 import policy from "@/assets/policies.svg";
 import life from "@/assets/life.svg";
 import location from "@/assets/location.svg";
 import PageLayout from "../../beolayer/layout/PageLayout";
 import StepItem from "../../beolayer/components/base/Step/StepItem";
+import review_icon from '@/assets/review_icon.svg'
+
+
 
 const Home = () => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
 
-  const steps = [
-    { label:  t("home.review"), status: "Completed", path: "/offer" },
-    {
-      label: t("home.BGV_Submission"),
-      status: "InProgress",
-      path: "/back-ground-verification-main",
-    },
-    {
-      label: t("home.Pre_Joining"),
-      status: "Yet to start",
-      path: "/formalities",
-    },
-    { label: t("home.Day_1"), status: "Yet to start", path: "/day1" },
-  ];
+const steps = [
+  {
+    icon: review_icon,
+    label: t("home.review"),
+    status: "Completed",
+    path: "/offer",
+  },
+  {
+    icon: bgv,
+    label: t("home.BGV_Submission"),
+    status: "InProgress",
+    path: "/back-ground-verification-main",
+  },
+  {
+    icon: pre_join,
+    label: t("home.Pre_Joining"),
+    status: "Yet to start",
+    path: "/formalities",
+  },
+  {
+    icon: day1,
+    label: t("home.Day_1"),
+    status: "Yet to start",
+    path: "/day1",
+  },
+];
 
   const tiles = [
     {
@@ -96,7 +114,7 @@ const handleTileClick = (tile) => {
               {steps.map((step, index) => (
                 <StepItem
                   key={index}
-                  icon="📄"
+                   icon={step.icon}
                   label={step.label}
                   status={step.status}
                   path={step.path}
