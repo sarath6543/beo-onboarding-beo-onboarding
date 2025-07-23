@@ -163,6 +163,7 @@ const AddressForm = () => {
             <p className="text-lg font-medium col-span-1 sm:col-span-2 lg:col-span-3 mt-4">Permanent Address</p>
             {renderAddressFields("permanent", watchedSameAsCurrent)}
           </div>
+          
 
           {/* <div className="flex justify-end mt-6">
             <button
@@ -172,10 +173,10 @@ const AddressForm = () => {
               Save
             </button>
           </div> */}
-                  <div className="flex justify-end mt-6">
+                  <div className="flex justify-end bg-[#F1F1F1] px-10 py-5">
          <button
            onClick={handleSubmit(onSubmit, onError)}
-           className="bg-white text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors duration-300 text-base border border-[#DADADA]"
+           className="bg-white text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors duration-300 text-base border border-[#9D9D9D]"
          >           Save         </button>
        </div>
         </form>

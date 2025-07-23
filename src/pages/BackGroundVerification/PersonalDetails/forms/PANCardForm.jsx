@@ -136,10 +136,10 @@ export default function PANCardForm() {
       </FormWrapper>
 
       {/* Save Button */}
-      <div className="flex justify-end mt-6">
+      <div className="flex justify-end bg-[#F1F1F1] px-10 py-5">
         <button
           onClick={handleSubmit(onSubmit, onError)}
-          className="bg-white text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors duration-300 text-base border border-[#DADADA]"
+          className="bg-white text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors duration-300 text-base border border-[#9D9D9D]"
         >
           Save
         </button>
