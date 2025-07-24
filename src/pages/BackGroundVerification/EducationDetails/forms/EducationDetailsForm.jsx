@@ -5,7 +5,6 @@ import useEducationStore from '../../../../beolayer/stores/BGV/EducationalDetail
 import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from "react-toastify";
 import Toast from '../../../../beolayer/components/base/Toast/Toast';
-import Popup from '../../../../beolayer/components/base/pop-up/Popup';
  
  
  
@@ -16,9 +15,7 @@ const educationModeOptions = [
  
 const EducationDetailsForm = () => {
 
-  const [gapInMonths,setGapInMonths] = useState(null) 
   const [dropdownHidden, setDropdownHidden] = useState("")
-  const [isOpen,setIsOpen] = useState(false)
 
   const {educationList, setEducationList, updateEducation} = useEducationStore()
 
@@ -50,12 +47,6 @@ const EducationDetailsForm = () => {
     return ()=> subscription.unsubscribe();
   },[watch,setEducationList]);
  
-  // const watchedEducation = watch("education");
-
-  // useEffect(()=>{
-  //   setEducationList(watchedEducation);
-  // },[watchedEducation,setEducationList]);
- 
   const handleSelectChange = (e) => {
     const { value } = e.target;
     append({
@@ -77,30 +68,27 @@ const EducationDetailsForm = () => {
     educationList.some((item) => item.key === value);
  
   const onSubmit = (data) => {
+    // const education = [...data.education];
+    // // console.log(education,"saveed");
 
-    const education = [...data.education];
-    // console.log(education,"saveed");
-
-    for (let i = 0; i < education.length; i++){
-      if(education[i].key === '10th'){
-        var end_10th = new Date(education[i].toDate);
-      }else if(education[i].key === '12th'){
-        var start_12th = new Date(education[i].fromDate);
-      }
-    }
-    const gapInMonths =
-        (start_12th.getFullYear() - end_10th.getFullYear()) * 12 +
-        (start_12th.getMonth() - end_10th.getMonth());
+    // for (let i = 0; i < education.length; i++){
+    //   if(education[i].key === '10th'){
+    //     var end_10th = new Date(education[i].toDate);
+    //   }else if(education[i].key === '12th'){
+    //     var start_12th = new Date(education[i].fromDate);
+    //   }
+    // }
+    // const gapInMonths =
+    //     (start_12th.getFullYear() - end_10th.getFullYear()) * 12 +
+    //     (start_12th.getMonth() - end_10th.getMonth());
       
-    if (gapInMonths < 6) {
-        setGapInMonths(gapInMonths)
-        setIsOpen(true)
-        // console.log(
-        //   `Gap of ${gapInMonths} months found between 10th & 12th`
-        // );
-      }
-    
-
+    // if (gapInMonths < 6) {
+    //     setGapInMonths(gapInMonths)
+    //     setIsOpen(true)
+    //     // console.log(
+    //     //   `Gap of ${gapInMonths} months found between 10th & 12th`
+    //     // );
+    //   }
     console.log("Submitted Education Details:", data.education);
     setEducationList(data.education)
   };
@@ -129,7 +117,6 @@ const EducationDetailsForm = () => {
  
   return (
     <>
-      <Popup type={"validation"} children={`Gap of ${gapInMonths} months found between 10th & 12th`} show={isOpen} onClose={() => setIsOpen(false)}/>
       <Toast />
 
       <FormWrapper columns={1}>
@@ -258,14 +245,21 @@ const EducationDetailsForm = () => {
                   </button>
                 </div>
               )}
-   
+
+              {/* Highest education checkbox  */}
               <div className="my-4 me-6 flex justify-end">
                 <label className="flex items-center space-x-2">
                   <span className="text-sm">Click if This is your highest education qualification</span>
                   <input
                     className="w-4 h-5"
                     type="checkbox"
+                    checked={watch(`education.${index}.isHighest`)}
                     {...register(`education.${index}.isHighest`)}
+                    onChange={() => {
+                      fields.forEach((_, idx) => {
+                        setValue(`education.${idx}.isHighest`, idx === index);
+                      });
+                    }}
                   />
                 </label>
               </div>
@@ -295,7 +289,7 @@ const EducationDetailsForm = () => {
     <div>
       <button
         onClick={handleSubmit(onSubmit, onError)}
-        className="bg-white text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors duration-300 text-base border border-[#DADADA]"
+        className="bg-white text-black px-4 py-2 rounded shadow-sm hover:bg-black hover:text-white transition-colors duration-300 text-base border border-[#DADADA]"
       >
         Save
       </button>

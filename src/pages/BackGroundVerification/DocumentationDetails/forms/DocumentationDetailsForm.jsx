@@ -42,7 +42,7 @@ const DocumentationDetailsForm = () => {
       { label: "Marital Status", value: personalDetails.maritalStatus },
     ],
     [
-      { label: "Alternate Mobile Number", value: personalDetails.alternateMobileNumber },
+      { label: "Mobile Number", value: personalDetails.mobileNumber },
       { label: "Blood Group", value: personalDetails.bloodGroup },
       { label: "Mobile", value: personalDetails.mobile },
     ],
@@ -185,6 +185,7 @@ const DocumentationDetailsForm = () => {
                 }]
               : []
           }
+          showImages={true}
         />
 
         <DetailsCard
@@ -223,11 +224,13 @@ const DocumentationDetailsForm = () => {
         <DetailsCard
           title="Experience Details"
           columns={experienceDetailsColumns}
+          
         />
 
         <DetailsCard
           title="Education Details"
           columns={educationDetailsColumns}
+          
         />
       </div>
   

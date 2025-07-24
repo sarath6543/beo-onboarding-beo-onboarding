@@ -37,7 +37,7 @@ const AccordionSection = ({ title, children,icon }) => {
 
       {/* Body */}
       {isOpen && (
-        <div className="bg-white mt-3 rounded-xl md:border-[#CACACA] overflow-hidden">
+        <div className="bg-white mt-3 rounded-xl md:border-[#CACACA] ">
           <div className="">{children}</div>
         </div>
       )}

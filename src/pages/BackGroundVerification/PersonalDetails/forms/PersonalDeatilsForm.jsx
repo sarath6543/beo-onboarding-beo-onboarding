@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 const PersonalDeatilsForm = () => {
 
-  const { firstName, middleName, lastName, fathersName, dob, nationality, placeOfBirth, gender, maritalStatus, email, pin, mobile, alternateMobileNumber, photoFile, photoPreviewUrl, bloodGroup, setPersonalDetailsField } = usePersonalDetailsStore();
+  const { firstName, middleName, lastName, fathersName, dob, nationality, placeOfBirth, gender, maritalStatus, email, pin, mobile, mobileNumber, photoFile, photoPreviewUrl, bloodGroup, setPersonalDetailsField } = usePersonalDetailsStore();
   const {
     register,
     handleSubmit,
@@ -26,10 +26,7 @@ const PersonalDeatilsForm = () => {
       placeOfBirth: placeOfBirth,
       gender: gender,
       maritalStatus: maritalStatus,
-      email: email,
-      pin: pin,
       mobile: mobile,
-      alternateMobileNumber: alternateMobileNumber,
       bloodGroup: bloodGroup,
       photoFile: photoFile ? [photoFile] : null,
     },
@@ -196,14 +193,14 @@ console.log("inside experince details")
         error={errors.maritalStatus?.message}
       />
       <InputField
-        label="Alternate Mobile Number"
+        label="Mobile Number"
         type="text"
-        {...register("alternateMobileNumber", { required: "Alternate Mobile Number is required" })}
-        value={watch("alternateMobileNumber")}
-        onChange={(e) => setValue("alternateMobileNumber", e.target.value)}
-        name="alternateMobileNumber"
+        {...register("mobile", { required: "Mobile Number is required" })}
+        value={watch("mobile")}
+        onChange={(e) => setValue("mobile", e.target.value)}
+        name="mobile"
         asterisk
-        error={errors.alternateMobileNumber?.message}
+        error={errors.mobile?.message}
       />
       <InputField
       label="Blood Group"

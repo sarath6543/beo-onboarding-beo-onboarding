@@ -13,7 +13,6 @@ const usePersonalDetailsStore = create((set) => ({
   email: "",
   pin: "",
   mobile: "",
-  alternateMobileNumber: "",
   photoFile: null,
   photoPreviewUrl: "https://www.gstatic.com/webp/gallery/1.webp", // <-- Add this
   bloodGroup: "",

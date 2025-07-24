@@ -108,14 +108,13 @@ const Popup = ({ onClose, show, title, type, fileType, children }) => {
                   <iframe
                     src={children}
                     title="PDF Preview"
-                    className="w-full h-[500px] rounded border"
+                    className="w-full rounded min-h-[400px]"
+                    style={{ objectFit: "contain" }}
                   ></iframe>
                 ) : (
                   <img className="rounded max-h-[500px] mx-auto" src={children} alt="Preview" />
                 )}
               </div>
-
-              {/* <hr className='border-gray-300 mt-6'/> */}
               <div className='flex justify-center gap-6 mt-6'>
                   <button
                     onClick={onClose}
@@ -123,13 +122,6 @@ const Popup = ({ onClose, show, title, type, fileType, children }) => {
                   >
                   Close
                   </button>
-
-                  {/* <button
-                    // onClick={onClose}
-                    className="bg-black text-gray-200 hover:text-gray-400 rounded-md py-1 px-3"
-                  >
-                    Submit
-                  </button> */}
                 </div>   
             </div>
           </div>
