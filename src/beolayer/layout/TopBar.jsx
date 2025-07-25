@@ -48,7 +48,7 @@ export default function TopBar() {
 
   return (
     <header
-      className="w-full bg-white text-black flex items-center justify-between px-5 relative"
+      className="w-full bg-white text-black flex items-center justify-between px-10 relative"
       style={{ height: 88 }}
     >
       {/* Logo */}
@@ -60,8 +60,8 @@ export default function TopBar() {
         />
       </div>
 
-      {/* Right Section */}
-      <div className="flex items-center space-x-4 relative">
+      <div className="flex items-center gap-4 min-w-[200px] justify-end relative shrink-0">
+   
         <button
           className="relative w-8 h-8 flex items-center justify-center"
           aria-label="Notifications"
