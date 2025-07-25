@@ -8,13 +8,11 @@ import FontIcon from "../../beolayer/components/base/Icons/FontIcon.jsx";
 import email from "@/assets/email_ico.svg";
 import Popup from "../../beolayer/components/base/pop-up/Popup.jsx";
 
-
-
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 const Offer = () => {
   const navigate = useNavigate();
-  const [declinePopup,setDeclinePopup] = useState(false)
+  const [declinePopup, setDeclinePopup] = useState(false);
   const [numPages, setNumPages] = useState();
   const [pageNumber, setPageNumber] = useState(1);
 
@@ -43,7 +41,6 @@ const Offer = () => {
       return Promise.resolve("File size must be under 100 KB.");
     }
 
-    // If image, check dimensions asynchronously
     if (file.type.startsWith("image/")) {
       return new Promise((resolve) => {
         const img = new Image();
@@ -63,11 +60,9 @@ const Offer = () => {
       });
     }
 
-    // For PDFs, no dimension validation needed
     return Promise.resolve("");
   };
 
-  // Handle file input change
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -84,7 +79,6 @@ const Offer = () => {
     }
   };
 
-
   const getPreviewUrl = () => (uploadedFile ? URL.createObjectURL(uploadedFile) : null);
 
   useEffect(() => {
@@ -97,28 +91,29 @@ const Offer = () => {
 
   return (
     <>
-      <Popup type={"validation"} children={`Please briefly explain your reason for declining the offer.`} show={declinePopup} onClose={() => setDeclinePopup(false)}/>
+      <Popup
+        type={"validation"}
+        children={`Please briefly explain your reason for declining the offer.`}
+        show={declinePopup}
+        onClose={() => setDeclinePopup(false)}
+      />
 
       <div className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
         <TopBar />
       </div>
 
-      <div className="mt-20 bg-[url('@/assets/review-bg.svg')] bg-cover bg-center h-64 flex flex-col justify-center items-center h-20 text-white  px-6">
-      <div className="flex items-start justify-between items-center">
-        <div className="mr-4 flex justify-center items-center">
-           <img
-              src= {email} 
-              alt="email_ico"      
-            />
+      <div className="mt-20 bg-[url('@/assets/review-bg.svg')] bg-cover bg-center h-45 flex flex-col justify-center items-center text-white px-6">
+        <div className="flex justify-between items-center">
+          <div className="mr-4 flex justify-center items-center">
+            <img src={email} alt="email_ico" />
+          </div>
+          <div className="flex-1 flex flex-col pb-4">
+            <p className="text-4xl font-light pb-3">Review & Accept Offer</p>
+            <p className="text-lg md:text-xl leading-7 max-w-xl font-light">
+              Your joining date with BEO is
+            </p>
+          </div>
         </div>
-        <div className="flex-1 flex flex-col pb-4">
-        <p className="text-4xl font-light pb-3">Review & Accept Offer</p>
-        <p className="text-lg md:text-xl leading-7 max-w-xl font-light">
-          Your joining date with BEO is
-        </p>
-        </div>
-      </div>
-       
       </div>
 
       <div className="bg-white py-4">
@@ -140,10 +135,14 @@ const Offer = () => {
         <div className="max-w-6xl mx-auto">
           {/* PDF Viewer */}
           <div className="max-h-[280px] overflow-y-auto rounded-xl border border-gray-300 p-5 bg-white mb-8 ">
-            <Document file={samplePDF} onLoadSuccess={onDocumentLoadSuccess}  >
-              <Page pageNumber={pageNumber} scale={.8} width={1100} renderTextLayer={false} />
+            <Document file={samplePDF} onLoadSuccess={onDocumentLoadSuccess}>
+              <Page
+                pageNumber={pageNumber}
+                scale={0.8}
+                width={1100}
+                renderTextLayer={false}
+              />
             </Document>
-
           </div>
 
           {/* Form */}
@@ -179,15 +178,10 @@ const Offer = () => {
                   Upload Sign
                 </label>
 
-                {/* Upload Box (Always Visible) */}
-               <div
-  className="border border-gray-300 rounded-lg text-sm text-gray-700 flex items-center justify-center bg-white relative overflow-hidden mx-auto"
-  style={{
-    width: "100%",
-    maxWidth: "600px",
-    height: "200px", // 🔐 Fixed height
-  }}
->
+                <div
+                  className="border border-gray-300 rounded-lg text-sm text-gray-700 flex items-center justify-center bg-white relative overflow-hidden mx-auto"
+                  style={{ width: "100%", maxWidth: "600px", height: "150px" }}
+                >
                   {!uploadedFile && (
                     <label className="flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 w-full h-full transition-all duration-300">
                       <FontIcon
@@ -202,32 +196,61 @@ const Offer = () => {
                     </label>
                   )}
 
-                  {/* File Name */}
                   {uploadedFile && !previewOpen && (
-                    <p className="text-sm text-center break-words">{uploadedFile.name}</p>
+                    <p className="text-sm text-center break-words">
+                      {uploadedFile.name}
+                    </p>
                   )}
 
-                  {/* File Preview */}
-                  {uploadedFile && previewOpen && (
-                    <div className="w-full h-full flex items-center justify-center">
-                      {uploadedFile.type === "application/pdf" ? (
-                        <iframe
-                          src={getPreviewUrl()}
-                          title="PDF Preview"
-                          className="w-full h-full rounded"
-                          style={{ objectFit: "contain" }}
-                        />
-                      ) : (
-                        <img
-                          src={getPreviewUrl()}
-                          alt="Preview"
-                          className="max-w-full max-h-full object-contain rounded"
-                        />
-                      )}
-                    </div>
-                  )}
+             {/* {uploadedFile && previewOpen && (
+  <div
+    className="flex items-center justify-center border border-gray-400 bg-gray-50 rounded overflow-hidden mx-auto"
+    style={{ width: "280px", height: "120px" }}
+  >
+    {uploadedFile.type === "application/pdf" ? (
+      <iframe
+        src={getPreviewUrl()}
+        title="PDF Preview"
+        className="w-full h-full"
+        style={{ objectFit: "contain" }}
+      />
+    ) : (
+      <img
+        src={getPreviewUrl()}
+        alt="Preview"
+        className="max-w-full max-h-full object-contain"
+      />
+    )}
+  </div>
+)} */}
+{uploadedFile && previewOpen && (
+  <div
+    className="relative border-2 border-gray-500 bg-white flex items-center justify-center rounded mx-auto"
+    style={{ width: "280px", height: "120px" }}
+  >
+    {uploadedFile.type === "application/pdf" ? (
+      <iframe
+        src={getPreviewUrl()}
+        title="PDF Preview"
+        className="w-full h-full"
+        style={{ objectFit: "contain" }}
+      />
+    ) : (
+      <img
+        src={getPreviewUrl()}
+        alt="Signature Preview"
+        className="max-w-full max-h-full object-contain"
+        style={{
+          width: "100%",
+          height: "100%",
+        }}
+      />
+    )}
+  </div>
+)}
 
-                  {/* Single Hidden Input - always present */}
+
+
                   <input
                     type="file"
                     accept=".pdf,.jpg,.jpeg,.png"
@@ -237,20 +260,18 @@ const Offer = () => {
                   />
                 </div>
 
-
-                {/* Footer Row: file type + buttons */}
                 <div className="mt-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs text-gray-600">
                   <div className="flex">
-                    <span className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm">PDF</span>                
                     <span className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm">JPEG</span>
                     <span className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm">PNG</span>
-                    <span className="px-4 py-2 border mr-1 rounded-md text-sm"> &lt; 100 KB</span>            
+                    <span
+                      className="px-4 py-2 border mr-1 rounded-md text-[10px]"
+                      style={{ display: "inline-block", whiteSpace: "normal", lineHeight: "1" }}
+                    >
+                      &lt; 100 KB<br />
+                      &lt; 280px X 120px
+                    </span>
                   </div>
-                  {/* <div className="flex">
-                    <button className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm">
-                      view
-                    </button>
-                  </div> */}
 
                   {uploadedFile && (
                     <div className="flex gap-2 text-xs">
@@ -273,9 +294,7 @@ const Offer = () => {
                   )}
                 </div>
 
-                {error && (
-                  <div className="text-red-500 text-xs mt-1">{error}</div>
-                )}
+                {error && <div className="text-red-500 text-xs mt-1">{error}</div>}
               </div>
             </div>
           </div>
@@ -285,9 +304,10 @@ const Offer = () => {
       {/* Footer */}
       <div className="bg-[#F3F3F3] w-full fixed bottom-0 py-2 border-t border-gray-300">
         <div className="max-w-6xl mx-auto px-2 flex flex-col sm:flex-row justify-end gap-5">
-          <button 
+          <button
             onClick={() => setDeclinePopup(true)}
-            className="px-7 py-3 text-sm rounded-full border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 font-semibold transition">
+            className="px-7 py-3 text-sm rounded-full border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 font-semibold transition"
+          >
             Decline
           </button>
           <button className="px-7 py-3 text-sm rounded-full bg-yellow-400 text-gray-700 hover:bg-yellow-500 transition font-semibold">

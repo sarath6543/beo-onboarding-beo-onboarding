@@ -138,9 +138,9 @@ const AddressForm = () => {
   return (
     <>
       <Toast />
-      <div className="p-4 sm:p-6 md:p-8">
+      <div className="">
         <form onSubmit={handleSubmit(onSubmit, onError)}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-10">
             <p className="text-lg font-medium col-span-1 sm:col-span-2 lg:col-span-3">Current Address</p>
             {renderAddressFields("current")}
             <div className="col-span-1 sm:col-span-2 lg:col-span-3 mt-2">
