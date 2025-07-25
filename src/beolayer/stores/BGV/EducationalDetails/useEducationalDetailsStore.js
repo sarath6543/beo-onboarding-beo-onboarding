@@ -11,7 +11,7 @@ import { create } from 'zustand';
       specialization: "",
       modeOfEducation: "",
       certificate:null,
-      certificateFilePreviewUrl:"https://www.gstatic.com/webp/gallery/1.webp",
+      certificateFilePreviewUrl:"",
       isHighest:"",
       key: "10th",
     },

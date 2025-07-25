@@ -176,7 +176,7 @@ const ExperienceDetailsForm = () => {
                 />
                 <InputField
                   label="From Date"
-                  type="date"
+                  type="month"
                   asterisk
                   {...register(`experiences.${index}.startDate`, {
                     required: "From Date is required",
@@ -185,7 +185,7 @@ const ExperienceDetailsForm = () => {
                 />
                 <InputField
                   label="To Date"
-                  type="date"
+                  type="month"
                   asterisk={!isCurrentOrg}
                   {...register(`experiences.${index}.lastWorkingDate`, {
                     required: !isCurrentOrg ?"To Date is required" : false,
@@ -193,9 +193,9 @@ const ExperienceDetailsForm = () => {
                   error={errors.experiences?.[index]?.lastWorkingDate?.message}
                 />
   
-                {/* Salary Slip Upload */}
+                {/* Salary Slip & Experience letter Upload */}
                 <InputField
-                  label="Salary Slip"
+                  label={isCurrentOrg ? "Salary Slip" : " Experience Letter"}
                   type="upload"
                   {...register(`experiences.${index}.salaryFile`, {
                     required: "Salary Slip is required",
@@ -241,7 +241,8 @@ const ExperienceDetailsForm = () => {
                   error={errors.experiences?.[index]?.relievingFile?.message}
                 />
 
-                {index !== 0 &&(
+                  {/* Extra optional input box */}
+                {/* {index !== 0 &&(
                   <InputField
                   label="Company Name"
                   type="text"
@@ -251,7 +252,7 @@ const ExperienceDetailsForm = () => {
                   })}
                   error={errors.experiences?.[index]?.companyName?.message}
                 />
-                )}
+                )} */}
 
               </FormWrapper>
   

@@ -4,7 +4,7 @@ const useAadharDetailsStore = create((set) => ({
     aadharNumber: "",
     aadharName: "",
     aadharFile: null,
-        aadharFilePreviewUrl: "https://www.gstatic.com/webp/gallery/1.webp",
+        aadharFilePreviewUrl: "",
     setAadharField: (name, value) => set((state) => ({
         ...state,
         [name]: value,

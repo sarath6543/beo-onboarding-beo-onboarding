@@ -8,17 +8,31 @@ const DetailsCard = ({ title, heading, columns, images = [] }) => {
     "Experience Details",
     "Education Details",
   ];
-
-  console.log(images[0]);
+  const sectionImage = [
+    "Personal Details",
+    "PAN Card Details",
+    "Aadhaar Card Details",
+    "Address Details",
+  ];
 
   // Normalize columns: if not sectioned, wrap as a single section
   const sections =
     Array.isArray(columns) && columns.length > 0 && columns[0].data
       ? columns
       : [{ data: columns }];
+  console.log("daat", sections);
 
   return (
     <>
+      <Popup
+        type="viewFile"
+        fileType={selectedImg?.type}
+        children={selectedImg?.url}
+        title={selectedImg?.label}
+        show={!!selectedImg}
+        onClose={() => setSelectedImg(null)}
+      />
+
       <div className="relative border border-gray-300 rounded-lg px-6 pt-8 pb-6 max-w-full font-sans bg-white">
         {/* Floating title */}
         {title && (
@@ -64,66 +78,59 @@ const DetailsCard = ({ title, heading, columns, images = [] }) => {
                   ))}
 
                   {/*  */}
-                  <div className="flex justify-end w-full lg:w-auto">
-                    <div className="flex flex-wrap gap-4">
-                      {Array.isArray(section.img) && section.img.length > 0 && (
-                        <div className="flex flex-row gap-8 items-center min-w-[120px]">
-                          {section.img.map((img, index) => {
-                            const imageKey = `section-${sectionIdx}-${index}`;
-                            // console.log(imageKey);
-                            return (
-                              <div
-                                key={index}
-                                className="mb-4 flex flex-col items-center"
-                              >
-                                <div className="text-xs text-gray-500 mb-1">
-                                  {img.label}
+                  {!sectionImage.includes(title) && (
+                    <div className="flex justify-end w-full lg:w-auto">
+                      <div className="flex flex-wrap gap-4">
+                        {Array.isArray(section.img) &&
+                        section.img.length > 0 ? (
+                          <div className="flex flex-row gap-8 items-center min-w-[120px]">
+                            {section?.img.map((img, index) => {
+                              const imageKey = `section-${sectionIdx}-${index}`;
+                              // console.log(img);
+                              return (
+                                <div
+                                  key={index}
+                                  className="mb-4 flex flex-col items-center"
+                                >
+                                  {img.label && (
+                                    <div className="text-xs text-gray-500 mb-1">
+                                      {img.label}
+                                    </div>
+                                  )}
+
+                                  {img.type === "application/pdf" ? (
+                                    <div className="w-16 h-16 mb-2 flex items-center justify-center bg-gray-100 border border-gray-300 rounded text-xs text-gray-600">
+                                      PDF
+                                    </div>
+                                  ) : (
+                                    <img
+                                      src={img.url}
+                                      alt={img.label || "Image"}
+                                      className="w-16 h-16 rounded-md object-cover mb-2 border border-gray-300"
+                                    />
+                                  )}
+
+                                  {img.onViewClick && (
+                                    <button
+                                      // onClick={() => setOpenImageKey(imageKey)}
+                                      onClick={() => setSelectedImg(img)}
+                                      className="text-xs px-3 py-1 border border-gray-400 rounded hover:bg-gray-100 transition"
+                                    >
+                                      View 👁
+                                    </button>
+                                  )}
                                 </div>
-                                {img.type === "application/pdf" ? (
-                                  // <iframe
-                                  //   src={img.url}
-                                  //   title="PDF Preview"
-                                  //   className="w-16 h-16 rounded border"
-                                  // ></iframe>
-                                  <div className="w-16 h-16 mb-2 flex items-center justify-center bg-gray-100 border border-gray-300 rounded text-xs text-gray-600">
-                                    PDF
-                                  </div>
-                                ) : (
-                                  <img
-                                    src={img.url}
-                                    alt={img.label || `Image`}
-                                    className="w-16 h-16 rounded-md object-cover mb-2 border border-gray-300"
-                                  />
-                                )}
-                                {img.onViewClick && (
-                                  <button
-                                    onClick={() => setOpenImageKey(imageKey)}
-                                    className="text-xs px-3 py-1 border border-gray-400 rounded hover:bg-gray-100 transition"
-                                  >
-                                    View 👁
-                                  </button>
-                                )}
-                                <Popup
-                                  type="viewFile"
-                                  fileType={
-                                    img.type ||
-                                    (img.url?.endsWith(".pdf")
-                                      ? "application/pdf"
-                                      : "image/*")
-                                  }
-                                  children={img.url}
-                                  title={img.label}
-                                  // show={openImageKey}
-                                  // onClose={() => setOpenImageKey(null)}
-                                />
-                                {/* { console.log("Popup received fileType:", img.type, "url:",img.url )} */}
-                              </div>
-                            );
-                          })}
-                        </div>
-                      )}
+                              );
+                            })}
+                          </div>
+                        ) : (
+                          <div className="me-7 w-17 h-17 mb-2 flex items-center justify-center bg-gray-50 border border-dashed border-gray-400 rounded text-[10px] text-gray-500 text-center">
+                            No File uploaded
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
+                  )}
                   {/*  */}
                 </div>
               </div>
@@ -154,8 +161,8 @@ const DetailsCard = ({ title, heading, columns, images = [] }) => {
                     )}
                   </div>
                 ) : (
-                  <div className="w-16 h-16 mb-2 flex items-center justify-center bg-gray-50 border border-dashed border-gray-400 rounded text-[10px] text-gray-500 text-center">
-                    No image uploaded
+                  <div className="me-7 w-16 h-16 mb-2 flex items-center justify-center bg-gray-50 border border-dashed border-gray-400 rounded text-[10px] text-gray-500 text-center">
+                    No File uploaded
                   </div>
                 )}
               </div>
@@ -163,15 +170,6 @@ const DetailsCard = ({ title, heading, columns, images = [] }) => {
           )}
         </div>
       </div>
-
-      <Popup
-        type="viewFile"
-        fileType={selectedImg?.type}
-        children={selectedImg?.url}
-        title={selectedImg?.label}
-        show={!!selectedImg}
-        onClose={() => setSelectedImg(null)}
-      />
     </>
   );
 };

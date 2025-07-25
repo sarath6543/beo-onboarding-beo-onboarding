@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import TopBar from "../../beolayer/layout/TopBar";
 import { useNavigate } from "react-router-dom";
 import FontIcon from "../../beolayer/components/base/Icons/FontIcon.jsx";
-import email from "@/assets/email_ico.svg";
+// import email from "@/assets/email_ico.svg";
 import Popup from "../../beolayer/components/base/pop-up/Popup.jsx";
 
 

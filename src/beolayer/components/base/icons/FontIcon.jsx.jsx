@@ -10,6 +10,7 @@ import { IoArrowBack } from "react-icons/io5";
 import { FaAsterisk } from "react-icons/fa";
 import { FaCircleExclamation } from "react-icons/fa6";
 import { FaChevronDown } from "react-icons/fa";
+import { MdOutlineErrorOutline } from "react-icons/md";
 
 const iconMap = {  
 Person: IoPersonCircle,
@@ -22,7 +23,8 @@ Asterisk: FaAsterisk,
 Upload: CgSoftwareUpload,
 Back: IoArrowBack,
 Exclamation:FaCircleExclamation,
-downIcon:FaChevronDown
+downIcon:FaChevronDown,
+errorIcon:MdOutlineErrorOutline,
 };
 
 const FontIcon = ({ iconName, color = '#000', size = '16px', display='inline', verticalAlign='text-bottom',margin="0.25rem"}) => {
