@@ -20,7 +20,7 @@ const DetailsCard = ({ title, heading, columns, images = [] }) => {
     Array.isArray(columns) && columns.length > 0 && columns[0].data
       ? columns
       : [{ data: columns }];
-  console.log("daat", sections);
+  
 
   return (
     <>
@@ -80,12 +80,12 @@ const DetailsCard = ({ title, heading, columns, images = [] }) => {
                   {/*  */}
                   {!sectionImage.includes(title) && (
                     <div className="flex justify-end w-full lg:w-auto">
-                      <div className="flex flex-wrap gap-4">
+                      <div className="flex flex-wrap ">
                         {Array.isArray(section.img) &&
                         section.img.length > 0 ? (
-                          <div className="flex flex-row gap-8 items-center min-w-[120px]">
+                          <div className="flex flex-row items-center">
                             {section?.img.map((img, index) => {
-                              const imageKey = `section-${sectionIdx}-${index}`;
+                              // const imageKey = `section-${sectionIdx}-${index}`;
                               // console.log(img);
                               return (
                                 <div
