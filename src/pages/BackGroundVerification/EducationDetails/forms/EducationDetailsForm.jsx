@@ -5,6 +5,7 @@ import useEducationStore from '../../../../beolayer/stores/BGV/EducationalDetail
 import { useFieldArray, useForm } from 'react-hook-form';
 import { toast } from "react-toastify";
 import Toast from '../../../../beolayer/components/base/Toast/Toast';
+import FontIcon from '../../../../beolayer/components/base/Icons/FontIcon.jsx';
  
  
  
@@ -157,14 +158,15 @@ const EducationDetailsForm = () => {
                     />
                     <InputField
                       label="From Date"
-                      type="date"
+                      type="month"
                       {...register(`education.${index}.fromDate`, { required: true })}
                       error={errors?.education?.[index]?.fromDate && "Required"}
                       asterisk
                     />
                     <InputField
                       label="To Date"
-                      type="date"
+                      type="month"
+                      placeholder="MM/YYYY"
                       {...register(`education.${index}.toDate`, { required: true })}
                       error={errors?.education?.[index]?.toDate && "Required"}
                       // {...register(`education.${index}.toDate`, { 
@@ -249,12 +251,15 @@ const EducationDetailsForm = () => {
               {/* Highest education checkbox  */}
               <div className="my-4 me-6 flex justify-end">
                 <label className="flex items-center space-x-2">
-                  <span className="text-sm">Click if This is your highest education qualification</span>
+                  <span className="text-sm flex items-center space-x-1">
+                    {errors?.education?.[index]?.isHighest ? (<FontIcon color='red' iconName={"errorIcon"}/>) : ''}
+                    <span>Click if This is your highest education qualification</span>
+                  </span>
                   <input
-                    className="w-4 h-5"
+                    className="w-4 h-5" 
                     type="checkbox"
                     checked={watch(`education.${index}.isHighest`)}
-                    {...register(`education.${index}.isHighest`)}
+                    {...register(`education.${index}.isHighest`, {required : "check highest education qualification checkbox"})}
                     onChange={() => {
                       fields.forEach((_, idx) => {
                         setValue(`education.${idx}.isHighest`, idx === index);
