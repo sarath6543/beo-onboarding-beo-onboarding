@@ -6,6 +6,7 @@ import { pdfjs } from "react-pdf";
 import { Document, Page } from "react-pdf";
 import FontIcon from "../../beolayer/components/base/Icons/FontIcon.jsx";
 import email from "@/assets/email_ico.svg";
+import Popup from "../../beolayer/components/base/pop-up/Popup.jsx";
 
 
 
@@ -13,6 +14,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/b
 
 const Offer = () => {
   const navigate = useNavigate();
+  const [declinePopup,setDeclinePopup] = useState(false)
   const [numPages, setNumPages] = useState();
   const [pageNumber, setPageNumber] = useState(1);
 
@@ -95,6 +97,8 @@ const Offer = () => {
 
   return (
     <>
+      <Popup type={"validation"} children={`Please briefly explain your reason for declining the offer.`} show={declinePopup} onClose={() => setDeclinePopup(false)}/>
+
       <div className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
         <TopBar />
       </div>
@@ -281,7 +285,9 @@ const Offer = () => {
       {/* Footer */}
       <div className="bg-[#F3F3F3] w-full fixed bottom-0 py-2 border-t border-gray-300">
         <div className="max-w-6xl mx-auto px-2 flex flex-col sm:flex-row justify-end gap-5">
-          <button className="px-7 py-3 text-sm rounded-full border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 font-semibold transition">
+          <button 
+            onClick={() => setDeclinePopup(true)}
+            className="px-7 py-3 text-sm rounded-full border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 font-semibold transition">
             Decline
           </button>
           <button className="px-7 py-3 text-sm rounded-full bg-yellow-400 text-gray-700 hover:bg-yellow-500 transition font-semibold">

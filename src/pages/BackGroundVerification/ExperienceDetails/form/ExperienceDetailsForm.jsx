@@ -118,15 +118,29 @@ const ExperienceDetailsForm = () => {
       <Popup type={"validation"} children={gapMessage} show={isOpen} onClose={() => setIsOpen(false)}/>
       <Toast />
 
-      <form >
+    <FormWrapper columns={1}>
         {fields.map((field, index) => {
           const watchedSalaryFile = watch(`experiences.${index}.salaryFile`);
           const watchedRelievingFile = watch(`experiences.${index}.relievingFile`);
           const isCurrentOrg = watch(`experiences.${index}.isCurrentOrg`);
  
           return (
-            <div key={field.id} className="mb-8">
+            <div key={field.id}>
               <p className="text-xl font-medium mb-6 ml-2">Experience {index +1}</p>
+
+              {/* Current Org Checkbox */}
+              {index === 0 &&(
+                <div className=" me-11 flex justify-end">
+                <label className="flex items-center space-x-2">
+                  <span className="text-sm">Serving notice period</span>
+                  <input
+                    className="w-4 h-5"
+                    type="checkbox"
+                    {...register(`experiences.${index}.isCurrentOrg`)}
+                  />
+                </label>
+              </div>)}
+
               <FormWrapper columns={3}>
                 <InputField
                   label="Company Name"
@@ -240,43 +254,45 @@ const ExperienceDetailsForm = () => {
                   placeholder={watchedRelievingFile?.name || "Choose relieving letter"}
                   error={errors.experiences?.[index]?.relievingFile?.message}
                 />
+
+                {index !== 0 &&(
+                  <InputField
+                  label="Company Name"
+                  type="text"
+                  asterisk
+                  {...register(`experiences.${index}.companyName`, {
+                    required: "Company Name is required",
+                  })}
+                  error={errors.experiences?.[index]?.companyName?.message}
+                />
+                )}
+
               </FormWrapper>
   
-              {/* Current Org Checkbox */}
-              <div className="my-4 me-6 flex justify-end">
-                <label className="flex items-center space-x-2">
-                  <span className="text-sm">Current Organization</span>
-                  <input
-                    className="w-4 h-5"
-                    type="checkbox"
-                    {...register(`experiences.${index}.isCurrentOrg`)}
-                  />
-                </label>
-              </div>
   
               {/* Delete Button */}
-              {fields.length > 1 && (
+              {fields.length > 1 && index == 1 &&(
                 <div className="flex justify-end mb-8 pr-4">
                  <button
-  type="button"
-  className="px-4 py-2 mt-2 bg-[#DADADA] hover:bg-[#000000] hover:text-white rounded"
-  onClick={() => remove(index)}
->
-  Delete
-</button>
+                    type="button"
+                    className="px-4 py-2 mt-2 bg-[#DADADA] hover:bg-[#000000] hover:text-white rounded"
+                    onClick={() => remove(index)}
+                  >
+                    Delete
+                  </button>
                 </div>
               )}
   
-              <hr className="my-6" />
+              <hr/>
             </div>
           );
         })}
   
         {/* Add / Save Buttons */}
-        <div className="flex justify-between mb-8 px-2">
+        <div className="flex justify-between items-center w-full">
           <button
             type="button"
-            className="bg-white text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors duration-300 text-base border border-[#DADADA]"
+            className="bg-white text-black px-4 py-2 rounded-md shadow-sm hover:bg-black hover:text-white transition-colors duration-300 text-base border border-[#DADADA]"
             onClick={() =>
               append({
                 companyName: "",
@@ -296,14 +312,14 @@ const ExperienceDetailsForm = () => {
           >
             ADD +
           </button>
-         <button
-        onClick={handleSubmit(onSubmit, onError)}
-        className="bg-white text-black px-4 py-2 rounded hover:bg-black hover:text-white transition-colors duration-300 text-base border border-[#DADADA]"
-      >
-        Save
-      </button>
+          <button
+            onClick={handleSubmit(onSubmit, onError)}
+            className="bg-white text-black px-4 py-2 rounded-md shadow-sm hover:bg-black hover:text-white transition-colors duration-300 text-base border border-[#DADADA]"
+          >
+            Save
+          </button>
         </div>
-      </form>
+  </FormWrapper>
     </>
   );
 };
