@@ -209,25 +209,104 @@ const ExperienceDetailsForm = () => {
                 <InputField
                   label={isCurrentOrg ? "Salary Slip" : " Experience Letter"}
                   type="upload"
+                  multiple={isCurrentOrg}
                   {...register(`experiences.${index}.salaryFile`, {
                     required: "Salary Slip is required",
                   })}
                   onChange={(e) => {
-                    const file = e.target.files[0];
-                    if (file) {
+                    const newFiles = Array.from(e.target.files || []);
+
+                    if (isCurrentOrg && newFiles.length > 0) {
+                      
+                      const existingValue = watch(`experiences.${index}.salaryFile`);
+                      let existingFiles = [];
+
+                      if (Array.isArray(existingValue)) {
+                        existingFiles = existingValue;
+                      } else if (existingValue instanceof File) {
+                        existingFiles = [existingValue];
+                      }
+
+                      // Avoid duplicates by name (optional)
+                      const filteredNewFiles = newFiles.filter(
+                        (file) => !existingFiles.some((existing) => existing.name === file.name)
+                      );
+
+                      const mergedFiles = [...existingFiles, ...filteredNewFiles];
+
+                      const previewUrls = mergedFiles.map((file) =>
+                        URL.createObjectURL(file)
+                      );
+
+                      setValue(`experiences.${index}.salaryFile`, mergedFiles);
+                      setValue(`experiences.${index}.salaryPreviewUrl`, previewUrls);
+                      updateExperienceField(index, "salaryFile", mergedFiles);
+                      updateExperienceField(index, "salaryPreviewUrl", previewUrls);
+
+                    } else if (!isCurrentOrg && newFiles.length > 0) {
+                      const file = newFiles[0];
                       const previewUrl = URL.createObjectURL(file);
                       setValue(`experiences.${index}.salaryFile`, file);
                       setValue(`experiences.${index}.salaryPreviewUrl`, previewUrl);
                       updateExperienceField(index, "salaryFile", file);
                       updateExperienceField(index, "salaryPreviewUrl", previewUrl);
                     }
+
+                    // if(files.length > 0) {
+                    //   if(isCurrentOrg){
+                    //     const existingFiles = watch(`experiences.${index}.salaryFile`) || [];
+                    //     const updatedFiles = [...existingFiles, ...files]
+                    //     const previews = files.map(file => ({file, previewUrl : URL.createObjectURL(file)}));
+
+                    //     setValue(`experiences.${index}.salaryFile`, updatedFiles);
+                    //     setValue(`experiences.${index}.salaryPreviewUrl`, previews.map(p => p.previewUrl));
+                    //     updateExperienceField(index, "salaryFile", files);
+                    //     updateExperienceField(index, "salaryPreviewUrl", previews.map(p => p.previewUrl));
+                    //   }
+                    //    else {
+                    //     const file = files[0];
+                    //     const previewUrl = URL.createObjectURL(file);
+                    //     setValue(`experiences.${index}.salaryFile`, file);
+                    //     setValue(`experiences.${index}.salaryPreviewUrl`, previewUrl);
+                    //     updateExperienceField(index, "salaryFile", file);
+                    //     updateExperienceField(index, "salaryPreviewUrl", previewUrl);
+                    //   }
+                    // }
+                  }}
+                  onFileRemove={(fileIndex) => {
+                    const currentFiles = watch(`experiences.${index}.salaryFile`);
+                    if (Array.isArray(currentFiles)) {
+                      const updatedFiles = currentFiles.filter((_, i) => i !== fileIndex);
+                      const previewUrls = updatedFiles.map((file) => URL.createObjectURL(file));
+                      setValue(`experiences.${index}.salaryFile`, updatedFiles);
+                      setValue(`experiences.${index}.salaryPreviewUrl`, previewUrls);
+                      updateExperienceField(index, "salaryFile", updatedFiles);
+                      updateExperienceField(index, "salaryPreviewUrl", previewUrls);
+                    }
                   }}
                   name={`experiences.${index}.salaryFile`}
                   asterisk
-                  value={watchedSalaryFile || experienceList[index].salaryPreviewUrl}
+                  value={
+                    isCurrentOrg ?
+                      watchedSalaryFile || experienceList[index]?.salaryFile || []
+                      : 
+                      watchedSalaryFile || experienceList[index]?.salaryFile || null
+                    }
                   placeholder={watchedSalaryFile?.name || "Choose salary file"}
                   error={errors.experiences?.[index]?.salaryFile?.message}
                 />
+
+                    {fields.length > 1 && (
+          <div className="flex justify-end mt-2">
+            <button
+              type="button"
+              className="px-4 py-2 bg-red-500 text-white rounded"
+              onClick={() => remove(index)}
+            >
+              Delete
+            </button>
+          </div>
+        )}
   
                 {/* Relieving Letter Upload */}
                 <InputField

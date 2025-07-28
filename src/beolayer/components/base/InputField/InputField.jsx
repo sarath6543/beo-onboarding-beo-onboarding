@@ -11,6 +11,7 @@ const InputField = ({
   asterisk,
   disabled,
   options = [],
+  multiple,
   error,
   ...rest
 }) => {
@@ -37,7 +38,7 @@ const InputField = ({
             <button
               type="button"
              className="w-1/4 bg-gray-500 text-white px-4 py-2 font-light"
-              onClick={() => document.getElementById(name).click()}
+              onClick={() => document.getElementById(name)?.click()}
             >
               Browse
             </button>
@@ -45,6 +46,7 @@ const InputField = ({
               id={name}
               type="file"
               name={name}
+              multiple={multiple}
               onChange={onChange}
               disabled={disabled}
               className="w-3/4 px-4 py-2 text-sm text-gray-700 focus:outline-none"
@@ -54,11 +56,36 @@ const InputField = ({
               type="text"
               readOnly
               // value={value?.name || ""}
-              value={value?.name || value || ""}
+              value={
+                multiple ? 
+                  Array.isArray(value) ?
+                    value.map(file => file.name).join(" ,  ")
+                    : ""
+                : value?.name || value || ""
+              }
               className="w-3/4 px-4 py-2 text-sm text-gray-700 focus:outline-none"
               placeholder="Upload file..."
             />
           </div>
+
+          {/* Show list of file names below if multiple */}
+          {multiple && Array.isArray(value) && value.length > 0 && (
+            <ul className="mt-2 text-sm text-gray-700 list-disc list-inside space-y-1">
+              {value.map((file, idx) => (
+                <li key={idx} className="flex items-center  pr-2">
+                  <span className="truncate">{file.name}</span>
+                  <button
+                    type="button"
+                    onClick={() => rest.onFileRemove?.(idx)}
+                    className="ml-2 text-red-500 hover:text-red-700 text-xs"
+                  >
+                    X
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+
           <div className="flex mt-2">
             <span className="px-4 py-1 mr-1 rounded-md bg-gray-200 text-xs">PNG</span>
             <span className="px-4 py-1 mr-1 rounded-md bg-gray-200 text-xs">JPG</span>
@@ -127,7 +154,13 @@ const InputField = ({
         //   </select>
         // </div>
  
-      ) : (
+      ) 
+      // : isMultiUpload ? (
+      //   <div className="w-full"> 
+
+      //   </div>
+      // ) 
+      : (
         <input
           type={type}
           name={name}
