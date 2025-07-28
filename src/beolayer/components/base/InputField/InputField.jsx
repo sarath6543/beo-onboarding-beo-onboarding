@@ -17,7 +17,8 @@ const InputField = ({
 }) => {
   const isUpload = type === "upload";
   const isDropDown = type === "dropdown";
- 
+  const isMultiUpload = type === "multiFile";
+
   const selectedOption = options.find((option) => option.value === value) || null;
  
   return (
@@ -31,13 +32,53 @@ const InputField = ({
           color="red"
         />
       )}
- 
+
       {isUpload ? (
         <div className="relative mt-1 w-full">
           <div className="flex w-full border border-gray-400 rounded-md overflow-hidden">
             <button
               type="button"
-             className="w-1/4 bg-gray-500 text-white px-4 py-2 font-light"
+              className="w-1/4 bg-gray-500 text-white px-4 py-2 font-light"
+              onClick={() => document.getElementById(name).click()}
+            >
+              Browse
+            </button>
+            <input
+              id={name}
+              type="file"
+              name={name}
+              onChange={onChange}
+              disabled={disabled}
+              className="w-3/4 px-4 py-2 text-sm text-gray-700 focus:outline-none"
+              style={{ display: "none" }}
+            />
+            <input
+              type="text"
+              readOnly
+              // value={value?.name || ""}
+              value={value?.name || value || ""}
+              className="w-3/4 px-4 py-2 text-sm text-gray-700 focus:outline-none"
+              placeholder="Upload file..."
+            />
+          </div>
+          <div className="flex mt-2">
+            <span className="px-4 py-1 mr-1 rounded-md bg-gray-200 text-xs">
+              PNG
+            </span>
+            <span className="px-4 py-1 mr-1 rounded-md bg-gray-200 text-xs">
+              JPG
+            </span>
+            <span className="px-4 py-1 border mr-1 rounded-md text-xs">
+              &lt; 100 KB
+            </span>
+          </div>
+        </div>
+      ) : isMultiUpload ? (
+        <div className="relative mt-1 w-full">
+          <div className="flex w-full border border-gray-400 rounded-md overflow-hidden">
+            <button
+              type="button"
+              className="w-1/4 bg-gray-500 text-white px-4 py-2 font-light"
               onClick={() => document.getElementById(name)?.click()}
             >
               Browse
@@ -49,51 +90,49 @@ const InputField = ({
               multiple={multiple}
               onChange={onChange}
               disabled={disabled}
-              className="w-3/4 px-4 py-2 text-sm text-gray-700 focus:outline-none"
+              // className="w-3/4 px-4 py-2 text-sm text-gray-700 focus:outline-none"
               style={{ display: "none" }}
             />
-            <input
-              type="text"
-              readOnly
-              // value={value?.name || ""}
-              value={
-                multiple ? 
-                  Array.isArray(value) ?
-                    value.map(file => file.name).join(" ,  ")
-                    : ""
-                : value?.name || value || ""
-              }
-              className="w-3/4 px-4 py-2 text-sm text-gray-700 focus:outline-none"
-              placeholder="Upload file..."
-            />
+
+            <div className="w-3/4 px-2 overfow-x-auto flex items-center ">
+              {Array.isArray(value) && value.length === 0 ? 
+                (
+                  <div className="ms-4">
+                    <span className="text-gray-400 whitespace-nowrap">Upload file...</span>
+                  </div>
+                )
+                : (
+                <div className="flex gap-2 text-sm text-gray-700 overflow-hidden">
+                  {value.map((file, idx) => (
+                    <div key={idx} className="px-2 py-1 bg-gray-300 flex justify-center items-center rounded">
+                      <span className="truncate whitespace-nowrap overflow-hidden text-ellipsis max-w-[90px]">{file.name}</span>
+                      <button
+                        type="button"
+                        onClick={() => rest.onFileRemove?.(idx)}
+                        className="ml-2 text-black hover:text-red-700 text-xs"
+                      >
+                        X
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
-
-          {/* Show list of file names below if multiple */}
-          {multiple && Array.isArray(value) && value.length > 0 && (
-            <ul className="mt-2 text-sm text-gray-700 list-disc list-inside space-y-1">
-              {value.map((file, idx) => (
-                <li key={idx} className="flex items-center  pr-2">
-                  <span className="truncate">{file.name}</span>
-                  <button
-                    type="button"
-                    onClick={() => rest.onFileRemove?.(idx)}
-                    className="ml-2 text-red-500 hover:text-red-700 text-xs"
-                  >
-                    X
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-
           <div className="flex mt-2">
-            <span className="px-4 py-1 mr-1 rounded-md bg-gray-200 text-xs">PNG</span>
-            <span className="px-4 py-1 mr-1 rounded-md bg-gray-200 text-xs">JPG</span>
-            <span className="px-4 py-1 border mr-1 rounded-md text-xs">&lt; 100 KB</span>
+            <span className="px-4 py-1 mr-1 rounded-md bg-gray-200 text-xs">
+              PNG
+            </span>
+            <span className="px-4 py-1 mr-1 rounded-md bg-gray-200 text-xs">
+              JPG
+            </span>
+            <span className="px-4 py-1 border mr-1 rounded-md text-xs">
+              &lt; 100 KB
+            </span>
           </div>
         </div>
       ) : isDropDown ? (
-      <div className="w-full mt-1 z-50">
+        <div className="w-full mt-1 z-50">
           <Listbox
             value={selectedOption}
             onChange={(val) =>
@@ -111,9 +150,10 @@ const InputField = ({
                 className={`flex justify-between block w-full rounded-md border border-gray-400 bg-white px-3 py-2 text-left text-sm text-gray-700
                   focus:outline-none focus:border-gray-500`}
               >
-                {selectedOption?.key || "Select"} <FontIcon size="10" iconName={"downIcon"}/>
+                {selectedOption?.key || "Select"}{" "}
+                <FontIcon size="10" iconName={"downIcon"} />
               </ListboxButton>
- 
+
               <ListboxOptions className="absolute z-[5000] mt-1 w-full overflow-visible rounded-md border border-gray-200 bg-white py-1 shadow-lg focus:outline-none">
                 {options.map((option) => (
                   <ListboxOption
@@ -129,12 +169,10 @@ const InputField = ({
                   </ListboxOption>
                 ))}
               </ListboxOptions>
- 
             </div>
           </Listbox>
         </div>
- 
- 
+      ) : (
         // <div className="mb-1">
         //   <select
         //     className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
@@ -153,14 +191,7 @@ const InputField = ({
         //     ))}
         //   </select>
         // </div>
- 
-      ) 
-      // : isMultiUpload ? (
-      //   <div className="w-full"> 
 
-      //   </div>
-      // ) 
-      : (
         <input
           type={type}
           name={name}
@@ -169,17 +200,14 @@ const InputField = ({
           disabled={disabled}
           {...rest}
           className={`mt-1 block w-full px-4 py-2 border rounded-md focus:outline-none
-    ${error ? 'border-gray-400' : 'border-gray-400'}
+    ${error ? "border-gray-400" : "border-gray-400"}
   `}
         />
       )}
- 
- 
+
       {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
     </label>
   );
 };
- 
+
 export default InputField;
- 
- 

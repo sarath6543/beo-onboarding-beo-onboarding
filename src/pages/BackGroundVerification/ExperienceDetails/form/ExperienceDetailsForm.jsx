@@ -207,8 +207,8 @@ const ExperienceDetailsForm = () => {
   
                 {/* Salary Slip & Experience letter Upload */}
                 <InputField
-                  label={isCurrentOrg ? "Salary Slip" : " Experience Letter"}
-                  type="upload"
+                  label={isCurrentOrg ? "Salary Slip" : "Experience Letter"}
+                  type={isCurrentOrg ? "multiFile" : "upload"}
                   multiple={isCurrentOrg}
                   {...register(`experiences.${index}.salaryFile`, {
                     required: "Salary Slip is required",
