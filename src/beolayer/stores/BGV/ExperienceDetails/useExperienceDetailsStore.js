@@ -30,6 +30,13 @@ updateExperienceField: (index, field, value) =>
     updated[index] = { ...updated[index], [field]: value };
     return { experienceList: updated };
   }),
+    setExperienceField: (index, field, value) =>
+    set((state) => {
+      const updated = [...state.experienceList];
+      updated[index] = { ...updated[index], [field]: value };
+      return { experienceList: updated };
+    })
 }));
+
 
 export default useExperienceStore;

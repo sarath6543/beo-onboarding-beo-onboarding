@@ -21,7 +21,12 @@ import { create } from 'zustand';
     set((state) => ({
       educationList: [...state.educationList, newEntry],
     })),
-
+ setEducationalField: (index, field, value) =>
+    set((state) => {
+      const updated = [...state.educationList];
+      updated[index][field] = value;
+      return { educationList: updated };
+    }),
   updateEducation: (index, name, value) =>
     set((state) => {
       const updated = [...state.educationList];
