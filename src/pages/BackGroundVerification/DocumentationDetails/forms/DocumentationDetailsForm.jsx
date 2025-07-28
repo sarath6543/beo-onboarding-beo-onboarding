@@ -3,24 +3,19 @@ import FormWrapper from "../../../../beolayer/components/base/Form/FormWrapper";
 import DetailsCard from "../../../../beolayer/components/base/DetailsCard/DetailsCard";
 import usePersonalDetailsStore from "../../../../beolayer/stores/BGV/PersonalDetails/usePersonalDetailsStore";
 import useExperienceStore from "../../../../beolayer/stores/BGV/ExperienceDetails/useExperienceDetailsStore";
-import usePanCardStore from '../../../../beolayer/stores/BGV/PersonalDetails/usePanCardStore';
-import useAadhaaStore from '../../../../beolayer/stores/BGV/PersonalDetails/useAadharDetailsStore';
+import usePanCardStore from "../../../../beolayer/stores/BGV/PersonalDetails/usePanCardStore";
+import useAadhaaStore from "../../../../beolayer/stores/BGV/PersonalDetails/useAadharDetailsStore";
 import useAddressStore from "../../../../beolayer/stores/BGV/PersonalDetails/useAddressStore";
 import useEducationStore from '../../../../beolayer/stores/BGV/EducationalDetails/useEducationalDetailsStore';
-import Button from "../../../../beolayer/components/base/Button/Button";
 
 const DocumentationDetailsForm = () => {
   const personalDetails = usePersonalDetailsStore();
   const panCardDetails = usePanCardStore();
   const aadhaarDetails = useAadhaaStore();
-  const { experienceList } = useExperienceStore();
-  const { educationList } = useEducationStore();
+  const { experienceList, setExperienceField } = useExperienceStore();
+  const { educationList, setEducationalField } = useEducationStore();
   const addressDetails = useAddressStore();
-
-  const handleView = () => {
-    alert("View clicked");
-  };
-
+console.log(panCardDetails,"kjdhfgkjdfhnkgjdnfkjgdf")
   const handleSave = () => {
     console.log("Save clicked");
   };
@@ -97,156 +92,196 @@ const DocumentationDetailsForm = () => {
     ];
   };
 
-  const educationDetailsColumns = educationList.map((edu) => {
-    const certificateUrl =
-      edu.certificateFilePreviewUrl ||
-      (edu.certificate instanceof File ? URL.createObjectURL(edu.certificate) : null);
-
-    const sectionImages = certificateUrl
-      ? [{
-          label: `${edu.key} Certificate`,
-          url: certificateUrl,
-          type: edu.certificate?.type || "application/pdf",
-          onViewClick: () => window.open(certificateUrl, "_blank"),
-        }]
-      : [];
-
-    return {
-      sectionTitle: edu.key,
-      data: createEducationColumns(edu),
-      img: sectionImages,
-    };
-  });
-
   const createExperienceColumns = (exp) => [
     [
-      { label: "Company Name", value: exp.companyName },
-      { label: "Employee Id", value: exp.employeeId },
-      { label: "Designation", value: exp.designation },
+      { label: "Company Name", value: exp.company },
+      { label: "Role", value: exp.role },
     ],
     [
-      { label: "Location", value: exp.location },
-      { label: "Mode of Employment", value: exp.modeOfEmployement },
       { label: "Start Date", value: exp.startDate },
+      { label: "End Date", value: exp.endDate },
     ],
     [
-      { label: "Last Working Date", value: exp.lastWorkingDate },
+      { label: "Employment Type", value: exp.employmentType },
+      { label: "Current Organization", value: exp.isCurrentOrg ? "Yes" : "No" },
     ],
   ];
 
-  const experienceDetailsColumns = experienceList.map((exp, index) => {
-    const relievingLetterUrl =
-      exp.relievingPreviewUrl ||
-      (exp.relievingFile instanceof File ? URL.createObjectURL(exp.relievingFile) : null);
+const educationDetailsColumns = educationList.map((edu, index) => {
+  const certificateUrl =
+    edu.certificateFilePreviewUrl ||
+    (edu.certificate instanceof File ? URL.createObjectURL(edu.certificate) : null);
 
-    const salarySlipUrl =
-      exp.salaryPreviewUrl ||
-      (exp.salaryFile instanceof File ? URL.createObjectURL(exp.salaryFile) : null);
+  return {
+    sectionTitle: edu.key,
+    data: createEducationColumns(edu),
+    img: [
+      {
+        label: `${edu.key} Certificate`,
+        url: certificateUrl || null,
+        type: edu.certificate?.type,
+        fallback: certificateUrl ? null : "No file uploaded",
+        onViewClick: certificateUrl
+          ? () =>
+              setSelectedImg({
+                label: `${edu.key} Certificate`,
+                url: certificateUrl,
+                type: edu.certificate?.type,
+              })
+          : undefined,
+        onUpload: (file, url) => {
+          setEducationalField(index, "certificate", file);
+          setEducationalField(index, "certificateFilePreviewUrl", url);
+        },
+      },
+    ],
+  };
+});
 
-    const experienceImages = [];
 
-    if (relievingLetterUrl) {
-      experienceImages.push({
+
+
+const experienceDetailsColumns = experienceList.map((exp, index) => {
+  const relievingLetterUrl =
+    exp.relievingPreviewUrl ||
+    (exp.relievingFile instanceof File ? URL.createObjectURL(exp.relievingFile) : null);
+
+  const salarySlipUrl =
+    exp.salaryPreviewUrl ||
+    (exp.salaryFile instanceof File ? URL.createObjectURL(exp.salaryFile) : null);
+
+  return {
+    sectionTitle: `Experience ${index + 1}`,
+    data: createExperienceColumns(exp),
+    img: [
+      {
         label: "Relieving Letter",
-        url: relievingLetterUrl,
-        type: exp.relievingFile?.type || "application/pdf",
-        onViewClick: () => window.open(relievingLetterUrl, "_blank"),
-      });
-    }
+        url: relievingLetterUrl || null,
+        type: exp.relievingFile?.type,
+        fallback: relievingLetterUrl ? null : "No file uploaded",
+        onViewClick: relievingLetterUrl
+          ? () =>
+              setSelectedImg({
+                label: "Relieving Letter",
+                url: relievingLetterUrl,
+                type: exp.relievingFile?.type,
+              })
+          : undefined,
+        onUpload: (file, url) => {
+          setExperienceField(index, "relievingFile", file);
+          setExperienceField(index, "relievingPreviewUrl", url);
+        },
+      },
+      {
+        label: exp.isCurrentOrg ? "Salary Slip" : "Experience Letter",
+        url: salarySlipUrl || null,
+        type: exp.salaryFile?.type,
+        fallback: salarySlipUrl ? null : "No file uploaded",
+        onViewClick: salarySlipUrl
+          ? () =>
+              setSelectedImg({
+                label: exp.isCurrentOrg ? "Salary Slip" : "Experience Letter",
+                url: salarySlipUrl,
+                type: exp.salaryFile?.type,
+              })
+          : undefined,
+        onUpload: (file, url) => {
+          setExperienceField(index, "salaryFile", file);
+          setExperienceField(index, "salaryPreviewUrl", url);
+        },
+      },
+    ],
+  };
+});
 
-    if (salarySlipUrl) {
-      experienceImages.push({
-        label: "Salary Slip",
-        url: salarySlipUrl,
-        type: exp.salaryFile?.type || "application/pdf",
-        onViewClick: () => window.open(salarySlipUrl, "_blank"),
-      });
-    }
-    // console.log("DEBUG experienceImages:", experienceImages);
-    return {
-      sectionTitle: `Experience ${index + 1}`,
-      data: createExperienceColumns(exp),
-      img: experienceImages,
-    };
-  });
 
   return (
     <FormWrapper columns={1} onSave={handleSave}>
-      <div className="p-4 space-y-6">
-        <DetailsCard
-          title="Personal Details"
-          columns={personalDetailsColumns}
-          images={
-            personalDetails.photoPreviewUrl
-              ? [{
-                  label: "Photo",
-                  url: personalDetails.photoPreviewUrl,
-                  onViewClick: handleView,
-                }]
-              : []
+      <DetailsCard
+        title="Personal Details"
+        heading="Personal Information"
+        columns={personalDetailsColumns}
+        images={[
+          {
+            label: "Photo",
+            url: personalDetails.photoPreviewUrl || null,
+            type: personalDetails.photoFile?.type,
+            fallback: personalDetails.photoPreviewUrl ? null : "No file uploaded",
+            onViewClick: personalDetails.photoPreviewUrl
+              ? () =>
+                  setSelectedImg({
+                    label: "Photo",
+                    url: personalDetails.photoPreviewUrl,
+                    type: personalDetails.photoFile?.type
+                  })
+              : undefined,
+            onUpload: (file, url) => {
+              personalDetails.setPersonalDetailsField("photoFile", file);
+              personalDetails.setPersonalDetailsField("photoPreviewUrl", url);
+            }
           }
-          showImages={true}
-        />
+        ]}
+      />
 
-        <DetailsCard
-          title="PAN Card Details"
-          columns={panCardDetailsColumns}
-          images={
-            panCardDetails.panFilePreviewUrl
-              ? [{
-                  label: "PAN Card",
-                  url: panCardDetails.panFilePreviewUrl,
-                  onViewClick: handleView,
-                }]
-              : []
-          }
-        />
+<DetailsCard
+  title="PAN Card Details"
+  heading="PAN Information"
+  columns={panCardDetailsColumns}
+  images={[
+    {
+      label: "PAN Card",
+      url: panCardDetails.panFilePreviewUrl || null,
+      type: panCardDetails.panFile?.type,
+      fallback: panCardDetails.panFilePreviewUrl ? null : "No file uploaded",
+      onViewClick: panCardDetails.panFilePreviewUrl
+        ? () =>
+            setSelectedImg({
+              label: "PAN Card",
+              url: panCardDetails.panFilePreviewUrl,
+              type: panCardDetails.panFile?.type,
+            })
+        : undefined,
+      onUpload: (file, url) => {
+        panCardDetails.setPanField("panFile", file);
+        panCardDetails.setPanField("panFilePreviewUrl", url);
+      },
+    },
+  ]}
+/>
 
-        <DetailsCard
-          title="Aadhaar Card Details"
-          columns={aadhaarDetailsColumns}
-          images={
-            aadhaarDetails.aadharFilePreviewUrl
-              ? [{
-                  label: "Aadhaar Card",
-                  url: aadhaarDetails.aadharFilePreviewUrl,
-                  onViewClick: handleView,
-                }]
-              : []
-          }
-        />
 
-        <DetailsCard
-          title="Address Details"
-          columns={addressDetailsColumns}
-        />
+   <DetailsCard
+  title="Aadhaar Card Details"
+  heading="Aadhaar Information"
+  columns={aadhaarDetailsColumns}
+  images={[
+    {
+      label: "Aadhaar Card",
+      url: aadhaarDetails.aadharFilePreviewUrl || null,
+      type: aadhaarDetails.aadharFile?.type,
+      fallback: aadhaarDetails.aadharFilePreviewUrl ? null : "No file uploaded",
+      onViewClick: aadhaarDetails.aadharFilePreviewUrl
+        ? () =>
+            setSelectedImg({
+              label: "Aadhaar Card",
+              url: aadhaarDetails.aadharFilePreviewUrl,
+              type: aadhaarDetails.aadharFile?.type,
+            })
+        : undefined,
+      onUpload: (file, url) => {
+        aadhaarDetails.setAadharField("aadharFile", file);
+        aadhaarDetails.setAadharField("aadharFilePreviewUrl", url);
+      },
+    },
+  ]}
+/>
 
-        <DetailsCard
-          title="Experience Details"
-          columns={experienceDetailsColumns}
-          
-        />
 
-        <DetailsCard
-          title="Education Details"
-          columns={educationDetailsColumns}
-          
-        />
-      </div>
-  
-        <div className="max-w-6xl mx-auto px-2 flex flex-col sm:flex-row justify-end gap-5">
-          <button className="px-7 py-3 text-sm rounded-full border border-gray-300 bg-white text-black hover:bg-gray-100 font-semibold transition">
-           Back
-          </button>
-          <button className="px-7 py-3 text-sm rounded-full bg-yellow-400 text-black hover:bg-yellow-500 transition font-semibold">
-            Submit
-          </button>
-        </div>
-      
+      <DetailsCard title="Address Details" heading="Address Information" columns={addressDetailsColumns} />
+      <DetailsCard title="Education Details" heading="Education Details" columns={educationDetailsColumns} />
+      <DetailsCard title="Experience Details" heading="Experience Details" columns={experienceDetailsColumns} />
     </FormWrapper>
   );
 };
 
 export default DocumentationDetailsForm;
-
-
