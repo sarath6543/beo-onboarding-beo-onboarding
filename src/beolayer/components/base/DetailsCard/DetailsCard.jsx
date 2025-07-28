@@ -98,27 +98,35 @@ const DetailsCard = ({ title, heading, columns, images = [] }) => {
                                     </div>
                                   )}
 
-                                  {img.type === "application/pdf" ? (
-                                    <div className="w-16 h-16 mb-2 flex items-center justify-center bg-gray-100 border border-gray-300 rounded text-xs text-gray-600">
-                                      PDF
-                                    </div>
-                                  ) : (
-                                    <img
-                                      src={img.url}
-                                      alt={img.label || "Image"}
-                                      className="w-16 h-16 rounded-md object-cover mb-2 border border-gray-300"
-                                    />
-                                  )}
+                                {img.url ? (
+  <>
+    {img.type === "application/pdf" ? (
+      <div className="w-16 h-16 mb-2 flex items-center justify-center bg-gray-100 border border-gray-300 rounded text-xs text-gray-600">
+        PDF
+      </div>
+    ) : (
+      <img
+        src={img.url}
+        alt={img.label || "Image"}
+        className="w-16 h-16 rounded-md object-cover mb-2 border border-gray-300"
+      />
+    )}
+    {img.onViewClick && (
+      <button
+        onClick={() => setSelectedImg(img)}
+        className="text-xs px-3 py-1 border border-gray-400 rounded hover:bg-gray-100 transition"
+      >
+        View 👁
+      </button>
+      
+    )}
+  </>
+) : (
+  <div className="w-16 h-16 mb-2 flex items-center justify-center bg-gray-50 border border-dashed border-gray-400 rounded text-[10px] text-gray-500 text-center">
+    {img.fallback || "No File uploaded"}
+  </div>
+)}
 
-                                  {img.onViewClick && (
-                                    <button
-                                      // onClick={() => setOpenImageKey(imageKey)}
-                                      onClick={() => setSelectedImg(img)}
-                                      className="text-xs px-3 py-1 border border-gray-400 rounded hover:bg-gray-100 transition"
-                                    >
-                                      View 👁
-                                    </button>
-                                  )}
                                 </div>
                               );
                             })}
@@ -141,30 +149,36 @@ const DetailsCard = ({ title, heading, columns, images = [] }) => {
           {!showImages.includes(title) && (
             <div className="flex justify-end w-full lg:w-auto">
               <div className="flex flex-wrap gap-4">
-                {images[0]?.url ? (
-                  <div className="flex flex-col items-center min-w-[120px]">
-                    <div className="text-xs text-gray-500 mb-1">
-                      {images[0]?.label}
-                    </div>
-                    <img
-                      src={images[0]?.url ?? ""}
-                      alt={images[0]?.label || `Image`}
-                      className="w-16 h-16 rounded-md object-cover mb-2 border border-gray-300"
-                    />
-                    {!!images[0] && (
-                      <button
-                        onClick={() => setSelectedImg(images[0])}
-                        className="text-xs px-3 py-1 border border-gray-400 rounded hover:bg-gray-100 transition"
-                      >
-                        View 👁
-                      </button>
-                    )}
-                  </div>
-                ) : (
-                  <div className="me-7 w-16 h-16 mb-2 flex items-center justify-center bg-gray-50 border border-dashed border-gray-400 rounded text-[10px] text-gray-500 text-center">
-                    No File uploaded
-                  </div>
-                )}
+           {images[0]?.url ? (
+  <div className="flex flex-col items-center min-w-[120px]">
+    <div className="text-xs text-gray-500 mb-1">{images[0]?.label}</div>
+    {images[0].type === "application/pdf" ? (
+      <div className="w-16 h-16 mb-2 flex items-center justify-center bg-gray-100 border border-gray-300 rounded text-xs text-gray-600">
+        PDF
+      </div>
+    ) : (
+      <img
+        src={images[0]?.url ?? ""}
+        alt={images[0]?.label || `Image`}
+        className="w-16 h-16 rounded-md object-cover mb-2 border border-gray-300"
+      />
+    )}
+    <button
+      onClick={() => setSelectedImg(images[0])}
+      className="text-xs px-3 py-1 border border-gray-400 rounded hover:bg-gray-100 transition"
+    >
+      View 👁
+    </button>
+  </div>
+) : (
+  <div className="flex flex-col items-center min-w-[120px]">
+    <div className="text-xs text-gray-500 mb-1">{images[0]?.label}</div>
+    <div className="w-16 h-16 mb-2 flex items-center justify-center bg-gray-50 border border-dashed border-gray-400 rounded text-[10px] text-gray-500 text-center">
+      {images[0]?.fallback || "No File uploaded"}
+    </div>
+  </div>
+)}
+
               </div>
             </div>
           )}

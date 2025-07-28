@@ -134,41 +134,49 @@ const DocumentationDetailsForm = () => {
     ],
   ];
 
-  const experienceDetailsColumns = experienceList.map((exp, index) => {
-    const relievingLetterUrl =
-      exp.relievingPreviewUrl ||
-      (exp.relievingFile instanceof File ? URL.createObjectURL(exp.relievingFile) : null);
+const experienceDetailsColumns = experienceList.map((exp, index) => {
+  const relievingLetterUrl =
+    exp.relievingPreviewUrl ||
+    (exp.relievingFile instanceof File ? URL.createObjectURL(exp.relievingFile) : null);
 
-    const salarySlipUrl =
-      exp.salaryPreviewUrl ||
-      (exp.salaryFile instanceof File ? URL.createObjectURL(exp.salaryFile) : null);
+  const salarySlipUrl =
+    exp.salaryPreviewUrl ||
+    (exp.salaryFile instanceof File ? URL.createObjectURL(exp.salaryFile) : null);
 
-    const experienceImages = [];
-
-    if (relievingLetterUrl) {
-      experienceImages.push({
+const experienceImages = [
+  relievingLetterUrl
+    ? {
         label: "Relieving Letter",
         url: relievingLetterUrl,
         type: exp.relievingFile?.type || "application/pdf",
         onViewClick: () => window.open(relievingLetterUrl, "_blank"),
-      });
-    }
+      }
+    : {
+        label: "Relieving Letter",
+        fallback: "No file uploaded",
+      },
 
-    if (salarySlipUrl) {
-      experienceImages.push({
-        label: "Salary Slip",
+  salarySlipUrl
+    ? {
+        label: exp.isCurrentOrg ? "Salary Slip" : "Experience Letter",
         url: salarySlipUrl,
         type: exp.salaryFile?.type || "application/pdf",
         onViewClick: () => window.open(salarySlipUrl, "_blank"),
-      });
-    }
-    // console.log("DEBUG experienceImages:", experienceImages);
-    return {
-      sectionTitle: `Experience ${index + 1}`,
-      data: createExperienceColumns(exp),
-      img: experienceImages,
-    };
-  });
+      }
+    : {
+        label: exp.isCurrentOrg ? "Salary Slip" : "Experience Letter",
+        fallback: "No file uploaded",
+      },
+];
+
+
+  return {
+    sectionTitle: `Experience ${index + 1}`,
+    data: createExperienceColumns(exp),
+    img: experienceImages,
+  };
+});
+
 
   return (
     <FormWrapper columns={1} onSave={handleSave}>
