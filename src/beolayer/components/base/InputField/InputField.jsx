@@ -32,6 +32,9 @@ const InputField = ({
           color="red"
         />
       )}
+      {isMultiUpload && (
+        <span className="text-xs ps-1">Upload 3 files</span>
+      )}
 
       {isUpload ? (
         <div className="relative mt-1 w-full">
@@ -103,7 +106,7 @@ const InputField = ({
                 )
                 : (
                 <div className="flex gap-2 text-sm text-gray-700 overflow-hidden">
-                  {value.map((file, idx) => (
+                  {value?.map((file, idx) => (
                     <div key={idx} className="px-2 py-1 bg-gray-300 flex justify-center items-center rounded">
                       <span className="truncate whitespace-nowrap overflow-hidden text-ellipsis max-w-[90px]">{file.name}</span>
                       <button

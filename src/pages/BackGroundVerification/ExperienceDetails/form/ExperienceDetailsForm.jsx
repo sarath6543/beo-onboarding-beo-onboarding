@@ -62,6 +62,22 @@ const ExperienceDetailsForm = () => {
     return () => subscription.unsubscribe();
   }, [watch, setExperienceList]);
 
+  useEffect(() => {
+    fields.forEach((field,index) => {
+      const subscription = watch((value ,{ name , type}) => {
+        if( name === `experiences.${index}.isCurrentOrg`) {
+          const newValue = value.experiences?.[index]?.isCurrentOrg;
+
+          setValue(`experiences.${index}.salaryFile`, newValue ? [] : null);
+          setValue(`experiences.${index}.salaryPreviewUrl`, newValue ? [] : "");
+          updateExperienceField(index, "salaryFile", newValue ? [] : null);
+          updateExperienceField(index, "salaryPreviewUrl", newValue ? [] : "");
+        }
+      });
+      return () => subscription.unsubscribe();
+    })
+  },[watch, updateExperienceField , setValue, fields])
+
   const onSubmit = (data) => {
     // console.log("Saved experience list:", data.experiences);
     // setExperienceList(data.experiences);
@@ -120,10 +136,10 @@ const ExperienceDetailsForm = () => {
 
     <FormWrapper columns={1}>
         {fields.map((field, index) => {
-          const watchedSalaryFile = watch(`experiences.${index}.salaryFile`);
+          const watchedSalaryFile = watch(`experiences.${index}.salaryFile`) || [];
           const watchedRelievingFile = watch(`experiences.${index}.relievingFile`);
           const isCurrentOrg = watch(`experiences.${index}.isCurrentOrg`);
- 
+          
           return (
             <div key={field.id} className="mb-8">
               <p className="text-xl font-medium mb-6 ml-6 mt-6">Experience {index +1}</p>
@@ -210,6 +226,7 @@ const ExperienceDetailsForm = () => {
                   label={isCurrentOrg ? "Salary Slip" : "Experience Letter"}
                   type={isCurrentOrg ? "multiFile" : "upload"}
                   multiple={isCurrentOrg}
+                  disabled={watchedSalaryFile.length > 2}
                   {...register(`experiences.${index}.salaryFile`, {
                     required: (isCurrentOrg ?"Salary Slip is required" : "Experience Letter is required"),
                   })}
@@ -227,7 +244,6 @@ const ExperienceDetailsForm = () => {
                         existingFiles = [existingValue];
                       }
 
-                      // Avoid duplicates by name (optional)
                       const filteredNewFiles = newFiles.filter(
                         (file) => !existingFiles.some((existing) => existing.name === file.name)
                       );
@@ -295,18 +311,6 @@ const ExperienceDetailsForm = () => {
                   placeholder={watchedSalaryFile?.name || "Choose salary file"}
                   error={errors.experiences?.[index]?.salaryFile?.message}
                 />
-
-                    {fields.length > 1 && (
-          <div className="flex justify-end mt-2">
-            <button
-              type="button"
-              className="px-4 py-2 bg-red-500 text-white rounded"
-              onClick={() => remove(index)}
-            >
-              Delete
-            </button>
-          </div>
-        )}
   
                 {/* Relieving Letter Upload */}
                 <InputField

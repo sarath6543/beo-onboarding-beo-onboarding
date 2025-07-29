@@ -15,7 +15,10 @@ const DocumentationDetailsForm = () => {
   const { experienceList, setExperienceField } = useExperienceStore();
   const { educationList, setEducationalField } = useEducationStore();
   const addressDetails = useAddressStore();
-console.log(panCardDetails,"kjdhfgkjdfhnkgjdnfkjgdf")
+// console.log(panCardDetails,"kjdhfgkjdfhnkgjdnfkjgdf")
+
+// console.log("exp",experienceList);
+
   const handleSave = () => {
     console.log("Save clicked");
   };

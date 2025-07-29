@@ -262,7 +262,7 @@ const EducationDetailsForm = () => {
                     {...register(`education.${index}.isHighest`, {
                     validate: (value) => {
                       const isChecked = watch("education").some((item) => item.isHighest);
-                      return isChecked ;
+                      return isChecked || "Check at least one highest education qualification";
                     },})}
                     onChange={() => {
                       fields.forEach((_, idx) => {
