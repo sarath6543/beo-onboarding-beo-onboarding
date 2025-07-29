@@ -259,7 +259,11 @@ const EducationDetailsForm = () => {
                     className="w-4 h-5" 
                     type="checkbox"
                     checked={watch(`education.${index}.isHighest`)}
-                    {...register(`education.${index}.isHighest`, {required : "check highest education qualification checkbox"})}
+                    {...register(`education.${index}.isHighest`, {
+                    validate: (value) => {
+                      const isChecked = watch("education").some((item) => item.isHighest);
+                      return isChecked ;
+                    },})}
                     onChange={() => {
                       fields.forEach((_, idx) => {
                         setValue(`education.${idx}.isHighest`, idx === index);

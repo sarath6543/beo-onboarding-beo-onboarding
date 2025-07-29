@@ -211,7 +211,7 @@ const ExperienceDetailsForm = () => {
                   type={isCurrentOrg ? "multiFile" : "upload"}
                   multiple={isCurrentOrg}
                   {...register(`experiences.${index}.salaryFile`, {
-                    required: "Salary Slip is required",
+                    required: (isCurrentOrg ?"Salary Slip is required" : "Experience Letter is required"),
                   })}
                   onChange={(e) => {
                     const newFiles = Array.from(e.target.files || []);
