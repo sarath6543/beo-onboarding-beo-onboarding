@@ -1,4 +1,5 @@
 import React from "react";
+import { Navigate, useNavigation } from "react-router-dom";
 import FormWrapper from "../../../../beolayer/components/base/Form/FormWrapper";
 import DetailsCard from "../../../../beolayer/components/base/DetailsCard/DetailsCard";
 import usePersonalDetailsStore from "../../../../beolayer/stores/BGV/PersonalDetails/usePersonalDetailsStore";
@@ -18,6 +19,10 @@ const DocumentationDetailsForm = () => {
 console.log(panCardDetails,"kjdhfgkjdfhnkgjdnfkjgdf")
   const handleSave = () => {
     console.log("Save clicked");
+  };
+  const handleBack = () => {
+    console.log("Back clicked");
+    Navigate("/back-ground-verification-main");
   };
 
   const personalDetailsColumns = [
@@ -199,7 +204,7 @@ const experienceDetailsColumns = experienceList.map((exp, index) => {
     <FormWrapper columns={1} onSave={handleSave}>
       <DetailsCard
         title="Personal Details"
-        heading="Personal Information"
+       // heading="Personal Information"
         columns={personalDetailsColumns}
         images={[
           {
@@ -225,7 +230,7 @@ const experienceDetailsColumns = experienceList.map((exp, index) => {
 
 <DetailsCard
   title="PAN Card Details"
-  heading="PAN Information"
+ // heading="PAN Information"
   columns={panCardDetailsColumns}
   images={[
     {
@@ -252,7 +257,7 @@ const experienceDetailsColumns = experienceList.map((exp, index) => {
 
    <DetailsCard
   title="Aadhaar Card Details"
-  heading="Aadhaar Information"
+ // heading="Aadhaar Information"
   columns={aadhaarDetailsColumns}
   images={[
     {
@@ -277,9 +282,17 @@ const experienceDetailsColumns = experienceList.map((exp, index) => {
 />
 
 
-      <DetailsCard title="Address Details" heading="Address Information" columns={addressDetailsColumns} />
-      <DetailsCard title="Education Details" heading="Education Details" columns={educationDetailsColumns} />
-      <DetailsCard title="Experience Details" heading="Experience Details" columns={experienceDetailsColumns} />
+      <DetailsCard title="Address Details" columns={addressDetailsColumns} />
+      <DetailsCard title="Education Details"columns={educationDetailsColumns} />
+      <DetailsCard title="Experience Details" columns={experienceDetailsColumns} />
+       <div className="max-w-6xl mx-auto px-2 flex flex-col sm:flex-row justify-end gap-5">
+          <button onClick={handleBack} className="px-7 py-3 text-sm rounded-full border border-gray-300 bg-white text-black hover:bg-gray-100 font-semibold transition">
+           Back
+          </button>
+          <button onClick={handleSave} className="px-7 py-3 text-sm rounded-full bg-yellow-400 text-black hover:bg-yellow-500 transition font-semibold">
+            Submit
+          </button>
+        </div>
     </FormWrapper>
   );
 };
