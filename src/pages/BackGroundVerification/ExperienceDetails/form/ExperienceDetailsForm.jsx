@@ -289,7 +289,8 @@ const ExperienceDetailsForm = () => {
                     //   }
                     // }
                   }}
-                  onFileRemove={(fileIndex) => {
+                  onFileRemove={(e ,fileIndex) => {
+                    e.preventDefault();
                     const currentFiles = watch(`experiences.${index}.salaryFile`);
                     if (Array.isArray(currentFiles)) {
                       const updatedFiles = currentFiles.filter((_, i) => i !== fileIndex);

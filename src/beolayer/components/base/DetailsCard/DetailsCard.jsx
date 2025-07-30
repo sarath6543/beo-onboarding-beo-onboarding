@@ -76,61 +76,61 @@ const DetailsCard = ({ title, heading, columns, images = [] }) => {
                   {!sectionImage.includes(title) && Array.isArray(section.img) && (
                     <div className="flex justify-end w-full lg:w-auto">
                       <div className="flex flex-wrap gap-6">
-{section.img.map((img, index) => (
-  <div key={index} className="flex flex-col items-center">
-    {img.label && (
-      <div className="text-xs text-gray-500 mb-1">{img.label}</div>
-    )}
+                        {section.img.map((img, index) => (
+                          <div key={index} className="flex flex-col items-center">
+                            {img.label && (
+                              <div className="text-xs text-gray-500 mb-1">{img.label}</div>
+                            )}
 
-    {img.url ? (
-      <>
-        {/* Show image or doc icon */}
-        {isDocFile(img.type) ? (
-          <div className="w-16 h-16 mb-2 flex items-center justify-center bg-gray-100 border border-gray-300 rounded text-xs text-gray-600">
-            {img.type === "application/pdf" ? "PDF" : "DOC"}
-          </div>
-        ) : (
-          <img
-            src={img.url}
-            alt={img.label || "File"}
-            className="w-16 h-16 rounded-md object-cover mb-2 border border-gray-300"
-          />
-        )}
+                            {img.url ? (
+                              <>
+                                {/* Show image or doc icon */}
+                                {isDocFile(img.type) ? (
+                                  <div className="w-16 h-16 mb-2 flex items-center justify-center bg-gray-100 border border-gray-300 rounded text-xs text-gray-600">
+                                    {img.type === "application/pdf" ? "PDF" : "DOC"}
+                                  </div>
+                                ) : (
+                                  <img
+                                    src={img.url}
+                                    alt={img.label || "File"}
+                                    className="w-16 h-16 rounded-md object-cover mb-2 border border-gray-300"
+                                  />
+                                )}
 
-        {/* View button */}
-        {img.onViewClick && (
-          <button
-            onClick={() => setSelectedImg(img)}
-            className="text-xs px-3 py-1 border border-gray-400 rounded hover:bg-gray-100 transition mb-1"
-          >
-            View 👁
-          </button>
-        )}
-      </>
-    ) : (
-      <div className="w-16 h-16 mb-2 flex items-center justify-center bg-gray-50 border border-dashed border-gray-400 rounded text-[10px] text-gray-500 text-center">
-        {img.fallback || "No file uploaded"}
-      </div>
-    )}
+                                {/* View button */}
+                                {img.onViewClick && (
+                                  <button
+                                    onClick={() => setSelectedImg(img)}
+                                    className="text-xs px-3 py-1 border border-gray-400 rounded hover:bg-gray-100 transition mb-1"
+                                  >
+                                    View 👁
+                                  </button>
+                                )}
+                              </>
+                            ) : (
+                              <div className="w-16 h-16 mb-2 flex items-center justify-center bg-gray-50 border border-dashed border-gray-400 rounded text-[10px] text-gray-500 text-center">
+                                {img.fallback || "No file uploaded"}
+                              </div>
+                            )}
 
-    {/* Upload button: ALWAYS visible */}
-    <label className="text-xs px-3 py-1 border border-gray-400 rounded hover:bg-gray-100 transition cursor-pointer text-center">
-      Upload
-      <input
-        type="file"
-        accept="image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-        className="hidden"
-        onChange={(e) => {
-          const file = e.target.files[0];
-          if (file && img.onUpload) {
-            const url = URL.createObjectURL(file);
-            img.onUpload(file, url);
-          }
-        }}
-      />
-    </label>
-  </div>
-))}
+                            {/* Upload button: ALWAYS visible */}
+                            <label className="text-xs px-3 py-1 border border-gray-400 rounded hover:bg-gray-100 transition cursor-pointer text-center">
+                              Upload
+                              <input
+                                type="file"
+                                accept="image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                className="hidden"
+                                onChange={(e) => {
+                                  const file = e.target.files[0];
+                                  if (file && img.onUpload) {
+                                    const url = URL.createObjectURL(file);
+                                    img.onUpload(file, url);
+                                  }
+                                }}
+                              />
+                            </label>
+                          </div>
+                        ))}
 
 
                       </div>

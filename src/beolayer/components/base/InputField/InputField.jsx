@@ -100,7 +100,7 @@ const InputField = ({
             <div className="w-3/4 px-2 overfow-x-auto flex items-center ">
               {Array.isArray(value) && value.length === 0 ? 
                 (
-                  <div className="ms-4">
+                  <div className="ms-2">
                     <span className="text-gray-400 whitespace-nowrap">Upload file...</span>
                   </div>
                 )
@@ -111,7 +111,7 @@ const InputField = ({
                       <span className="truncate whitespace-nowrap overflow-hidden text-ellipsis max-w-[90px]">{file.name}</span>
                       <button
                         type="button"
-                        onClick={() => rest.onFileRemove?.(idx)}
+                        onClick={(e) => rest.onFileRemove?.(e, idx)}
                         className="ml-2 text-black hover:text-red-700 text-xs"
                       >
                         X
