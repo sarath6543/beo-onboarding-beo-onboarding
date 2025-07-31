@@ -59,18 +59,30 @@ const DetailsCard = ({ title, heading, columns, images = [] }) => {
                   </div>
                 )}
                 <div className="flex flex-wrap gap-6">
-                  {section.data?.map((col, colIdx) => (
-                    <div key={colIdx} className="min-w-[320px] flex-1">
-                      {col.map((field, idx) => (
-                        <div key={idx} className="mb-4">
-                          <div className="text-xs text-gray-500">{field.label}</div>
-                          <div className="text-sm font-semibold text-gray-800">
-                            {field.value || "—"}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  ))}
+                {section.data?.map((col, colIdx) => (
+  <div key={colIdx} className="min-w-[320px] flex-1">
+    {/* If col is an array (array of fields) */}
+    {Array.isArray(col) ? (
+      col.map((field, idx) => (
+        <div key={idx} className="mb-4">
+          <div className="text-xs text-gray-500">{field.label}</div>
+          <div className="text-sm font-semibold text-gray-800">
+            {field.value || "—"}
+          </div>
+        </div>
+      ))
+    ) : (
+      // If col is a single field object
+      <div className="mb-4">
+        <div className="text-xs text-gray-500">{col.label}</div>
+        <div className="text-sm font-semibold text-gray-800">
+          {col.value || "—"}
+        </div>
+      </div>
+    )}
+  </div>
+))}
+
 
                   {/* Render files/images in section.img for sections except specific ones */}
                   {!sectionImage.includes(title) && Array.isArray(section.img) && (

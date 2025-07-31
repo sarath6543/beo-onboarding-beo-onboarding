@@ -1,27 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
-import {
-  DndContext,
-  closestCenter,
-  useSensor,
-  useSensors,
-  PointerSensor,
-} from "@dnd-kit/core";
-import {
-  arrayMove,
-  SortableContext,
-  useSortable,
-  horizontalListSortingStrategy,
-} from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 import { useTranslation } from "react-i18next";
 
-
-
+// Wrapper around the table for scroll detection
 const TableWrapper = ({ children, className, onScrollBottom }) => {
   const tableRef = useRef(null);
-
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,78 +37,47 @@ const TableWrapper = ({ children, className, onScrollBottom }) => {
   );
 };
 
-const TableHeaderCell = ({ id, columnName }) => {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id });
+TableWrapper.propTypes = {
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
+  onScrollBottom: PropTypes.func.isRequired,
+};
 
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
-
+// Static header without drag-and-drop
+const StaticTableHeader = ({ headers, enableSelectAll, onSelectAll }) => {
   return (
-    <th
-      ref={setNodeRef}
-      style={style}
-      {...attributes}
-      {...listeners}
-      className="px-6 py-3 text-left text-sm font-medium text-text tracking-wider cursor-grab"
-    >
-      {columnName}
-    </th>
+    <thead>
+      <tr className="bg-grey sticky top-0 z-10">
+        <th className="px-6 py-2 w-0">
+          {enableSelectAll && (
+            <input
+              type="checkbox"
+              onChange={(e) => onSelectAll(e.target.checked)}
+            />
+          )}
+        </th>
+        {headers.map((header) => (
+          <th
+            key={header.id}
+            className="px-6 py-3 text-left text-sm font-medium text-text tracking-wider"
+          >
+            {header.name}
+          </th>
+        ))}
+      </tr>
+    </thead>
   );
 };
 
-const DraggableTableHeader = ({
-  headers,
-  setHeaders,
-  enableSelectAll,
-  onSelectAll,
-}) => {
-  const sensors = useSensors(useSensor(PointerSensor));
-
-  const handleDragEnd = (event) => {
-    const { active, over } = event;
-
-    if (active.id !== over.id) {
-      const oldIndex = headers.findIndex((header) => header.id === active.id);
-      const newIndex = headers.findIndex((header) => header.id === over.id);
-      setHeaders((prev) => arrayMove(prev, oldIndex, newIndex));
-    }
-  };
-
-  return (
-    <DndContext
-      sensors={sensors}
-      collisionDetection={closestCenter}
-      onDragEnd={handleDragEnd}
-    >
-      <SortableContext
-        items={headers.map((header) => header.id)}
-        strategy={horizontalListSortingStrategy}
-      >
-        <thead>
-          <tr className="bg-grey sticky top-0 z-10">
-            <th className="px-6 py-2 w-0">
-              {enableSelectAll && (
-                <input
-                  type="checkbox"
-                  onChange={(e) => onSelectAll(e.target.checked)}
-                />
-              )}
-            </th>
-            {headers.map((header) => (
-              <TableHeaderCell
-                key={header.id}
-                id={header.id}
-                columnName={header.name}
-              />
-            ))}
-          </tr>
-        </thead>
-      </SortableContext>
-    </DndContext>
-  );
+StaticTableHeader.propTypes = {
+  headers: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  enableSelectAll: PropTypes.bool,
+  onSelectAll: PropTypes.func.isRequired,
 };
 
 const TableBody = ({
@@ -157,7 +110,7 @@ const TableBody = ({
               </td>
               {headers.map((header) => (
                 <td
-                  onClick={() => onRowClick(row)}
+                  onClick={() => onRowClick && onRowClick(row)}
                   key={header.id}
                   style={{ width: `${100 / headers.length}%` }}
                   className="px-6 text-sm text-text py-3 break-normal lg:break-all"
@@ -179,6 +132,19 @@ const TableBody = ({
   );
 };
 
+TableBody.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  headers: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  onRowClick: PropTypes.func,
+  selectedRows: PropTypes.array,
+  onRowSelection: PropTypes.func.isRequired,
+};
+
 const Table = ({
   headers: initialHeaders,
   data,
@@ -187,9 +153,9 @@ const Table = ({
   singleSelect = false,
   enableSelectAll = false,
   onScrollBottom,
-  resetKey = 0
+  resetKey = 0,
 }) => {
-  const [headers, setHeaders] = useState(
+  const [headers] = useState(
     initialHeaders.map((header) => ({
       id: header.key,
       name: header.name,
@@ -234,9 +200,8 @@ const Table = ({
 
   return (
     <TableWrapper onScrollBottom={onScrollBottom}>
-      <DraggableTableHeader
+      <StaticTableHeader
         headers={headers}
-        setHeaders={setHeaders}
         enableSelectAll={enableSelectAll}
         onSelectAll={handleSelectAll}
       />
@@ -251,45 +216,7 @@ const Table = ({
   );
 };
 
-export default Table;
-
-TableWrapper.propTypes = {
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-  onScrollBottom: PropTypes.func.isRequired,
-};
-
-TableHeaderCell.propTypes = {
-  id: PropTypes.string.isRequired,
-  columnName: PropTypes.string.isRequired,
-};
-
-DraggableTableHeader.propTypes = {
-  headers: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  setHeaders: PropTypes.func.isRequired,
-  enableSelectAll: PropTypes.bool,
-  onSelectAll: PropTypes.func.isRequired,
-};
-
-TableBody.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
-  headers: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  onRowClick: PropTypes.func,
-  selectedRows: PropTypes.array,
-  onRowSelection: PropTypes.func.isRequired,
-};
-
-DraggableTable.propTypes = {
+Table.propTypes = {
   headers: PropTypes.arrayOf(
     PropTypes.shape({
       key: PropTypes.string.isRequired,
@@ -302,5 +229,7 @@ DraggableTable.propTypes = {
   singleSelect: PropTypes.bool,
   enableSelectAll: PropTypes.bool,
   onScrollBottom: PropTypes.func.isRequired,
-  resetKey: PropTypes.number
+  resetKey: PropTypes.number,
 };
+
+export default Table;
