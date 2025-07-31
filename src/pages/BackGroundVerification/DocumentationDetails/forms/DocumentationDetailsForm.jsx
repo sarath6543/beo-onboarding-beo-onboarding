@@ -154,59 +154,90 @@ const educationDetailsColumns = educationList.map((edu, index) => {
     const salaryFiles = Array.isArray(exp.salaryFile) ? exp.salaryFile : exp.salaryFile ? [exp.salaryFile] : [];
 
     // Build salary slip images or single experience letter
-    const salaryImgItems = exp.isCurrentOrg
-      ? salaryFiles.map((file, i) => {
-          const url = typeof file === "string" ? file : URL.createObjectURL(file);
-          return {
-            label: `Salary Slip ${i + 1}`,
-            url,
-            type: file?.type,
-            fallback: url ? null : "No file uploaded",
-            onViewClick: url
-              ? () => setSelectedImg({ label: `Salary Slip ${i + 1}`, url, type: file?.type })
-              : undefined,
-            onUpload: (fileObj, fileUrl) => {
-              const updated = [...salaryFiles];
-              updated[i] = fileObj;
-              setExperienceField(index, "salaryFile", updated);
-              setExperienceField(index, "salaryPreviewUrl", updated.map(f => typeof f === "string" ? f : URL.createObjectURL(f)));
-            },
-          };
-        })
-      : [
-          {
-            label: "Experience Letter",
-            url: exp.salaryPreviewUrl || (salaryFiles[0] && URL.createObjectURL(salaryFiles[0])) || null,
-            type: exp.salaryFile?.type,
-            fallback: null,
-            onViewClick: exp.salaryPreviewUrl
-              ? () => setSelectedImg({ label: "Experience Letter", url: exp.salaryPreviewUrl, type: exp.salaryFile?.type })
-              : undefined,
-            onUpload: (fileObj, fileUrl) => {
-              setExperienceField(index, "salaryFile", fileObj);
-              setExperienceField(index, "salaryPreviewUrl", fileUrl);
-            },
-          },
-        ];
+const salaryImgItems = exp.isCurrentOrg
+  ? Array.from({ length: 3 }).map((_, i) => {
+      const file = salaryFiles[i];
+      const url = file ? (typeof file === "string" ? file : URL.createObjectURL(file)) : null;
+      return {
+        label: `Salary Slip ${i + 1}`,
+        url,
+        type: file?.type,
+        fallback: !url ? "No file uploaded" : null,
+        onViewClick: url
+          ? () => setSelectedImg({ label: `Salary Slip ${i + 1}`, url, type: file?.type })
+          : undefined,
+        onUpload: (fileObj, fileUrl) => {
+          const updated = [...salaryFiles];
+          updated[i] = fileObj;
+          setExperienceField(index, "salaryFile", updated);
+          setExperienceField(index, "salaryPreviewUrl", updated.map(f =>
+            typeof f === "string" ? f : URL.createObjectURL(f)
+          ));
+        },
+      };
+    })
+  : [
+      {
+        label: "Experience Letter",
+        url: exp.salaryPreviewUrl || (salaryFiles[0] && URL.createObjectURL(salaryFiles[0])) || null,
+        type: exp.salaryFile?.type,
+        fallback: exp.salaryPreviewUrl ? null : "No file uploaded",
+        onViewClick: exp.salaryPreviewUrl
+          ? () => setSelectedImg({
+              label: "Experience Letter",
+              url: exp.salaryPreviewUrl,
+              type: exp.salaryFile?.type
+            })
+          : undefined,
+        onUpload: (fileObj, fileUrl) => {
+          setExperienceField(index, "salaryFile", fileObj);
+          setExperienceField(index, "salaryPreviewUrl", fileUrl);
+        },
+      },
+    ];
+
 
     // Conditionally include relieving letter only if not current org
-    const relievingImgItems = !exp.isCurrentOrg
-      ? [
-          {
-            label: "Relieving Letter",
-            url: relievingUrl || null,
-            type: exp.relievingFile?.type,
-            fallback: null,
-            onViewClick: relievingUrl
-              ? () => setSelectedImg({ label: "Relieving Letter", url: relievingUrl, type: exp.relievingFile?.type })
-              : undefined,
-            onUpload: (fileObj, fileUrl) => {
-              setExperienceField(index, "relievingFile", fileObj);
-              setExperienceField(index, "relievingPreviewUrl", fileUrl);
-            },
-          },
-        ]
-      : [];
+const relievingImgItems = exp.isCurrentOrg
+  ? [
+      {
+        label: "Relieving Letter",
+        url: relievingUrl || null,
+        type: exp.relievingFile?.type,
+        fallback: !relievingUrl ? "No file uploaded" : null,
+        onViewClick: relievingUrl
+          ? () => setSelectedImg({
+              label: "Relieving Letter",
+              url: relievingUrl,
+              type: exp.relievingFile?.type
+            })
+          : undefined,
+        onUpload: (fileObj, fileUrl) => {
+          setExperienceField(index, "relievingFile", fileObj);
+          setExperienceField(index, "relievingPreviewUrl", fileUrl);
+        },
+      },
+    ]
+  : [
+      {
+        label: "Relieving Letter",
+        url: relievingUrl || null,
+        type: exp.relievingFile?.type,
+        fallback: !relievingUrl ? "No file uploaded" : null,
+        onViewClick: relievingUrl
+          ? () => setSelectedImg({
+              label: "Relieving Letter",
+              url: relievingUrl,
+              type: exp.relievingFile?.type
+            })
+          : undefined,
+        onUpload: (fileObj, fileUrl) => {
+          setExperienceField(index, "relievingFile", fileObj);
+          setExperienceField(index, "relievingPreviewUrl", fileUrl);
+        },
+      },
+    ];
+
 
     return {
       sectionTitle: `Experience ${index + 1}`,
