@@ -40,7 +40,7 @@ const steps = [
     icon: pre_join,
     label: t("home.Pre_Joining"),
     status: "Yet to start",
-    path: "/formalities",
+    path: "/admin-home",
   },
   {
     icon: day1,

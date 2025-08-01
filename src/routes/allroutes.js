@@ -40,6 +40,13 @@ const routes = [
   isAuthProtected: false,
   role: null,
 },
+{
+  path: "/admin-home",
+  name: "admin-home",
+  value: React.lazy(() => import("../pages/Admin/AdminHomeMain")),
+  isAuthProtected: false,
+  role: null,
+},
 
 ];
 
