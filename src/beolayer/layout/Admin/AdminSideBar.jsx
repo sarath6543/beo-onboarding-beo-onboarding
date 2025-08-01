@@ -1,13 +1,13 @@
 import React from "react";
 import { FaHome, FaFileAlt, FaUser } from "react-icons/fa";
-import beo_logo from "@/assets/beo_logo.png"; 
+import beo_logo from "@/assets/beo_logo.png";
+import { Link } from "react-router-dom";
 
 const menuItems = [
-  { key: "candidates", label: "Candidates", icon: <FaHome /> },
-  { key: "clients", label: "Clients", icon: <FaFileAlt /> },
-  { key: "reports", label: "Reports", icon: <FaUser /> },
-   { key: "employeeRegister", label: "Employee Register", icon: <FaUser /> },
-   
+  { key: "candidates", url: "/admin-candidates", label: "Candidates", icon: <FaHome /> },
+  { key: "clients", url: "/admin-clients", label: "Clients", icon: <FaFileAlt /> },
+  { key: "reports", url: "/admin-reports", label: "Reports", icon: <FaUser /> },
+  { key: "employeeRegister", url: "/admin-employee_register", label: "Employee Register", icon: <FaUser /> },
 ];
 
 export default function AdminSidebar({ onNavigate, active }) {
@@ -19,16 +19,22 @@ export default function AdminSidebar({ onNavigate, active }) {
 
       <nav className="flex flex-col gap-1 p-4">
         {menuItems.map((item) => (
-          <button
-            key={item.key}
-            onClick={() => onNavigate(item.key)}
+          // <button
+          //   key={item.key}
+          //   onClick={() => onNavigate(item.key)}
+          //   className={`flex items-center gap-3 px-4 py-2 rounded hover:bg-[#E9E9E9] transition ${
+          //     active === item.key ? "bg-[#E9E9E9]" : ""
+          //   }`}
+          // >
+          <Link
+            to={item.url}
             className={`flex items-center gap-3 px-4 py-2 rounded hover:bg-[#E9E9E9] transition ${
               active === item.key ? "bg-[#E9E9E9]" : ""
             }`}
           >
             <span>{item.icon}</span>
             <span className="text-sm">{item.label}</span>
-          </button>
+          </Link>
         ))}
       </nav>
     </aside>
