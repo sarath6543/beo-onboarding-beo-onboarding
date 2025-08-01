@@ -3,9 +3,11 @@ import { FaHome, FaFileAlt, FaUser } from "react-icons/fa";
 import beo_logo from "@/assets/beo_logo.png"; 
 
 const menuItems = [
-  { key: "home", label: "Home", icon: <FaHome /> },
-  { key: "offers", label: "Offer Letters", icon: <FaFileAlt /> },
-  { key: "users", label: "Users", icon: <FaUser /> },
+  { key: "candidates", label: "Candidates", icon: <FaHome /> },
+  { key: "clients", label: "Clients", icon: <FaFileAlt /> },
+  { key: "reports", label: "Reports", icon: <FaUser /> },
+   { key: "employeeRegister", label: "Employee Register", icon: <FaUser /> },
+   
 ];
 
 export default function AdminSidebar({ onNavigate, active }) {
