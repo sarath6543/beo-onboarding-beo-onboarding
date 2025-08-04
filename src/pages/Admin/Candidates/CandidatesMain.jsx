@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Table from "../../../beolayer/components/base/Table/Table";
 
-const AdminHomeMain = () => {
+const CandidatesMain = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [resetKey, setResetKey] = useState(0);
  const headers = [
