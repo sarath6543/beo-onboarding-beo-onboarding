@@ -1,7 +1,7 @@
 import React from "react";
 
 const AdminHomeMain = () => {
-    return <div>AdminHomeMain</div>;
+    return <div>Reports</div>;
 };
 
 export default AdminHomeMain;

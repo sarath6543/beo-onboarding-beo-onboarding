@@ -2,18 +2,21 @@ import React from "react";
 import { useState } from "react";
 import AdminSidebar from "../../beolayer/layout/Admin/AdminSideBar";
 import AdminTopBar from "../../beolayer/layout/Admin/AdminTopBar";
+import ClientsMain from "./Clients/ClientsMain";
+import CandidatesMain from "./Candidates/CandidatesMain";
+import ReportsMain from "./Reports/ReportsMain";
 
 const AdminHomeMain = () => {
-     const [activePage, setActivePage] = useState("home");
+     const [activePage, setActivePage] = useState("candidates");
 
   const renderContent = () => {
     switch (activePage) {
-      case "home":
-        return <div className="p-6 text-xl font-semibold">Welcome to the Admin Dashboard</div>;
-      case "offers":
-        return <AdminHomeMain />;
-      case "users":
-        return <div className="p-6 text-xl font-semibold">User Management</div>;
+      case "candidates":
+         return <CandidatesMain />;
+      case "clients":
+        return <ClientsMain />;
+      case "reports":
+       return <ReportsMain />;
       default:
         return <div className="p-6">Page not found</div>;
     }
