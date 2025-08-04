@@ -86,8 +86,8 @@ const CandidatesMain = () => {
         data={data}
         onRowClick={handleRowClick}
         onSelectionChange={handleSelectionChange}
-        singleSelect={false}
-        enableSelectAll={true}
+        singleSelect={true}
+        enableSelectAll={false}
         onScrollBottom={handleScrollBottom}
         resetKey={resetKey}
       />
