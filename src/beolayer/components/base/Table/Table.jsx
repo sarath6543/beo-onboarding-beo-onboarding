@@ -1,36 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
 
-// Wrapper around the table for scroll detection
-const TableWrapper = ({ children, className, onScrollBottom }) => {
-  const tableRef = useRef(null);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (tableRef.current) {
-        const { scrollTop, scrollHeight, clientHeight } = tableRef.current;
-        if (scrollTop + clientHeight >= scrollHeight) {
-          onScrollBottom();
-        }
-      }
-    };
-
-    const tableElement = tableRef.current;
-    tableElement.addEventListener("scroll", handleScroll);
-
-    return () => {
-      tableElement.removeEventListener("scroll", handleScroll);
-    };
-  }, [onScrollBottom]);
-
+const TableWrapper = ({ children, className }) => {
   return (
-    <div
-      ref={tableRef}
-      className={clsx("overflow-x-auto mt-5", className, "max-h-full")}
-    >
-      <table className="min-w-full divide-y divide-gray-200 max-h-full">
+    <div className={clsx("overflow-x-auto mt-5", className)}>
+      <table className="min-w-full divide-y divide-gray-200">
         {children}
       </table>
     </div>
@@ -40,34 +17,31 @@ const TableWrapper = ({ children, className, onScrollBottom }) => {
 TableWrapper.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
-  onScrollBottom: PropTypes.func.isRequired,
 };
 
-// Static header without drag-and-drop
-const StaticTableHeader = ({ headers, enableSelectAll, onSelectAll }) => {
-  return (
-    <thead>
-      <tr className="bg-grey sticky top-0 z-10">
-        <th className="px-6 py-2 w-0">
-          {enableSelectAll && (
-            <input
-              type="checkbox"
-              onChange={(e) => onSelectAll(e.target.checked)}
-            />
-          )}
+
+const StaticTableHeader = ({ headers, enableSelectAll, onSelectAll }) => (
+  <thead>
+    <tr className="bg-grey sticky top-0 z-10">
+      <th className="px-6 py-2 w-0">
+        {enableSelectAll && (
+          <input
+            type="checkbox"
+            onChange={(e) => onSelectAll(e.target.checked)}
+          />
+        )}
+      </th>
+      {headers.map((header) => (
+        <th
+          key={header.id}
+          className="px-6 py-3 text-left text-sm font-medium text-text tracking-wider"
+        >
+          {header.name}
         </th>
-        {headers.map((header) => (
-          <th
-            key={header.id}
-            className="px-6 py-3 text-left text-sm font-medium text-text tracking-wider"
-          >
-            {header.name}
-          </th>
-        ))}
-      </tr>
-    </thead>
-  );
-};
+      ))}
+    </tr>
+  </thead>
+);
 
 StaticTableHeader.propTypes = {
   headers: PropTypes.arrayOf(
@@ -80,6 +54,7 @@ StaticTableHeader.propTypes = {
   onSelectAll: PropTypes.func.isRequired,
 };
 
+
 const TableBody = ({
   data,
   headers,
@@ -88,6 +63,7 @@ const TableBody = ({
   onRowSelection,
 }) => {
   const { t } = useTranslation("language");
+
   return (
     <tbody className="bg-white divide-y divide-border">
       {Array.isArray(data) && data.length > 0 ? (
@@ -99,7 +75,9 @@ const TableBody = ({
           return (
             <tr
               key={rowIndex}
-              className={clsx("hover:bg-border", { "bg-gray-200": isSelected })}
+              className={clsx("hover:bg-border", {
+                "bg-gray-200": isSelected,
+              })}
             >
               <td className="px-6 py-3 w-0">
                 <input
@@ -110,8 +88,8 @@ const TableBody = ({
               </td>
               {headers.map((header) => (
                 <td
-                  onClick={() => onRowClick && onRowClick(row)}
                   key={header.id}
+                  onClick={() => onRowClick && onRowClick(row)}
                   style={{ width: `${100 / headers.length}%` }}
                   className="px-6 text-sm text-text py-3 break-normal lg:break-all"
                 >
@@ -123,7 +101,10 @@ const TableBody = ({
         })
       ) : (
         <tr>
-          <td colSpan={headers.length + 1} className="text-center py-4 text-gray-500">
+          <td
+            colSpan={headers.length + 1}
+            className="text-center py-4 text-gray-500"
+          >
             {t("common.table.NoData")}
           </td>
         </tr>
@@ -145,6 +126,83 @@ TableBody.propTypes = {
   onRowSelection: PropTypes.func.isRequired,
 };
 
+const Pagination = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+  itemsPerPage,
+  onItemsPerPageChange,
+}) => {
+  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+  const options = [5, 10, 20, 50];
+
+  return (
+    <div className="flex flex-wrap justify-between items-center mt-4 gap-4 px-4">
+      <div className="flex items-center gap-2">
+        <label htmlFor="itemsPerPage" className="text-sm font-medium">
+          Items per page:
+        </label>
+        <select
+          id="itemsPerPage"
+          className="border rounded px-2 py-1 text-sm"
+          value={itemsPerPage}
+          onChange={(e) => onItemsPerPageChange(Number(e.target.value))}
+        >
+          {options.map((opt) => (
+            <option key={opt} value={opt}>
+              {opt}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="flex gap-2">
+        <button
+          onClick={() => onPageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="px-3 py-1 border rounded disabled:opacity-50"
+        >
+          Previous
+        </button>
+        {pages.map((page) => (
+          <button
+            key={page}
+            onClick={() => onPageChange(page)}
+            className={`px-3 py-1 border rounded ${
+              page === currentPage ? "bg-gray-300 font-bold" : ""
+            }`}
+          >
+            {page}
+          </button>
+        ))}
+        <button
+          onClick={() => onPageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="px-3 py-1 border rounded disabled:opacity-50"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  );
+};
+
+Pagination.propTypes = {
+  currentPage: PropTypes.number.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+  itemsPerPage: PropTypes.number.isRequired,
+  onItemsPerPageChange: PropTypes.func.isRequired,
+};
+
+
+Pagination.propTypes = {
+  currentPage: PropTypes.number.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  onPageChange: PropTypes.func.isRequired,
+};
+
+
 const Table = ({
   headers: initialHeaders,
   data,
@@ -152,7 +210,7 @@ const Table = ({
   onSelectionChange,
   singleSelect = false,
   enableSelectAll = false,
-  onScrollBottom,
+  itemsPerPage = 10,
   resetKey = 0,
 }) => {
   const [headers] = useState(
@@ -163,6 +221,16 @@ const Table = ({
   );
 
   const [selectedRows, setSelectedRows] = useState([]);
+const [currentPage, setCurrentPage] = useState(1);
+const [perPage, setPerPage] = useState(itemsPerPage);
+const totalPages = Math.ceil(data.length / perPage);
+
+
+const paginatedData = () => {
+  const start = (currentPage - 1) * perPage;
+  return data.slice(start, start + perPage);
+};
+
 
   const handleRowSelection = (row) => {
     setSelectedRows((prevSelected) => {
@@ -174,7 +242,7 @@ const Table = ({
           (selectedRow) => selectedRow.id === row.id
         );
         newSelectedRows = isSelected
-          ? prevSelected.filter((selectedRow) => selectedRow.id !== row.id)
+          ? prevSelected.filter((r) => r.id !== row.id)
           : [...prevSelected, row];
       }
 
@@ -183,36 +251,54 @@ const Table = ({
     });
   };
 
-  useEffect(() => {
-    setSelectedRows([]);
-    onSelectionChange([]);
-  }, [resetKey]);
-
   const handleSelectAll = (isChecked) => {
+    const visibleData = paginatedData();
     if (isChecked) {
-      setSelectedRows(data);
-      onSelectionChange(data);
+      setSelectedRows(visibleData);
+      onSelectionChange(visibleData);
     } else {
       setSelectedRows([]);
       onSelectionChange([]);
     }
   };
 
+  useEffect(() => {
+    setSelectedRows([]);
+    onSelectionChange([]);
+    setCurrentPage(1); // Reset to page 1 on resetKey change
+  }, [resetKey]);
+
   return (
-    <TableWrapper onScrollBottom={onScrollBottom}>
-      <StaticTableHeader
-        headers={headers}
-        enableSelectAll={enableSelectAll}
-        onSelectAll={handleSelectAll}
-      />
-      <TableBody
-        data={data}
-        headers={headers}
-        onRowClick={onRowClick}
-        selectedRows={selectedRows}
-        onRowSelection={handleRowSelection}
-      />
-    </TableWrapper>
+    <>
+      <TableWrapper>
+        <StaticTableHeader
+          headers={headers}
+          enableSelectAll={enableSelectAll}
+          onSelectAll={handleSelectAll}
+        />
+        <TableBody
+          data={paginatedData()}
+          headers={headers}
+          onRowClick={onRowClick}
+          selectedRows={selectedRows}
+          onRowSelection={handleRowSelection}
+        />
+      </TableWrapper>
+  <Pagination
+  currentPage={currentPage}
+  totalPages={totalPages}
+  onPageChange={(page) => {
+    if (page >= 1 && page <= totalPages) setCurrentPage(page);
+  }}
+  itemsPerPage={perPage}
+  onItemsPerPageChange={(newCount) => {
+    setPerPage(newCount);
+    setCurrentPage(1); 
+  }}
+/>
+
+
+    </>
   );
 };
 
@@ -228,7 +314,7 @@ Table.propTypes = {
   onSelectionChange: PropTypes.func.isRequired,
   singleSelect: PropTypes.bool,
   enableSelectAll: PropTypes.bool,
-  onScrollBottom: PropTypes.func.isRequired,
+  itemsPerPage: PropTypes.number,
   resetKey: PropTypes.number,
 };
 
