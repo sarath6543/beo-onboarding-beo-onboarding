@@ -2,7 +2,7 @@ import React from "react";
 const ClientsMain = () => {
     return (
         <div>
-            <h1>Client</h1>
+            <h1>ClientMain</h1>
         </div>
     );
 };

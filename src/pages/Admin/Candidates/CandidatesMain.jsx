@@ -67,4 +67,4 @@ const AdminHomeMain = () => {
     );
 };
 
-export default AdminHomeMain;
+export default CandidatesMain;

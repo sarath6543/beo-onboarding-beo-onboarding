@@ -5,6 +5,7 @@ import AdminTopBar from "../../beolayer/layout/Admin/AdminTopBar";
 import ClientsMain from "./Clients/ClientsMain";
 import CandidatesMain from "./Candidates/CandidatesMain";
 import ReportsMain from "./Reports/ReportsMain";
+import EmployeeRegisterMain from "./EmployeeRegister/EmployeeRegisterMain";
 
 const AdminHomeMain = () => {
      const [activePage, setActivePage] = useState("candidates");
@@ -17,6 +18,8 @@ const AdminHomeMain = () => {
         return <ClientsMain />;
       case "reports":
        return <ReportsMain />;
+      case "employeeRegister":
+        return <EmployeeRegisterMain/>;
       default:
         return <div className="p-6">Page not found</div>;
     }
