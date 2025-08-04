@@ -65,7 +65,7 @@ const TableBody = ({
   const { t } = useTranslation("language");
 
   return (
-    <tbody className="bg-white divide-y divide-border">
+    <tbody className="bg-white divide-y divide-gray-200">
       {Array.isArray(data) && data.length > 0 ? (
         data.map((row, rowIndex) => {
           const isSelected = selectedRows.some(
