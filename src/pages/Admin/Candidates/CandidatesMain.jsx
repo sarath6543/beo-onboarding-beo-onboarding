@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import FontIcon from "../../../beolayer/components/base/Icons/FontIcon.jsx";
 import { Slider } from "../../../beolayer/components/base/slider/Slider.jsx";
-import Table from "../../../beolayer/components/base/Table/Table.jsx";
+import Table from "../../../beolayer/components/base/Table/Table";
+import CandidateForm from "./form/CandidateForm.jsx";
 
 
 const CandidatesMain = () => {
-    const [showSlider,setShowSlider] = useState(false) 
-      const [selectedRows, setSelectedRows] = useState([]);
+    const [showSlider,setShowSlider] = useState(false);
+    const [selectedRows, setSelectedRows] = useState([]);
   const [resetKey, setResetKey] = useState(0);
  const headers = [
     { key: "name", name: "Name" },
@@ -55,20 +56,10 @@ const CandidatesMain = () => {
     setResetKey((prev) => prev + 1);
   };
 
-
     return (
     <>
     <Slider size="large" headline={"Add Candidates"} showSlider={showSlider} setShowSlider={setShowSlider}>
-        <div className="m-10 flex flex-col">
-            <label htmlFor="">Name</label>
-            <input className="border" type="text" />
-
-            <label htmlFor="">Name</label>
-            <input className="border" type="text" />
-
-            <label htmlFor="">Name</label>
-            <input className="border" type="text" />
-        </div>
+        <CandidateForm setShowSlider={setShowSlider}/>
     </Slider>
   
     <div className="p-5 py-8 flex justify-between items-center">
@@ -81,17 +72,17 @@ const CandidatesMain = () => {
             <button onClick={()=>setShowSlider(true)} className="bg-[#3F3F3F] p-1 text-white rounded-lg text-sm flex items-center px-3"><span className="text-xl pe-1">+</span>Add Candidates</button>
         </div>
     </div>
-     <Table
+
+    <Table
         headers={headers}
         data={data}
         onRowClick={handleRowClick}
         onSelectionChange={handleSelectionChange}
-        singleSelect={true}
-        enableSelectAll={false}
+        singleSelect={false}
+        enableSelectAll={true}
         onScrollBottom={handleScrollBottom}
         resetKey={resetKey}
       />
-
     </>
 )};
 
