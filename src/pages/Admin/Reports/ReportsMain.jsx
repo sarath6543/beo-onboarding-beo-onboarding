@@ -1,6 +1,6 @@
 import React from "react";
 
-const AdminHomeMain = () => {
+const ReportMain = () => {
     return <div>Reports</div>;
 };
 

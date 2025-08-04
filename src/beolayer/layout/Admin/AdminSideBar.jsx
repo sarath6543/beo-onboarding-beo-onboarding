@@ -19,22 +19,15 @@ export default function AdminSidebar({ onNavigate, active }) {
 
       <nav className="flex flex-col gap-1 p-4">
         {menuItems.map((item) => (
-          // <button
-          //   key={item.key}
-          //   onClick={() => onNavigate(item.key)}
-          //   className={`flex items-center gap-3 px-4 py-2 rounded hover:bg-[#E9E9E9] transition ${
-          //     active === item.key ? "bg-[#E9E9E9]" : ""
-          //   }`}
-          // >
-          <Link
-            to={item.url}
+          <button
+            key={item.key}
+            onClick={() => onNavigate(item.key)}
             className={`flex items-center gap-3 px-4 py-2 rounded hover:bg-[#E9E9E9] transition ${
-              active === item.key ? "bg-[#E9E9E9]" : ""
-            }`}
+              active === item.key ? "bg-[#E9E9E9]" : ""}`}
           >
             <span>{item.icon}</span>
             <span className="text-sm">{item.label}</span>
-          </Link>
+          </button> 
         ))}
       </nav>
     </aside>
