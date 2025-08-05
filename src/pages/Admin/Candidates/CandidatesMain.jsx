@@ -5,11 +5,14 @@ import Table from "../../../beolayer/components/base/Table/Table";
 import CandidateForm from "./form/CandidateForm.jsx";
 import { useNavigate } from "react-router-dom";
 
-
 const CandidatesMain = () => {
-  const [showSlider,setShowSlider] = useState(false);
+  const [showSlider, setShowSlider] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   const [resetKey, setResetKey] = useState(0);
+    const [searchTerm, setSearchTerm] = useState(""); 
+
+  const navigate = useNavigate();
+
   const headers = [
     { key: "name", name: "Name" },
     { key: "status", name: "Status" },
@@ -18,37 +21,33 @@ const CandidatesMain = () => {
     { key: "role", name: "Role" },
   ];
 
-const navigate = useNavigate();
   const data = [
-  { id: "1", name: "Alice", email: "alice@example.com", offerstatus: "error", role: "Admin", status: "success" },
-  { id: "2", name: "Bob", email: "bob@example.com", offerstatus: "success", role: "User", status: "error" },
-  { id: "3", name: "Charlie", email: "charlie@example.com", offerstatus: "pending", role: "Moderator", status: "yet to start" },
-  { id: "4", name: "David", email: "david@example.com", offerstatus: "error", role: "Admin", status: "progress" },
-  { id: "5", name: "Eve", email: "eve@example.com", offerstatus: "success", role: "User", status: "error" },
-  { id: "6", name: "Frank", email: "frank@example.com", offerstatus: "error", role: "Moderator", status: "success" },
-  { id: "7", name: "Grace", email: "grace@example.com", offerstatus: "success", role: "Admin", status: "yet to start" },
-  { id: "8", name: "Henry", email: "henry@example.com", offerstatus: "pending", role: "User", status: "error" },
-  { id: "9", name: "Ivy", email: "ivy@example.com", offerstatus: "success", role: "Moderator", status: "success" },
-  { id: "10", name: "Jack", email: "jack@example.com", offerstatus: "error", role: "Admin", status: "progress" },
-  { id: "11", name: "Kate", email: "kate@example.com", offerstatus: "success", role: "User", status: "error" },
-  { id: "12", name: "Liam", email: "liam@example.com", offerstatus: "error", role: "Moderator", status: "success" },
-  { id: "13", name: "Mia", email: "mia@example.com", offerstatus: "success", role: "Admin", status: "success" },
-  { id: "14", name: "Noah", email: "noah@example.com", offerstatus: "success", role: "User", status: "progress" },
-  { id: "15", name: "Olivia", email: "olivia@example.com", offerstatus: "pending", role: "Moderator", status: "error" },
-  { id: "16", name: "Parker", email: "parker@example.com", offerstatus: "error", role: "Admin", status: "yet to start" },
-  { id: "17", name: "Quinn", email: "quinn@example.com", offerstatus: "success", role: "User", status: "yet to start" },
-  { id: "18", name: "Riley", email: "riley@example.com", offerstatus: "pending", role: "Moderator", status: "error" },
-  { id: "19", name: "Sophia", email: "sophia@example.com", offerstatus: "error", role: "Admin", status: "success" },
-  { id: "20", name: "Theo", email: "theo@example.com", offerstatus: "success", role: "User", status: "progress" },
-];
+    { id: "1", name: "Alice", email: "alice@example.com", offerstatus: "error", role: "Admin", status: "success" },
+    { id: "2", name: "Bob", email: "bob@example.com", offerstatus: "success", role: "User", status: "error" },
+    { id: "3", name: "Charlie", email: "charlie@example.com", offerstatus: "pending", role: "Moderator", status: "yet to start" },
+    { id: "4", name: "David", email: "david@example.com", offerstatus: "error", role: "Admin", status: "progress" },
+    { id: "5", name: "Eve", email: "eve@example.com", offerstatus: "success", role: "User", status: "error" },
+    { id: "6", name: "Frank", email: "frank@example.com", offerstatus: "error", role: "Moderator", status: "success" },
+    { id: "7", name: "Grace", email: "grace@example.com", offerstatus: "success", role: "Admin", status: "yet to start" },
+    { id: "8", name: "Henry", email: "henry@example.com", offerstatus: "pending", role: "User", status: "error" },
+    { id: "9", name: "Ivy", email: "ivy@example.com", offerstatus: "success", role: "Moderator", status: "success" },
+    { id: "10", name: "Jack", email: "jack@example.com", offerstatus: "error", role: "Admin", status: "progress" },
+    { id: "11", name: "Kate", email: "kate@example.com", offerstatus: "success", role: "User", status: "error" },
+    { id: "12", name: "Liam", email: "liam@example.com", offerstatus: "error", role: "Moderator", status: "success" },
+    { id: "13", name: "Mia", email: "mia@example.com", offerstatus: "success", role: "Admin", status: "success" },
+    { id: "14", name: "Noah", email: "noah@example.com", offerstatus: "success", role: "User", status: "progress" },
+    { id: "15", name: "Olivia", email: "olivia@example.com", offerstatus: "pending", role: "Moderator", status: "error" },
+    { id: "16", name: "Parker", email: "parker@example.com", offerstatus: "error", role: "Admin", status: "yet to start" },
+    { id: "17", name: "Quinn", email: "quinn@example.com", offerstatus: "success", role: "User", status: "yet to start" },
+    { id: "18", name: "Riley", email: "riley@example.com", offerstatus: "pending", role: "Moderator", status: "error" },
+    { id: "19", name: "Sophia", email: "sophia@example.com", offerstatus: "error", role: "Admin", status: "success" },
+    { id: "20", name: "Theo", email: "theo@example.com", offerstatus: "success", role: "User", status: "progress" },
+  ];
 
-
-
- const handleRowClick = (row) => {
-    navigate(`${row.id}`);
+  const handleRowClick = (row) => {
+    navigate(`/admin-home/admin-candidates/${row.id}`);
     console.log("Row clicked:", row);
   };
-
 
   const handleSelectionChange = (rows) => {
     console.log("Selected rows:", rows);
@@ -57,33 +56,66 @@ const navigate = useNavigate();
 
   const handleScrollBottom = () => {
     console.log("Scrolled to bottom – Load more data if needed.");
-    // You can load more data here.
+    // Add lazy loading logic here if needed
   };
 
   const handleResetSelection = () => {
     setResetKey((prev) => prev + 1);
   };
+   const data1 = data.filter((row) => {
+    const search = searchTerm.toLowerCase();
+    return (
+      row.name.toLowerCase().includes(search) ||
+      row.email.toLowerCase().includes(search) ||
+      row.role.toLowerCase().includes(search) ||
+      row.status.toLowerCase().includes(search) ||
+      row.offerstatus.toLowerCase().includes(search)
+    );
+  });
 
   return (
-  <>
-  <Slider size="large" headline={"Add Candidates"} showSlider={showSlider} setShowSlider={setShowSlider}>
-      <CandidateForm setShowSlider={setShowSlider}/>
-  </Slider>
+    <>
+      {/* Slider for Adding Candidate */}
+      <Slider size="large" headline="Add Candidates" showSlider={showSlider} setShowSlider={setShowSlider}>
+        <CandidateForm setShowSlider={setShowSlider} />
+      </Slider>
 
-  <div className="p-5 py-8 flex justify-between items-center">
-      <div className="text-2xl">Candidates</div>
-      <div className="flex gap-7 ">
-          <div className="flex border rounded-lg items-center p-2 w-75">
-              <FontIcon iconName={"search"}/>
-              <input placeholder=" Search..." className="outline-none focus:outline-none focus:ring-0 focus:border-transparent text-sm " type="text" />
-          </div>
-          <button onClick={()=>setShowSlider(true)} className="bg-[#3F3F3F] p-1 text-white rounded-lg text-sm flex items-center px-3"><span className="text-xl pe-1">+</span>Add Candidates</button>
-      </div>
+      {/* Header Section */}
+<div className="p-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+  <div className="text-2xl font-semibold">Candidates</div>
+
+  <div className="flex flex-col sm:flex-row gap-4 items-center">
+    
+    {/* Search Input */}
+    <div className="flex items-center border rounded-lg px-4 py-2 bg-white shadow-sm w-full max-w-[300px] h-[40px]">
+      <FontIcon iconName={"search"} />
+    <input
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="ml-2 w-full outline-none text-sm bg-transparent"
+              type="text"
+            />
+    </div>
+
+    {/* Add Button */}
+    <button
+      onClick={() => setShowSlider(true)}
+      className="bg-[#3F3F3F] text-white rounded-lg text-sm px-4 py-2 h-[40px] flex items-center gap-2 shadow-sm hover:bg-[#2f2f2f] transition"
+    >
+      <span className="text-lg leading-none">+</span>
+      <span className="whitespace-nowrap">Add Candidates</span>
+    </button>
+    
   </div>
-  <div className="p-5">
-    <Table
+</div>
+
+
+      {/* Table Section */}
+      <div className="px-6 pb-6">
+        <Table
           headers={headers}
-          data={data}
+          data={data1}
           onRowClick={handleRowClick}
           onSelectionChange={handleSelectionChange}
           singleSelect={false}
@@ -91,9 +123,9 @@ const navigate = useNavigate();
           onScrollBottom={handleScrollBottom}
           resetKey={resetKey}
         />
-  </div>
-   
+      </div>
     </>
-)};
+  );
+};
 
 export default CandidatesMain;
