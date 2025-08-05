@@ -11,8 +11,9 @@ const CandidatesMain = () => {
   const [resetKey, setResetKey] = useState(0);
   const headers = [
     { key: "name", name: "Name" },
+    { key: "status", name: "Status" },
     { key: "email", name: "Email" },
-    { key: "status", name: "Offer Letter Status" },
+    { key: "offerstatus", name: "Offer Letter Status" },
     { key: "role", name: "Role" },
   ];
 
@@ -39,27 +40,28 @@ const CandidatesMain = () => {
   //   { id: "20", name: "Theo", email: "theo@example.com", role: "User" },
   // ];
   const data = [
-  { id: "1", name: "Alice", email: "alice@example.com", status: "error", role: "Admin" },
-  { id: "2", name: "Bob", email: "bob@example.com", status: "pending", role: "User" },
-  { id: "3", name: "Charlie", email: "charlie@example.com", status: "pending", role: "Moderator" },
-  { id: "4", name: "David", email: "david@example.com", status: "success", role: "Admin" },
-  { id: "5", name: "Eve", email: "eve@example.com", status: "success", role: "User" },
-  { id: "6", name: "Frank", email: "frank@example.com", status: "error", role: "Moderator" },
-  { id: "7", name: "Grace", email: "grace@example.com", status: "success", role: "Admin" },
-  { id: "8", name: "Henry", email: "henry@example.com", status: "pending", role: "User" },
-  { id: "9", name: "Ivy", email: "ivy@example.com", status: "success", role: "Moderator" },
-  { id: "10", name: "Jack", email: "jack@example.com", status: "error", role: "Admin" },
-  { id: "11", name: "Kate", email: "kate@example.com", status: "success", role: "User" },
-  { id: "12", name: "Liam", email: "liam@example.com", status: "error", role: "Moderator" },
-  { id: "13", name: "Mia", email: "mia@example.com", status: "success", role: "Admin" },
-  { id: "14", name: "Noah", email: "noah@example.com", status: "success", role: "User" },
-  { id: "15", name: "Olivia", email: "olivia@example.com", status: "pending", role: "Moderator" },
-  { id: "16", name: "Parker", email: "parker@example.com", status: "error", role: "Admin" },
-  { id: "17", name: "Quinn", email: "quinn@example.com", status: "success", role: "User" },
-  { id: "18", name: "Riley", email: "riley@example.com", status: "pending", role: "Moderator" },
-  { id: "19", name: "Sophia", email: "sophia@example.com", status: "error", role: "Admin" },
-  { id: "20", name: "Theo", email: "theo@example.com", status: "success", role: "User" },
+  { id: "1", name: "Alice", email: "alice@example.com", offerstatus: "error", role: "Admin", status: "success" },
+  { id: "2", name: "Bob", email: "bob@example.com", offerstatus: "success", role: "User", status: "error" },
+  { id: "3", name: "Charlie", email: "charlie@example.com", offerstatus: "pending", role: "Moderator", status: "yet to start" },
+  { id: "4", name: "David", email: "david@example.com", offerstatus: "error", role: "Admin", status: "progress" },
+  { id: "5", name: "Eve", email: "eve@example.com", offerstatus: "success", role: "User", status: "error" },
+  { id: "6", name: "Frank", email: "frank@example.com", offerstatus: "error", role: "Moderator", status: "success" },
+  { id: "7", name: "Grace", email: "grace@example.com", offerstatus: "success", role: "Admin", status: "yet to start" },
+  { id: "8", name: "Henry", email: "henry@example.com", offerstatus: "pending", role: "User", status: "error" },
+  { id: "9", name: "Ivy", email: "ivy@example.com", offerstatus: "success", role: "Moderator", status: "success" },
+  { id: "10", name: "Jack", email: "jack@example.com", offerstatus: "error", role: "Admin", status: "progress" },
+  { id: "11", name: "Kate", email: "kate@example.com", offerstatus: "success", role: "User", status: "error" },
+  { id: "12", name: "Liam", email: "liam@example.com", offerstatus: "error", role: "Moderator", status: "success" },
+  { id: "13", name: "Mia", email: "mia@example.com", offerstatus: "success", role: "Admin", status: "success" },
+  { id: "14", name: "Noah", email: "noah@example.com", offerstatus: "success", role: "User", status: "progress" },
+  { id: "15", name: "Olivia", email: "olivia@example.com", offerstatus: "pending", role: "Moderator", status: "error" },
+  { id: "16", name: "Parker", email: "parker@example.com", offerstatus: "error", role: "Admin", status: "yet to start" },
+  { id: "17", name: "Quinn", email: "quinn@example.com", offerstatus: "success", role: "User", status: "yet to start" },
+  { id: "18", name: "Riley", email: "riley@example.com", offerstatus: "pending", role: "Moderator", status: "error" },
+  { id: "19", name: "Sophia", email: "sophia@example.com", offerstatus: "error", role: "Admin", status: "success" },
+  { id: "20", name: "Theo", email: "theo@example.com", offerstatus: "success", role: "User", status: "progress" },
 ];
+
 
 
   const handleRowClick = (row) => {

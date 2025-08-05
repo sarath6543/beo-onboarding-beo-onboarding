@@ -63,27 +63,44 @@ const TableBody = ({
   onRowSelection,
 }) => {
   const { t } = useTranslation("language");
-  
+
   const getOfferStatus = (status) => {
     switch (status) {
       case 'error':
-        return 'Rejcted';
+        return 'Rejected';
       case 'success':
         return 'Accepted';
       default:
         return 'Pending'
     }
   }
-  const offerChipColor = (status) => {
-    switch (status) {
-      case 'error':
-        return 'error';
-      case 'success':
-        return 'success';
-      default:
-        return 'info'
-    }
+  const chipColor = (status) => {
+  switch (status) {
+    case 'error':
+      return 'error';
+    case 'success':
+      return 'success';
+    case 'pending':
+      return 'warning';
+    case 'progress':
+      return 'warning';
+    default:
+      return '';
   }
+}
+
+  const getStatus = (status) => {
+  switch (status) {
+    case 'error':
+      return 'Rejected';
+    case 'success':
+      return 'Success';
+    case 'progress':
+      return 'In Progress';
+    default:
+      return 'Yet to Start';
+  }
+};
 
   return (
     <tbody className="bg-white divide-y divide-gray-200">
@@ -114,9 +131,11 @@ const TableBody = ({
                   style={{ width: `${100 / headers.length}%` }}
                   className="px-6 text-sm text-text py-3 break-normal lg:break-all"
                 >{
-                    header.id === "status" 
-                      ? <div><Chip label={getOfferStatus(row.status)} color={offerChipColor(row.status)} variant="outlined"/></div>
-                      : row[header.id]
+                    header.id === "offerstatus" 
+                      ? <div><Chip label={getOfferStatus(row.offerstatus)} color={chipColor(row.offerstatus)} variant="outlined"/></div>
+                    :  header.id === "status"
+                      ? <div><Chip label={getStatus(row.status)} color={chipColor(row.status)} /></div>
+                    :   row[header.id]
                   }
                  
                 </td>
