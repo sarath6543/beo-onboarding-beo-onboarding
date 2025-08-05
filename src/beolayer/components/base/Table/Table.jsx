@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
-
+import Chip from '@mui/material/Chip';
 
 const TableWrapper = ({ children, className }) => {
   return (
@@ -63,6 +63,27 @@ const TableBody = ({
   onRowSelection,
 }) => {
   const { t } = useTranslation("language");
+  
+  const getOfferStatus = (status) => {
+    switch (status) {
+      case 'error':
+        return 'Rejcted';
+      case 'success':
+        return 'Accepted';
+      default:
+        return 'Pending'
+    }
+  }
+  const offerChipColor = (status) => {
+    switch (status) {
+      case 'error':
+        return 'error';
+      case 'success':
+        return 'success';
+      default:
+        return 'info'
+    }
+  }
 
   return (
     <tbody className="bg-white divide-y divide-gray-200">
@@ -92,8 +113,12 @@ const TableBody = ({
                   onClick={() => onRowClick && onRowClick(row)}
                   style={{ width: `${100 / headers.length}%` }}
                   className="px-6 text-sm text-text py-3 break-normal lg:break-all"
-                >
-                  {row[header.id]}
+                >{
+                    header.id === "status" 
+                      ? <div><Chip label={getOfferStatus(row.status)} color={offerChipColor(row.status)} variant="outlined"/></div>
+                      : row[header.id]
+                  }
+                 
                 </td>
               ))}
             </tr>
