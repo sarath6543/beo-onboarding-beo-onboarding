@@ -41,41 +41,39 @@ const routes = [
   role: null,
 },
 {
-  path: "/admin-home",
-  name: "admin-home",
-  value: React.lazy(() => import("../pages/Admin/AdminHomeMain")),
-  isAuthProtected: false,
-  role: null,
-},
-// Admin
-{
-  path: "/admin-candidates",
-  name: "admin-candidates",
-  value: React.lazy(() => import("../pages/Admin/Candidates/CandidatesMain")),
-  isAuthProtected: false,
-  role: null,
-},
-{
-  path: "/admin-clients",
-  name: "admin-clients",
-  value: React.lazy(() => import("../pages/Admin/Clients/ClientsMain")),
-  isAuthProtected: false,
-  role: null,
-},
-{
-  path: "/admin-reports",
-  name: "admin-reports",
-  value: React.lazy(() => import("../pages/Admin/Reports/ReportsMain")),
-  isAuthProtected: false,
-  role: null,
-},
-{
-  path: "/admin-employee_register",
-  name: "admin-employee_register",
-  value: React.lazy(() => import("../pages/Admin/EmployeeRegister/EmployeeRegisterMain")),
-  isAuthProtected: false,
-  role: null,
-},
+    path: "/admin-home",
+    name: "AdminHome",
+    value: React.lazy(() => import("../pages/Admin/AdminHomeMain")),
+    isAuthProtected: false,
+    children: [
+      {
+        index: true,
+        value: React.lazy(() => import("../pages/Admin/Candidates/CandidatesMain")),
+      },
+      {
+        path: "admin-candidates",
+        value: React.lazy(() => import("../pages/Admin/Candidates/CandidatesMain")),
+      },
+      {
+        path: "admin-candidates/:id",
+        value: React.lazy(() => import("../pages/Admin/Candidates/CandidateDetail")),
+      },
+      {
+        path: "admin-clients",
+        value: React.lazy(() => import("../pages/Admin/Clients/ClientsMain")),
+      },
+      {
+        path: "admin-reports",
+        value: React.lazy(() => import("../pages/Admin/Reports/ReportsMain")),
+      },
+      {
+        path: "admin-employee_register",
+        value: React.lazy(() => import("../pages/Admin/EmployeeRegister/EmployeeRegisterMain")),
+      },
+    ],
+  },
+
+
 
 ];
 

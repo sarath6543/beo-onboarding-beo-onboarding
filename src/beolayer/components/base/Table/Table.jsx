@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 const TableWrapper = ({ children, className }) => {
   return (
     <div className={clsx("overflow-x-auto mt-5", className)}>
-      <table className="min-w-full divide-y divide-gray-200">
+      <table className="min-w-full divide-y divide-gray-100">
         {children}
       </table>
     </div>
@@ -65,7 +65,7 @@ const TableBody = ({
   const { t } = useTranslation("language");
 
   return (
-    <tbody className="bg-white divide-y divide-gray-200">
+    <tbody className="bg-white divide-y divide-gray-100">
       {Array.isArray(data) && data.length > 0 ? (
         data.map((row, rowIndex) => {
           const isSelected = selectedRows.some(

@@ -3,42 +3,73 @@ import FontIcon from "../../../beolayer/components/base/Icons/FontIcon.jsx";
 import { Slider } from "../../../beolayer/components/base/slider/Slider.jsx";
 import Table from "../../../beolayer/components/base/Table/Table";
 import CandidateForm from "./form/CandidateForm.jsx";
+import { useNavigate } from "react-router-dom";
 
 
 const CandidatesMain = () => {
+   const navigate = useNavigate();
     const [showSlider,setShowSlider] = useState(false);
     const [selectedRows, setSelectedRows] = useState([]);
   const [resetKey, setResetKey] = useState(0);
  const headers = [
     { key: "name", name: "Name" },
-    { key: "email", name: "Email" },
-    { key: "role", name: "Role" },
+    { key: "emailemp_id", name: "EMP ID" },
+    { key: "status", name: "Status" },
+    { key: "category", name: "Category" },
+    { key: "division", name: "Division" },
+    { key: "offer_status", name: "Offer Status" },
   ];
 
-  const data = [
-    { id: "1", name: "Alice", email: "alice@example.com", role: "Admin" },
-    { id: "2", name: "Bob", email: "bob@example.com", role: "User" },
-    { id: "3", name: "Charlie", email: "charlie@example.com", role: "Moderator" },
-    { id: "4", name: "David", email: "david@example.com", role: "Admin" },
-    { id: "5", name: "Eve", email: "eve@example.com", role: "User" },
-    { id: "6", name: "Frank", email: "frank@example.com", role: "Moderator" },
-    { id: "7", name: "Grace", email: "grace@example.com", role: "Admin" },
-    { id: "8", name: "Henry", email: "henry@example.com", role: "User" },
-    { id: "9", name: "Ivy", email: "ivy@example.com", role: "Moderator" },
-    { id: "10", name: "Jack", email: "jack@example.com", role: "Admin" },
-    { id: "11", name: "Kate", email: "kate@example.com", role: "User" },
-    { id: "12", name: "Liam", email: "liam@example.com", role: "Moderator" },
-    { id: "13", name: "Mia", email: "mia@example.com", role: "Admin" },
-    { id: "14", name: "Noah", email: "noah@example.com", role: "User" },
-    { id: "15", name: "Olivia", email: "olivia@example.com", role: "Moderator" },
-    { id: "16", name: "Parker", email: "parker@example.com", role: "Admin" },
-    { id: "17", name: "Quinn", email: "quinn@example.com", role: "User" },
-    { id: "18", name: "Riley", email: "riley@example.com", role: "Moderator" },
-    { id: "19", name: "Sophia", email: "sophia@example.com", role: "Admin" },
-    { id: "20", name: "Theo", email: "theo@example.com", role: "User" },
-  ];
+const data = [
+  {
+    id: "1",
+    name: "John Doe",
+    emailemp_id: "123",
+    status: "Accepted",
+    category: "Category A",
+    division: "Division B",
+    offer_status: "Pending",
+  },
+  {
+    id: "2",
+    name: "Jane Smith",
+    emailemp_id: "456",
+    status: "Rejected",
+    category: "Category B",
+    division: "Division C",
+    offer_status: "Accepted",
+  },
+  {
+    id: "3",
+    name: "Bob Johnson",
+    emailemp_id: "789",
+    status: "Yet to Start",
+    category: "Category C",
+    division: "Division D",
+    offer_status: "Rejected",
+  },
+  {
+    id: "4",
+    name: "Alice Johnson",
+    emailemp_id: "789",
+    status: "In Progress",
+    category: "Category C",
+    division: "Division D",
+    offer_status: "Rejected",
+  },
+  {
+    id: "5",
+    name: "Alice Johnson",
+    emailemp_id: "789",
+    status: "Pending",
+    category: "Category C",
+    division: "Division D",
+    offer_status: "Rejected",
+  }
+]
 
   const handleRowClick = (row) => {
+    navigate(`${row.id}`);
     console.log("Row clicked:", row);
   };
 
@@ -62,16 +93,26 @@ const CandidatesMain = () => {
         <CandidateForm setShowSlider={setShowSlider}/>
     </Slider>
   
-    <div className="p-5 py-8 flex justify-between items-center">
-        <div className="text-2xl">Candidates</div>
-        <div className="flex gap-7 ">
-            <div className="flex border rounded-lg items-center p-2 w-75">
-                <FontIcon iconName={"search"}/>
-                <input placeholder=" Search..." className="outline-none focus:outline-none focus:ring-0 focus:border-transparent text-sm " type="text" />
-            </div>
-            <button onClick={()=>setShowSlider(true)} className="bg-[#3F3F3F] p-1 text-white rounded-lg text-sm flex items-center px-3"><span className="text-xl pe-1">+</span>Add Candidates</button>
-        </div>
+   <div className="p-3 py-2 flex justify-between items-center">
+  <div className="text-lg">Candidates</div>
+  <div className="flex gap-4">
+    <div className="flex border rounded-md items-center px-2 py-1 w-64">
+      <FontIcon iconName={"search"} />
+      <input
+        placeholder="Search..."
+        className="outline-none text-sm ml-2 w-full"
+        type="text"
+      />
     </div>
+    <button
+      onClick={() => setShowSlider(true)}
+      className="bg-[#3F3F3F] py-1 px-3 text-white rounded-md text-sm flex items-center"
+    >
+      <span className="text-base mr-1">+</span>Add Candidates
+    </button>
+  </div>
+</div>
+
 <div className="p-5">
    <Table
         headers={headers}
