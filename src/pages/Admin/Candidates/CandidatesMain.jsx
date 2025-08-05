@@ -18,28 +18,7 @@ const CandidatesMain = () => {
     { key: "role", name: "Role" },
   ];
 
-  // const data = [
-  //   { id: "1", name: "Alice", email: "alice@example.com",status: "success", role: "Admin" },
-  //   { id: "2", name: "Bob", email: "bob@example.com", role: "User" },
-  //   { id: "3", name: "Charlie", email: "charlie@example.com", role: "Moderator" },
-  //   { id: "4", name: "David", email: "david@example.com", role: "Admin" },
-  //   { id: "5", name: "Eve", email: "eve@example.com", role: "User" },
-  //   { id: "6", name: "Frank", email: "frank@example.com", role: "Moderator" },
-  //   { id: "7", name: "Grace", email: "grace@example.com", role: "Admin" },
-  //   { id: "8", name: "Henry", email: "henry@example.com", role: "User" },
-  //   { id: "9", name: "Ivy", email: "ivy@example.com", role: "Moderator" },
-  //   { id: "10", name: "Jack", email: "jack@example.com", role: "Admin" },
-  //   { id: "11", name: "Kate", email: "kate@example.com", role: "User" },
-  //   { id: "12", name: "Liam", email: "liam@example.com", role: "Moderator" },
-  //   { id: "13", name: "Mia", email: "mia@example.com", role: "Admin" },
-  //   { id: "14", name: "Noah", email: "noah@example.com", role: "User" },
-  //   { id: "15", name: "Olivia", email: "olivia@example.com", role: "Moderator" },
-  //   { id: "16", name: "Parker", email: "parker@example.com", role: "Admin" },
-  //   { id: "17", name: "Quinn", email: "quinn@example.com", role: "User" },
-  //   { id: "18", name: "Riley", email: "riley@example.com", role: "Moderator" },
-  //   { id: "19", name: "Sophia", email: "sophia@example.com", role: "Admin" },
-  //   { id: "20", name: "Theo", email: "theo@example.com", role: "User" },
-  // ];
+const navigate = useNavigate();
   const data = [
   { id: "1", name: "Alice", email: "alice@example.com", offerstatus: "error", role: "Admin", status: "success" },
   { id: "2", name: "Bob", email: "bob@example.com", offerstatus: "success", role: "User", status: "error" },
@@ -65,10 +44,11 @@ const CandidatesMain = () => {
 
 
 
-  const handleRowClick = (row) => {
+ const handleRowClick = (row) => {
     navigate(`${row.id}`);
     console.log("Row clicked:", row);
   };
+
 
   const handleSelectionChange = (rows) => {
     console.log("Selected rows:", rows);
