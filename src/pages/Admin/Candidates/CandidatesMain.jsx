@@ -72,8 +72,8 @@ const CandidatesMain = () => {
             <button onClick={()=>setShowSlider(true)} className="bg-[#3F3F3F] p-1 text-white rounded-lg text-sm flex items-center px-3"><span className="text-xl pe-1">+</span>Add Candidates</button>
         </div>
     </div>
-
-    <Table
+<div className="p-5">
+   <Table
         headers={headers}
         data={data}
         onRowClick={handleRowClick}
@@ -83,6 +83,8 @@ const CandidatesMain = () => {
         onScrollBottom={handleScrollBottom}
         resetKey={resetKey}
       />
+</div>
+   
     </>
 )};
 
