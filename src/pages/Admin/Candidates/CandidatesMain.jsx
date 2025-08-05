@@ -7,66 +7,63 @@ import { useNavigate } from "react-router-dom";
 
 
 const CandidatesMain = () => {
-   const navigate = useNavigate();
-    const [showSlider,setShowSlider] = useState(false);
-    const [selectedRows, setSelectedRows] = useState([]);
+  const [showSlider,setShowSlider] = useState(false);
+  const [selectedRows, setSelectedRows] = useState([]);
   const [resetKey, setResetKey] = useState(0);
- const headers = [
+  const headers = [
     { key: "name", name: "Name" },
-    { key: "emailemp_id", name: "EMP ID" },
     { key: "status", name: "Status" },
-    { key: "category", name: "Category" },
-    { key: "division", name: "Division" },
-    { key: "offer_status", name: "Offer Status" },
+    { key: "email", name: "Email" },
+    { key: "offerstatus", name: "Offer Letter Status" },
+    { key: "role", name: "Role" },
   ];
 
-const data = [
-  {
-    id: "1",
-    name: "John Doe",
-    emailemp_id: "123",
-    status: "Accepted",
-    category: "Category A",
-    division: "Division B",
-    offer_status: "Pending",
-  },
-  {
-    id: "2",
-    name: "Jane Smith",
-    emailemp_id: "456",
-    status: "Rejected",
-    category: "Category B",
-    division: "Division C",
-    offer_status: "Accepted",
-  },
-  {
-    id: "3",
-    name: "Bob Johnson",
-    emailemp_id: "789",
-    status: "Yet to Start",
-    category: "Category C",
-    division: "Division D",
-    offer_status: "Rejected",
-  },
-  {
-    id: "4",
-    name: "Alice Johnson",
-    emailemp_id: "789",
-    status: "In Progress",
-    category: "Category C",
-    division: "Division D",
-    offer_status: "Rejected",
-  },
-  {
-    id: "5",
-    name: "Alice Johnson",
-    emailemp_id: "789",
-    status: "Pending",
-    category: "Category C",
-    division: "Division D",
-    offer_status: "Rejected",
-  }
-]
+  // const data = [
+  //   { id: "1", name: "Alice", email: "alice@example.com",status: "success", role: "Admin" },
+  //   { id: "2", name: "Bob", email: "bob@example.com", role: "User" },
+  //   { id: "3", name: "Charlie", email: "charlie@example.com", role: "Moderator" },
+  //   { id: "4", name: "David", email: "david@example.com", role: "Admin" },
+  //   { id: "5", name: "Eve", email: "eve@example.com", role: "User" },
+  //   { id: "6", name: "Frank", email: "frank@example.com", role: "Moderator" },
+  //   { id: "7", name: "Grace", email: "grace@example.com", role: "Admin" },
+  //   { id: "8", name: "Henry", email: "henry@example.com", role: "User" },
+  //   { id: "9", name: "Ivy", email: "ivy@example.com", role: "Moderator" },
+  //   { id: "10", name: "Jack", email: "jack@example.com", role: "Admin" },
+  //   { id: "11", name: "Kate", email: "kate@example.com", role: "User" },
+  //   { id: "12", name: "Liam", email: "liam@example.com", role: "Moderator" },
+  //   { id: "13", name: "Mia", email: "mia@example.com", role: "Admin" },
+  //   { id: "14", name: "Noah", email: "noah@example.com", role: "User" },
+  //   { id: "15", name: "Olivia", email: "olivia@example.com", role: "Moderator" },
+  //   { id: "16", name: "Parker", email: "parker@example.com", role: "Admin" },
+  //   { id: "17", name: "Quinn", email: "quinn@example.com", role: "User" },
+  //   { id: "18", name: "Riley", email: "riley@example.com", role: "Moderator" },
+  //   { id: "19", name: "Sophia", email: "sophia@example.com", role: "Admin" },
+  //   { id: "20", name: "Theo", email: "theo@example.com", role: "User" },
+  // ];
+  const data = [
+  { id: "1", name: "Alice", email: "alice@example.com", offerstatus: "error", role: "Admin", status: "success" },
+  { id: "2", name: "Bob", email: "bob@example.com", offerstatus: "success", role: "User", status: "error" },
+  { id: "3", name: "Charlie", email: "charlie@example.com", offerstatus: "pending", role: "Moderator", status: "yet to start" },
+  { id: "4", name: "David", email: "david@example.com", offerstatus: "error", role: "Admin", status: "progress" },
+  { id: "5", name: "Eve", email: "eve@example.com", offerstatus: "success", role: "User", status: "error" },
+  { id: "6", name: "Frank", email: "frank@example.com", offerstatus: "error", role: "Moderator", status: "success" },
+  { id: "7", name: "Grace", email: "grace@example.com", offerstatus: "success", role: "Admin", status: "yet to start" },
+  { id: "8", name: "Henry", email: "henry@example.com", offerstatus: "pending", role: "User", status: "error" },
+  { id: "9", name: "Ivy", email: "ivy@example.com", offerstatus: "success", role: "Moderator", status: "success" },
+  { id: "10", name: "Jack", email: "jack@example.com", offerstatus: "error", role: "Admin", status: "progress" },
+  { id: "11", name: "Kate", email: "kate@example.com", offerstatus: "success", role: "User", status: "error" },
+  { id: "12", name: "Liam", email: "liam@example.com", offerstatus: "error", role: "Moderator", status: "success" },
+  { id: "13", name: "Mia", email: "mia@example.com", offerstatus: "success", role: "Admin", status: "success" },
+  { id: "14", name: "Noah", email: "noah@example.com", offerstatus: "success", role: "User", status: "progress" },
+  { id: "15", name: "Olivia", email: "olivia@example.com", offerstatus: "pending", role: "Moderator", status: "error" },
+  { id: "16", name: "Parker", email: "parker@example.com", offerstatus: "error", role: "Admin", status: "yet to start" },
+  { id: "17", name: "Quinn", email: "quinn@example.com", offerstatus: "success", role: "User", status: "yet to start" },
+  { id: "18", name: "Riley", email: "riley@example.com", offerstatus: "pending", role: "Moderator", status: "error" },
+  { id: "19", name: "Sophia", email: "sophia@example.com", offerstatus: "error", role: "Admin", status: "success" },
+  { id: "20", name: "Theo", email: "theo@example.com", offerstatus: "success", role: "User", status: "progress" },
+];
+
+
 
   const handleRowClick = (row) => {
     navigate(`${row.id}`);
@@ -87,44 +84,34 @@ const data = [
     setResetKey((prev) => prev + 1);
   };
 
-    return (
-    <>
-    <Slider size="large" headline={"Add Candidates"} showSlider={showSlider} setShowSlider={setShowSlider}>
-        <CandidateForm setShowSlider={setShowSlider}/>
-    </Slider>
-  
-   <div className="p-3 py-2 flex justify-between items-center">
-  <div className="text-lg">Candidates</div>
-  <div className="flex gap-4">
-    <div className="flex border rounded-md items-center px-2 py-1 w-64">
-      <FontIcon iconName={"search"} />
-      <input
-        placeholder="Search..."
-        className="outline-none text-sm ml-2 w-full"
-        type="text"
-      />
-    </div>
-    <button
-      onClick={() => setShowSlider(true)}
-      className="bg-[#3F3F3F] py-1 px-3 text-white rounded-md text-sm flex items-center"
-    >
-      <span className="text-base mr-1">+</span>Add Candidates
-    </button>
-  </div>
-</div>
+  return (
+  <>
+  <Slider size="large" headline={"Add Candidates"} showSlider={showSlider} setShowSlider={setShowSlider}>
+      <CandidateForm setShowSlider={setShowSlider}/>
+  </Slider>
 
-<div className="p-5">
-   <Table
-        headers={headers}
-        data={data}
-        onRowClick={handleRowClick}
-        onSelectionChange={handleSelectionChange}
-        singleSelect={false}
-        enableSelectAll={true}
-        onScrollBottom={handleScrollBottom}
-        resetKey={resetKey}
-      />
-</div>
+  <div className="p-5 py-8 flex justify-between items-center">
+      <div className="text-2xl">Candidates</div>
+      <div className="flex gap-7 ">
+          <div className="flex border rounded-lg items-center p-2 w-75">
+              <FontIcon iconName={"search"}/>
+              <input placeholder=" Search..." className="outline-none focus:outline-none focus:ring-0 focus:border-transparent text-sm " type="text" />
+          </div>
+          <button onClick={()=>setShowSlider(true)} className="bg-[#3F3F3F] p-1 text-white rounded-lg text-sm flex items-center px-3"><span className="text-xl pe-1">+</span>Add Candidates</button>
+      </div>
+  </div>
+  <div className="p-5">
+    <Table
+          headers={headers}
+          data={data}
+          onRowClick={handleRowClick}
+          onSelectionChange={handleSelectionChange}
+          singleSelect={false}
+          enableSelectAll={true}
+          onScrollBottom={handleScrollBottom}
+          resetKey={resetKey}
+        />
+  </div>
    
     </>
 )};
