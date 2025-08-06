@@ -13,6 +13,7 @@ const InputField = ({
   options = [],
   multiple,
   error,
+  placeholder,
   ...rest
 }) => {
   const isUpload = type === "upload";
@@ -196,6 +197,7 @@ const InputField = ({
         // </div>
 
         <input
+          placeholder={placeholder}
           type={type}
           name={name}
           value={value}
