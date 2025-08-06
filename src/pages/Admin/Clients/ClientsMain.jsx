@@ -8,7 +8,6 @@ const ClientsMain = () => {
     const [showSlider,setShowSlider] = useState(false); 
       const [selectedRows, setSelectedRows] = useState([]);
       const [resetKey, setResetKey] = useState(0);
-          const [searchTerm, setSearchTerm] = useState(""); 
       const headers = [
         { key: "name", name: "Name" },
         { key: "email", name: "Email" },
@@ -56,15 +55,15 @@ const ClientsMain = () => {
         setResetKey((prev) => prev + 1);
       };
 
-  return (
+    return (
     <>
     <Slider size="large" headline={"Add Clients"} showSlider={showSlider} setShowSlider={setShowSlider}>
         <ClientForm setShowSlider={setShowSlider}/>
     </Slider>
-    <div className="p-8 py-8 flex justify-between items-center">
-        <div className="text-2xl ms-12">Clients</div>
+    <div className="p-5 py-8 flex justify-between items-center">
+        <div className="text-2xl">Clients</div>
         <div className="flex gap-7 ">
-            <div className="flex border rounded-lg items-center p-1 w-75">
+            <div className="flex border rounded-lg items-center p-2 w-75">
                 <FontIcon iconName={"search"}/>
                 <input placeholder=" Search..." className="outline-none focus:outline-none focus:ring-0 focus:border-transparent text-sm " type="text" />
             </div>
@@ -82,35 +81,8 @@ const ClientsMain = () => {
               onScrollBottom={handleScrollBottom}
               resetKey={resetKey}
             />
-    </div>
-
-    {/* Add Button */}
-    <button
-      onClick={() => setShowSlider(true)}
-      className="bg-[#3F3F3F] text-white rounded-lg text-sm px-4 py-2 h-[40px] flex items-center gap-2 shadow-sm hover:bg-[#2f2f2f] transition"
-    >
-      <span className="text-lg leading-none">+</span>
-      <span className="whitespace-nowrap">Add Candidates</span>
-    </button>
-    
-  </div>
-</div>
-
-
-      {/* Table Section */}
-      <div className="px-6 pb-6">
-        <Table
-          headers={headers}
-          data={data}
-          onRowClick={handleRowClick}
-          onSelectionChange={handleSelectionChange}
-          singleSelect={false}
-          enableSelectAll={true}
-          onScrollBottom={handleScrollBottom}
-          resetKey={resetKey}
-        />
       </div>
     </>
-  );
+    );
 };
 export default ClientsMain;
