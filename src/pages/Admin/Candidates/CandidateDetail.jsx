@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 
 const tabs = [
-  { key: "profile", label: "Profile" },
+  { key: "create_offer", label: "Create Offer" },
   { key: "documents", label: "Documents" },
-  { key: "history", label: "History" },
-  { key: "settings", label: "Settings" },
+  { key: "pre_joining", label: "Pre Joining Formalities" },
+  { key: "day1", label: "Day One" },
 ];
 
 const CandidateDetail = () => {
@@ -14,13 +14,13 @@ const CandidateDetail = () => {
 
   const renderContent = () => {
     switch (activeTab) {
-      case "profile":
+      case "create_offer":
         return <div>Profile information for candidate ID: {id}</div>;
       case "documents":
         return <div>Documents related to candidate ID: {id}</div>;
-      case "history":
+      case "pre_joining":
         return <div>History and activities for candidate ID: {id}</div>;
-      case "settings":
+      case "day1":
         return <div>Settings for candidate ID: {id}</div>;
       default:
         return null;

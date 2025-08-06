@@ -149,7 +149,7 @@ const TableBody = ({
             colSpan={headers.length + 1}
             className="text-center py-4 text-gray-500"
           >
-            {t("common.table.NoData")}
+           No Data
           </td>
         </tr>
       )}

@@ -38,16 +38,16 @@ const normalizedPath = currentPath === "/admin-home" ? "/admin-home/admin-candid
       const isActive = normalizedPath === fullPath || normalizedPath.startsWith(fullPath + "/");
 
       return (
-        <button
-          key={item.key}
-          onClick={() => navigate(fullPath)}
-          className={`flex items-center gap-3 px-4 py-2 rounded transition ${
-            isActive ? "bg-[#E9E9E9] font-semibold" : "hover:bg-[#F5F5F5]"
-          }`}
-        >
-          <span>{item.icon}</span>
-          <span className="text-sm">{item.label}</span>
-        </button>
+      <button
+              key={item.key}
+              onClick={() => navigate(fullPath)}
+              className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-200 text-sm
+                ${isActive ? "bg-[#F0F0F0] text-[#000] font-semibold shadow-inner" : "hover:bg-[#F9F9F9] text-[#555]"}
+              `}
+            >
+              <span className="text-lg">{item.icon}</span>
+              <span>{item.label}</span>
+            </button>
       );
     })}
   </nav>
