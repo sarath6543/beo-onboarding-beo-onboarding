@@ -9,9 +9,9 @@ const ClientsMain = () => {
       const [selectedRows, setSelectedRows] = useState([]);
       const [resetKey, setResetKey] = useState(0);
       const headers = [
-        { key: "name", name: "Name" },
-        { key: "email", name: "Email" },
-        { key: "role", name: "Role" },
+        { id: "name", name: "Name" },
+        { id: "email", name: "Email" },
+        { id: "role", name: "Role" },
       ];
     
       const data = [
