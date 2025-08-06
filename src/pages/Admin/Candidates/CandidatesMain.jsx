@@ -70,10 +70,10 @@ const navigate = useNavigate();
       <CandidateForm setShowSlider={setShowSlider}/>
   </Slider>
 
-  <div className="p-5 py-8 flex justify-between items-center">
-      <div className="text-2xl">Candidates</div>
+  <div className="p-8 py-8 flex justify-between items-center">
+      <div className="text-2xl ms-12">Candidates</div>
       <div className="flex gap-7 ">
-          <div className="flex border rounded-lg items-center p-2 w-75">
+          <div className="flex border rounded-lg items-center p-1 w-75">
               <FontIcon iconName={"search"}/>
               <input placeholder=" Search..." className="outline-none focus:outline-none focus:ring-0 focus:border-transparent text-sm " type="text" />
           </div>
