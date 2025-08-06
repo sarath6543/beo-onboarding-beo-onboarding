@@ -26,7 +26,7 @@ export const Slider = ({
         {
           "w-full md:w-72 lg:w-72 xl:w-72": size === "small",
           "w-full md:w-96 lg:w-96 xl:w-96": size === "medium",
-          "w-full md:w-96 lg:w-1/2 xl:w-1/3": size === "large",
+          "w-full md:w-96 lg:w-[500px] xl:w-[500px]": size === "large",
           "translate-x-0": showSlider,
           "translate-x-full": !showSlider,
         }
