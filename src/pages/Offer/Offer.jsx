@@ -18,7 +18,6 @@ const Offer = () => {
 
   const validateFile = (file) => {
     const allowedTypes = [
-      "application/pdf",
       "image/jpeg",
       "image/png",
       "image/jpg",
@@ -221,7 +220,7 @@ const Offer = () => {
 
                   <input
                     type="file"
-                    accept=".pdf,.jpg,.jpeg,.png"
+                    accept=".jpg,.jpeg,.png"
                     onChange={handleFileChange}
                     ref={fileInputRef}
                     className="absolute inset-0 opacity-0 cursor-pointer"
@@ -235,6 +234,9 @@ const Offer = () => {
                     </span>
                     <span className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm">
                       PNG
+                    </span>
+                     <span className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm">
+                      JPG
                     </span>
                     <span
                       className="px-4 py-2 border mr-1 rounded-md text-[10px]"
@@ -252,13 +254,13 @@ const Offer = () => {
 
                   {uploadedFile && (
                     <div className="flex gap-2 text-xs">
-                      <button
+                      {/* <button
                         type="button"
                         className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm"
                         onClick={() => setPreviewOpen((prev) => !prev)}
                       >
                         {previewOpen ? "Hide" : "View"}
-                      </button>
+                      </button> */}
 
                       <button
                         type="button"

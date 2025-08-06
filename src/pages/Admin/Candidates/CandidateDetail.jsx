@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
+import CreateOffer from "./CreateOffer/CreateOffer.jsx";
+
 
 const tabs = [
   { key: "create_offer", label: "Create Offer" },
@@ -10,12 +12,13 @@ const tabs = [
 
 const CandidateDetail = () => {
   const { id } = useParams();
-  const [activeTab, setActiveTab] = useState("profile");
+ const [activeTab, setActiveTab] = useState("create_offer");
 
   const renderContent = () => {
     switch (activeTab) {
       case "create_offer":
-        return <div>Profile information for candidate ID: {id}</div>;
+        // return <div>Profile information for candidate ID: {id}</div>;
+        return <CreateOffer />;
       case "documents":
         return <div>Documents related to candidate ID: {id}</div>;
       case "pre_joining":
