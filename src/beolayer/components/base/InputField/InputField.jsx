@@ -23,7 +23,7 @@ const InputField = ({
   const selectedOption = options.find((option) => option.value === value) || null;
  
   return (
-    <label className="block mb-4 text-sm font-sm text-gray-700">
+    <label className="block mb-2 text-sm font-sm text-gray-700">
       {label}
       {asterisk && (
         <FontIcon
