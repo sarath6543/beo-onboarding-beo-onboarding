@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
 import { useTranslation } from "react-i18next";
-import Chip from '@mui/material/Chip';
 
 const TableWrapper = ({ children, className }) => {
   return (
@@ -64,44 +63,6 @@ const TableBody = ({
 }) => {
   const { t } = useTranslation("language");
 
-  const getOfferStatus = (status) => {
-    switch (status) {
-      case 'error':
-        return 'Rejected';
-      case 'success':
-        return 'Accepted';
-      default:
-        return 'Pending'
-    }
-  }
-  const chipColor = (status) => {
-  switch (status) {
-    case 'error':
-      return 'error';
-    case 'success':
-      return 'success';
-    case 'pending':
-      return 'warning';
-    case 'progress':
-      return 'warning';
-    default:
-      return '';
-  }
-}
-
-  const getStatus = (status) => {
-  switch (status) {
-    case 'error':
-      return 'Rejected';
-    case 'success':
-      return 'Success';
-    case 'progress':
-      return 'In Progress';
-    default:
-      return 'Yet to Start';
-  }
-};
-
   return (
     <tbody className="bg-white divide-y divide-gray-100">
       {Array.isArray(data) && data.length > 0 ? (
@@ -124,22 +85,19 @@ const TableBody = ({
                   onChange={() => onRowSelection(row)}
                 />
               </td>
-              {headers.map((header) => (
-                <td
-                  key={header.id}
-                  onClick={() => onRowClick && onRowClick(row)}
-                  style={{ width: `${100 / headers.length}%` }}
-                  className="px-6 text-sm text-text py-3 break-normal lg:break-all"
-                >{
-                    header.id === "offerstatus" 
-                      ? <div><Chip label={getOfferStatus(row.offerstatus)} color={chipColor(row.offerstatus)} variant="outlined"/></div>
-                    :  header.id === "status"
-                      ? <div><Chip label={getStatus(row.status)} color={chipColor(row.status)} /></div>
-                    :   row[header.id]
-                  }
-                 
-                </td>
-              ))}
+              {headers.map((header) => {
+                const value = row[header.id];                
+                return (
+                  <td
+                    key={header.id}
+                    onClick={() => onRowClick && onRowClick(row)}
+                    style={{ width: `${100 / headers.length}%` }}
+                    className="px-6 text-sm text-text py-3 break-normal lg:break-all"
+                  >
+                    {header.render ? header.render(value, row) : value}
+                  </td>
+                );
+              })}
             </tr>
           );
         })
@@ -248,7 +206,8 @@ Pagination.propTypes = {
 
 
 const Table = ({
-  headers: initialHeaders,
+  // headers: initialHeaders,
+  headers,
   data,
   onRowClick,
   onSelectionChange,
@@ -257,12 +216,12 @@ const Table = ({
   itemsPerPage = 10,
   resetKey = 0,
 }) => {
-  const [headers] = useState(
-    initialHeaders.map((header) => ({
-      id: header.key,
-      name: header.name,
-    }))
-  );
+  // const [headers] = useState(
+  //   initialHeaders.map((header) => ({
+  //     id: header.key,
+  //     name: header.name,
+  //   }))
+  // );
 
   const [selectedRows, setSelectedRows] = useState([]);
 const [currentPage, setCurrentPage] = useState(1);

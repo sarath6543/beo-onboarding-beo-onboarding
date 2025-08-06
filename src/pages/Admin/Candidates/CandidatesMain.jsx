@@ -4,21 +4,68 @@ import { Slider } from "../../../beolayer/components/base/slider/Slider.jsx";
 import Table from "../../../beolayer/components/base/Table/Table";
 import CandidateForm from "./form/CandidateForm.jsx";
 import { useNavigate } from "react-router-dom";
+import Chip from '@mui/material/Chip';
+
 
 const CandidatesMain = () => {
   const [showSlider, setShowSlider] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
   const [resetKey, setResetKey] = useState(0);
-    const [searchTerm, setSearchTerm] = useState(""); 
+  const [searchTerm, setSearchTerm] = useState(""); 
+
+  const getOfferStatus = (status) => {
+    switch (status) {
+      case 'error':
+        return 'Rejected';
+      case 'success':
+        return 'Accepted';
+      default:
+        return 'Pending'
+    }
+  }
+
+  const chipColor = (status) => {
+  switch (status) {
+    case 'error':
+      return 'error';
+    case 'success':
+      return 'success';
+    case 'pending':
+      return 'warning';
+    case 'progress':
+      return 'warning';
+    default:
+      return '';
+  }
+}
+
+  const getStatus = (status) => {
+  switch (status) {
+    case 'error':
+      return 'Rejected';
+    case 'success':
+      return 'Success';
+    case 'progress':
+      return 'In Progress';
+    default:
+      return 'Yet to Start';
+  }
+};
 
   const navigate = useNavigate();
 
   const headers = [
-    { key: "name", name: "Name" },
-    { key: "status", name: "Status" },
-    { key: "email", name: "Email" },
-    { key: "offerstatus", name: "Offer Letter Status" },
-    { key: "role", name: "Role" },
+    { id: "name", name: "Name" },
+    { id: "status", name: "Status",
+      render: (value) => (
+        <Chip label={getStatus(value)} color={chipColor(value)} />
+      ), },
+    { id: "email", name: "Email" },
+    { id: "offerstatus", name: "Offer Letter Status",
+      render: (value) => (
+        <Chip label={getOfferStatus(value)} color={chipColor(value)} variant="outlined"/>
+      ), },
+    { id: "role", name: "Role" },
   ];
 
   const data = [
@@ -75,40 +122,40 @@ const CandidatesMain = () => {
 
   return (
     <>
-      {/* Slider for Adding Candidate */}
-      <Slider size="large" headline="Add Candidates" showSlider={showSlider} setShowSlider={setShowSlider}>
-        <CandidateForm setShowSlider={setShowSlider} />
-      </Slider>
+    {/* Slider for Adding Candidate */}
+    <Slider size="large" headline="Add Candidates" showSlider={showSlider} setShowSlider={setShowSlider}>
+      <CandidateForm setShowSlider={setShowSlider} />
+    </Slider>
 
-      {/* Header Section */}
-<div className="p-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-  <div className="text-2xl font-semibold">Candidates</div>
+    {/* Header Section */}
+    <div className="p-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+      <div className="text-2xl font-semibold ms-12">Candidates</div>
 
-  <div className="flex flex-col sm:flex-row gap-4 items-center">
-    
-    {/* Search Input */}
-    <div className="flex items-center border rounded-lg px-4 py-2 bg-white shadow-sm w-full max-w-[300px] h-[40px]">
-      <FontIcon iconName={"search"} />
-    <input
-              placeholder="Search..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="ml-2 w-full outline-none text-sm bg-transparent"
-              type="text"
-            />
+      <div className="flex flex-col sm:flex-row gap-4 items-center">
+        
+        {/* Search Input */}
+        <div className="flex items-center border rounded-lg px-1 py-2 bg-white shadow-sm w-full max-w-[300px] h-[40px]">
+          <FontIcon iconName={"search"} />
+          <input
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="ml-2 w-full outline-none text-sm bg-transparent"
+            type="text"
+          />
+        </div>
+
+        {/* Add Button */}
+        <button
+          onClick={() => setShowSlider(true)}
+          className="bg-[#3F3F3F] text-white rounded-lg text-sm px-4 py-2 h-[40px] flex items-center gap-2 shadow-sm hover:bg-[#2f2f2f] transition"
+        >
+          <span className="text-lg leading-none">+</span>
+          <span className="whitespace-nowrap">Add Candidates</span>
+        </button>
+        
+      </div>
     </div>
-
-    {/* Add Button */}
-    <button
-      onClick={() => setShowSlider(true)}
-      className="bg-[#3F3F3F] text-white rounded-lg text-sm px-4 py-2 h-[40px] flex items-center gap-2 shadow-sm hover:bg-[#2f2f2f] transition"
-    >
-      <span className="text-lg leading-none">+</span>
-      <span className="whitespace-nowrap">Add Candidates</span>
-    </button>
-    
-  </div>
-</div>
 
 
       {/* Table Section */}
