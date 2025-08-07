@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 const TableWrapper = ({ children, className }) => {
   return (
     <div className={clsx("overflow-x-auto mt-5", className)}>
-      <table className="min-w-full divide-y divide-gray-100">
+      <table className="min-w-full divide-y divide-gray-300">
         {children}
       </table>
     </div>

@@ -58,12 +58,39 @@ const CandidatesMain = () => {
     { id: "name", name: "Name" },
     { id: "status", name: "Status",
       render: (value) => (
-        <Chip label={getStatus(value)} color={chipColor(value)} />
+        <Chip label={getStatus(value)} color={chipColor(value)}sx={{
+  width: 100,              
+  height: 28,              
+  borderRadius: '5px',    
+  fontSize: '0.75rem',   
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  textAlign: 'center',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+}}
+
+ />
       ), },
     { id: "email", name: "Email" },
     { id: "offerstatus", name: "Offer Letter Status",
       render: (value) => (
-        <Chip label={getOfferStatus(value)} color={chipColor(value)} variant="outlined"/>
+        <Chip label={getOfferStatus(value)} color={chipColor(value)} variant="outlined" sx={{
+  width: 100,              
+  height: 28,              
+  borderRadius: '5px',     
+  fontSize: '0.75rem',     
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  textAlign: 'center',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+}}
+/>
       ), },
     { id: "role", name: "Role" },
   ];
