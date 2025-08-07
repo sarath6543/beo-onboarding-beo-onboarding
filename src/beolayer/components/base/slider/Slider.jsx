@@ -36,7 +36,7 @@ export const Slider = ({
         id="notification_content_slider"
         className="h-full w-full bg-white rounded shadow-lg"
       >
-        <div className="h-10 w-full flex items-center justify-between rounded my-3 py-9 px-6 ">
+        <div className="h-10 w-full flex items-center justify-between rounded my-3 py-[26.5px] px-6 ">
           {/* <span className="font-medium flex text-text"><FontIcon iconName="Pricetags" color="#474cef" />{headline}</span> */}
           <span className="flex text-2xl ms-5">
             <FontIcon iconName={icon} color={color} />
