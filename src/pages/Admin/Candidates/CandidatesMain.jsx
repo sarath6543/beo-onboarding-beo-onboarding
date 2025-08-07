@@ -27,13 +27,12 @@ const CandidatesMain = () => {
   const chipColor = (status) => {
   switch (status) {
     case 'error':
-      return 'error';
+      return '#E60000';
     case 'success':
-      return 'success';
+      return '#59EC9E';
     case 'pending':
-      return 'warning';
     case 'progress':
-      return 'warning';
+      return '#FFB86A';
     default:
       return '';
   }
@@ -58,12 +57,12 @@ const CandidatesMain = () => {
     { id: "name", name: "Name" },
     { id: "status", name: "Status",
       render: (value) => (
-        <Chip label={getStatus(value)} color={chipColor(value)} />
+        <Chip label={getStatus(value)}  style={{color: value === "error" && "white" ,backgroundColor:chipColor(value)}} />
       ), },
     { id: "email", name: "Email" },
     { id: "offerstatus", name: "Offer Letter Status",
       render: (value) => (
-        <Chip label={getOfferStatus(value)} color={chipColor(value)} variant="outlined"/>
+        <Chip label={getOfferStatus(value)} style={{color:chipColor(value), borderColor:chipColor(value)}} variant="outlined"/>
       ), },
     { id: "role", name: "Role" },
   ];
