@@ -1,12 +1,10 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import TopBar from "../../beolayer/layout/TopBar";
 import { useNavigate } from "react-router-dom";
 import FontIcon from "../../beolayer/components/base/Icons/FontIcon.jsx";
- import email from "@/assets/email_ico.svg";
+import email from "@/assets/email_ico.svg";
 import Popup from "../../beolayer/components/base/pop-up/Popup.jsx";
-
-
+import { useForm } from "react-hook-form";
 
 const Offer = () => {
   const navigate = useNavigate();
@@ -16,12 +14,18 @@ const Offer = () => {
   const [error, setError] = useState("");
   const fileInputRef = useRef(null);
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log("Form submitted with:", data);
+  };
+
   const validateFile = (file) => {
-    const allowedTypes = [
-      "image/jpeg",
-      "image/png",
-      "image/jpg",
-    ];
+    const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
     const maxSize = 100 * 1024; // 100 KB
 
     if (!allowedTypes.includes(file.type)) {
@@ -38,7 +42,9 @@ const Offer = () => {
           const maxWidth = 800;
           const maxHeight = 600;
           if (img.naturalWidth > maxWidth || img.naturalHeight > maxHeight) {
-            resolve(`Image dimensions must be under ${maxWidth}x${maxHeight}px.`);
+            resolve(
+              `Image dimensions must be under ${maxWidth}x${maxHeight}px.`
+            );
           } else {
             resolve("");
           }
@@ -69,7 +75,8 @@ const Offer = () => {
     }
   };
 
-  const getPreviewUrl = () => (uploadedFile ? URL.createObjectURL(uploadedFile) : null);
+  const getPreviewUrl = () =>
+    uploadedFile ? URL.createObjectURL(uploadedFile) : null;
 
   useEffect(() => {
     return () => {
@@ -121,188 +128,209 @@ const Offer = () => {
         <hr className="border-t border-gray-200 w-full" />
       </div>
 
-      <div className="bg-white font-sans min-h-[40vh] px-6 md:px-8 py-8 pb-40 sm:pb-24">
-        <div className="max-w-6xl mx-auto">
-          {/* HTML Offer Letter Viewer */}
-          <div className="rounded-xl border border-gray-300 p-3 bg-white mb-4">
-            <iframe
-              src="/offer.html"
-              title="Offer Letter"
-              className="w-full h-[600px] border border-gray-100 rounded-md"
-              style={{ background: "#fff" }}
-            />
-          {uploadedFile && (
-  <div className="mt-6 ml-auto" style={{ width: "280px" }}>
-    <div
-      className="bg-white flex items-center justify-center rounded"
-      style={{ width: "280px", height: "120px" }}
-    >
-      <img
-        src={getPreviewUrl()}
-        alt="Signature Preview"
-        className="max-w-full max-h-full object-contain"
-        style={{ width: "100%", height: "100%" }}
-      />
-    </div>
-  </div>
-)}
-
-          </div>
-
-          {/* Signature below HTML if uploaded */}
-      
-
-          {/* Form */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10 mb-2 items-stretch">
-            {/* Left Column */}
-            <div className="flex flex-col justify-between">
-              <div>
-                <label className="text-sm font-semibold text-gray-700 mb-2 block">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  placeholder="Enter your name"
-                  className="w-full border border-gray-300 rounded-md px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:gray-300 transition"
-                />
-              </div>
-
-              <div className="mt-6">
-                <label className="text-sm font-semibold text-gray-700 mb-2 block">
-                  Comment
-                </label>
-                <textarea
-                  placeholder="Enter your comment"
-                  className="w-full h-24 resize-vertical border border-gray-300 rounded-md px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:gray-300 transition"
-                />
-              </div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="bg-white font-sans min-h-[40vh] px-6 md:px-8 py-8 pb-40 sm:pb-24">
+          <div className="max-w-6xl mx-auto">
+            {/* HTML Offer Letter Viewer */}
+            <div className="rounded-xl border border-gray-300 p-3 bg-white mb-4">
+              <iframe
+                src="/offer.html"
+                title="Offer Letter"
+                className="w-full h-[600px] border border-gray-100 rounded-md"
+                style={{ background: "#fff" }}
+              />
+              {uploadedFile && (
+                <div className="mt-6 ml-auto" style={{ width: "280px" }}>
+                  <div
+                    className="bg-white flex items-center justify-center rounded"
+                    style={{ width: "280px", height: "120px" }}
+                  >
+                    <img
+                      src={getPreviewUrl()}
+                      alt="Signature Preview"
+                      className="max-w-full max-h-full object-contain"
+                      style={{ width: "100%", height: "100%" }}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
 
-            {/* Right Column - Signature Upload */}
-            <div className="flex flex-col justify-between min-h-[180px]">
-              <div>
-                <label className="text-sm font-semibold text-gray-700 mb-2 block">
-                  Upload Sign
-                </label>
+            {/* Signature below HTML if uploaded */}
 
-                <div
-                  className="border border-gray-300 rounded-lg text-sm text-gray-700 flex items-center justify-center bg-white relative overflow-hidden mx-auto"
-                  style={{ width: "100%", maxWidth: "600px", height: "150px" }}
-                >
-                  {!uploadedFile && (
-                    <label className="flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 w-full h-full transition-all duration-300">
-                      <FontIcon
-                        iconName="Upload"
-                        color="#000"
-                        size="50px"
-                        display="inline"
-                        verticalAlign="text-bottom"
-                        margin="0.25rem"
-                      />
-                      Click to upload
-                    </label>
-                  )}
+            {/* Form */}
 
-               {uploadedFile && (
-  <div
-    className="relative border-2 border-gray-500 bg-white flex items-center justify-center rounded mx-auto"
-    style={{ width: "280px", height: "120px" }}
-  >
-    <img
-      src={getPreviewUrl()}
-      alt="Signature Preview"
-      className="max-w-full max-h-full object-contain"
-      style={{ width: "100%", height: "100%" }}
-    />
-  </div>
-)}
-
-
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10 mb-2 items-stretch">
+              {/* Left Column */}
+              <div className="flex flex-col justify-between">
+                <div>
+                  <label className="text-sm font-semibold text-gray-700 mb-2 block">
+                    Name
+                    <FontIcon
+                      iconName="Asterisk"
+                      size="6px"
+                      verticalAlign="top"
+                      color="red"
+                    />
+                  </label>
                   <input
-                    type="file"
-                    accept=".jpg,.jpeg,.png"
-                    onChange={handleFileChange}
-                    ref={fileInputRef}
-                    className="absolute inset-0 opacity-0 cursor-pointer"
+                    type="text"
+                    {...register("name", { required: "Name is required" })}
+                    placeholder="Enter your name"
+                    className="w-full border border-gray-300 rounded-md px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:gray-300 transition"
+                  />
+                  {errors.name && (
+                    <p className="text-xs text-red-500 mt-1 ms-2">{errors.name.message}</p>
+                  )}
+                </div>
+
+                <div className="mt-6">
+                  <label className="text-sm font-semibold text-gray-700 mb-2 block">
+                    Comment
+                  </label>
+                  <textarea
+                    placeholder="Enter your comment"
+                    className="w-full h-24 resize-vertical border border-gray-300 rounded-md px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:gray-300 transition"
                   />
                 </div>
+              </div>
 
-                <div className="mt-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs text-gray-600">
-                  <div className="flex">
-                    <span className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm">
-                      JPEG
-                    </span>
-                    <span className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm">
-                      PNG
-                    </span>
-                     <span className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm">
-                      JPG
-                    </span>
-                    <span
-                      className="px-4 py-2 border mr-1 rounded-md text-[10px]"
-                      style={{
-                        display: "inline-block",
-                        whiteSpace: "normal",
-                        lineHeight: "1",
-                      }}
-                    >
-                      &lt; 100 KB
-                      <br />
-                      &lt; 280px X 120px
-                    </span>
+              {/* Right Column - Signature Upload */}
+              <div className="flex flex-col justify-between min-h-[180px]">
+                <div>
+                  <label className="text-sm font-semibold text-gray-700 mb-2 block">
+                    Upload Sign
+                    {/* <FontIcon
+                      iconName="Asterisk"
+                      size="6px"
+                      verticalAlign="top"
+                      color="red"
+                    /> */}
+                  </label>
+
+                  <div
+                    className="border border-gray-300 rounded-lg text-sm text-gray-700 flex items-center justify-center bg-white relative overflow-hidden mx-auto"
+                    style={{
+                      width: "100%",
+                      maxWidth: "600px",
+                      height: "150px",
+                    }}
+                  >
+                    {!uploadedFile && (
+                      <label className="flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 w-full h-full transition-all duration-300">
+                        <FontIcon
+                          iconName="Upload"
+                          color="#000"
+                          size="50px"
+                          display="inline"
+                          verticalAlign="text-bottom"
+                          margin="0.25rem"
+                        />
+                        Click to upload
+                      </label>
+                    )}
+
+                    {uploadedFile && (
+                      <div
+                        className="relative border-2 border-gray-500 bg-white flex items-center justify-center rounded mx-auto"
+                        style={{ width: "280px", height: "120px" }}
+                      >
+                        <img
+                          src={getPreviewUrl()}
+                          alt="Signature Preview"
+                          className="max-w-full max-h-full object-contain"
+                          style={{ width: "100%", height: "100%" }}
+                        />
+                      </div>
+                    )}
+
+                    <input
+                      type="file"
+                      accept=".jpg,.jpeg,.png"
+                      onChange={handleFileChange}
+                      ref={fileInputRef}
+                      className="absolute inset-0 opacity-0 cursor-pointer"
+                    />
                   </div>
 
-                  {uploadedFile && (
-                    <div className="flex gap-2 text-xs">
-                      {/* <button
-                        type="button"
-                        className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm"
-                        onClick={() => setPreviewOpen((prev) => !prev)}
+                  <div className="mt-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-xs text-gray-600">
+                    <div className="flex">
+                      <span className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm">
+                        JPEG
+                      </span>
+                      <span className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm">
+                        PNG
+                      </span>
+                      <span className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm">
+                        JPG
+                      </span>
+                      <span
+                        className="px-4 py-2 border mr-1 rounded-md text-[10px]"
+                        style={{
+                          display: "inline-block",
+                          whiteSpace: "normal",
+                          lineHeight: "1",
+                        }}
                       >
-                        {previewOpen ? "Hide" : "View"}
-                      </button> */}
-
-                      <button
-                        type="button"
-                        className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm"
-                        onClick={() => fileInputRef.current?.click()}
-                      >
-                        Add New Sign
-                      </button>
+                        &lt; 100 KB
+                        <br />
+                        &lt; 280px X 120px
+                      </span>
                     </div>
+
+                    {uploadedFile && (
+                      <div className="flex gap-2 text-xs">
+                        {/* <button
+                          type="button"
+                          className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm"
+                          onClick={() => setPreviewOpen((prev) => !prev)}
+                        >
+                          {previewOpen ? "Hide" : "View"}
+                        </button> */}
+
+                        <button
+                          type="button"
+                          className="px-4 py-2 mr-1 rounded-md bg-gray-200 text-sm"
+                          onClick={() => fileInputRef.current?.click()}
+                        >
+                          Add New Sign
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
+                  {error && (
+                    <div className="text-red-500 text-xs mt-1">{error}</div>
                   )}
                 </div>
-
-                {error && <div className="text-red-500 text-xs mt-1">{error}</div>}
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Footer */}
-      <div className="bg-[#F3F3F3] w-full fixed bottom-0 py-2 border-t border-gray-300">
-        <div className="max-w-6xl mx-auto px-2 flex flex-col sm:flex-row justify-end gap-5">
-          <button
-            onClick={() => setDeclinePopup(true)}
-            className="px-7 py-3 text-sm rounded-full border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 font-semibold transition"
-          >
-            Decline
-          </button>
-          <button className="px-7 py-3 text-sm rounded-full bg-yellow-400 text-gray-700 hover:bg-yellow-500 transition font-semibold">
-            Accept
-          </button>
+        {/* Footer */}
+        <div className="bg-[#F3F3F3] w-full fixed bottom-0 py-2 border-t border-gray-300">
+          <div className="max-w-6xl mx-auto px-2 flex flex-col sm:flex-row justify-end gap-5">
+            <button
+              onClick={() => setDeclinePopup(true)}
+              className="px-7 py-3 text-sm rounded-full border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 font-semibold transition"
+            >
+              Decline
+            </button>
+            <button
+              type="submit"
+              className="px-7 py-3 text-sm rounded-full bg-yellow-400 text-gray-700 hover:bg-yellow-500 transition font-semibold"
+            >
+              Accept
+            </button>
+          </div>
         </div>
-      </div>
+      </form>
     </>
   );
 };
 
 export default Offer;
-
-
-
-
 
 // import React, { useState, useEffect, useRef } from "react";
 // import TopBar from "../../beolayer/layout/TopBar";
@@ -555,8 +583,6 @@ export default Offer;
 //     )}
 //   </div>
 // )}
-
-
 
 //                   <input
 //                     type="file"

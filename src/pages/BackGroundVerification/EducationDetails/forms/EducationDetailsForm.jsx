@@ -249,7 +249,7 @@ const EducationDetailsForm = () => {
               )}
 
               {/* Highest education checkbox  */}
-              <div className="my-4 me-6 flex justify-end">
+              {/* <div className="my-4 me-6 flex justify-end">
                 <label className="flex items-center space-x-2">
                   <span className="text-sm flex items-center space-x-1">
                     {errors?.education?.[index]?.isHighest ? (<FontIcon color='red' iconName={"errorIcon"}/>) : ''}
@@ -271,7 +271,7 @@ const EducationDetailsForm = () => {
                     }}
                   />
                 </label>
-              </div>
+              </div> */}
    
               <hr />
             </div>
