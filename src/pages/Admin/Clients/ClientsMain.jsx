@@ -65,7 +65,7 @@ const ClientsMain = () => {
 
     {/* Header Section */}
     <div className="p-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-      <div className="text-2xl font-semibold ms-12">Clients</div>
+      <div className="text-2xl font-semibold ms-5">Clients</div>
 
       <div className="flex flex-col sm:flex-row gap-4 items-center">
         

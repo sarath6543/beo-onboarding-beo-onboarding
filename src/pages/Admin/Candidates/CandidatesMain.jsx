@@ -151,8 +151,8 @@ const CandidatesMain = () => {
     </Slider>
 
     {/* Header Section */}
-    <div className="p-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-      <div className="text-2xl font-semibold ms-12">Candidates</div>
+    <div className="p-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+      <div className="text-2xl font-semibold ms-5">Candidates</div>
 
       <div className="flex flex-col sm:flex-row gap-4 items-center">
         
