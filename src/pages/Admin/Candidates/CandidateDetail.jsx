@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Documents from "./Documents/Documents";
 
 const tabs = [
   { key: "offer_letter", label: "Offer Letter" },
@@ -143,7 +144,7 @@ const CandidateDetail = () => {
           )
         );
       case "documents":
-        return <div>Documents related to candidate ID: {id}</div>;
+        return <Documents />;
       case "pre_joining":
         return <div>Pre-joining formalities for candidate ID: {id}</div>;
       case "day1":
@@ -269,7 +270,7 @@ const CandidateDetail = () => {
       {/* Tabs visible only when Accepted */}
       {status === "Accepted" && (
         <div className="w-full px-4 mt-6">
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-7xl mx-auto">
             <div className="tabs flex border-b border-gray-300 mb-4">
               {tabs.map((tab) => (
                 <button
