@@ -60,7 +60,7 @@ const Section = ({ title, rows, fileUrl }) => {
   const [viewUrl, setViewUrl] = useState(null);
   const isPdf = fileUrl?.toLowerCase().endsWith(".pdf");
 
-  // Chunk fields into sets of 6 (3 rows of 2 columns)
+ 
   const chunkedRows = [];
   for (let i = 0; i < rows.length; i += 6) {
     chunkedRows.push(rows.slice(i, i + 6));
@@ -81,7 +81,7 @@ const Section = ({ title, rows, fileUrl }) => {
             marginBottom: 24,
           }}
         >
-          {/* Left 3 columns with label-value fields (up to 6 pairs) */}
+
           {Array(3)
             .fill(0)
             .map((_, colIndex) => {
@@ -106,7 +106,7 @@ const Section = ({ title, rows, fileUrl }) => {
               );
             })}
 
-          {/* Last column: Preview + buttons (only once per section) */}
+
           {chunkIndex === 0 ? (
             <div style={{ textAlign: "center" }}>
               <div
@@ -155,7 +155,7 @@ const Section = ({ title, rows, fileUrl }) => {
         </div>
       ))}
 
-      {/* Modal Preview */}
+   
       {viewUrl && (
         <div
           onClick={() => setViewUrl(null)}
@@ -202,7 +202,7 @@ const Section = ({ title, rows, fileUrl }) => {
   );
 };
 
-// Button style helper
+
 const btnStyle = (bg, color, width = "100%", marginBottom = 8) => ({
   marginBottom,
   padding: "6px 12px",
@@ -227,7 +227,7 @@ export default function Documents() {
 
   return (
     <div style={{ padding: 24, fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}>
-      {/* 1. Personal Details Section */}
+   
       <Section
         title="Personal Details"
         rows={formatRows(
@@ -238,7 +238,7 @@ export default function Documents() {
         fileUrl={personalDetails.photoUrl}
       />
 
-      {/* 2. Combined Address Section */}
+
       <Section
         title="Address Details"
         rows={[
@@ -253,7 +253,7 @@ export default function Documents() {
         ]}
       />
 
-      {/* 3. Aadhaar Section (Single Row) */}
+
       <Section
         title="Aadhaar Document"
         rows={[
@@ -264,7 +264,7 @@ export default function Documents() {
         fileUrl={documents.aadhaar.fileUrl}
       />
 
-      {/* 4. PAN Section (Single Row) */}
+  
       <Section
         title="PAN Document"
         rows={[
