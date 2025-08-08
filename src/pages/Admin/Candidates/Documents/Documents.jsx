@@ -5,7 +5,35 @@ const sampleCandidateData = {
     firstName: "Vishnu",
     middleName: "S",
     lastName: "Nair",
+    fathersName: "S Nair",
+    dob: "1990-01-01",
+    nationality: "Indian",
+    placeOfBirth: "Kerala",
+    gender: "Male",
+    maritalStatus: "Single",
+    email: "vishnu@example.com",
+    mobile: "9876543210",
+    bloodGroup: "O+",
     photoUrl: "https://www.gstatic.com/webp/gallery/1.webp",
+  },
+  address: {
+    current: {
+      addressLine1: "123 MG Road",
+      addressLine2: "Near City Mall",
+      landmark: "Opposite Park",
+      country: "India",
+      state: "Kerala",
+      pin: "682001",
+    },
+    permanent: {
+      addressLine1: "456 Beach Road",
+      addressLine2: "Near Lighthouse",
+      landmark: "Opposite Beach",
+      country: "India",
+      state: "Kerala",
+      pin: "682002",
+    },
+    sameAsCurrent: false,
   },
   documents: {
     aadhaar: {
@@ -22,107 +50,112 @@ const sampleCandidateData = {
 };
 
 const Row = ({ label, value }) => (
-  <div
-    style={{
-      display: "flex",
-      padding: "6px 0",
-      borderBottom: "1px solid #eee",
-    }}
-  >
-    <div style={{ width: 150, fontWeight: "600", color: "#555" }}>{label}</div>
-    <div style={{ flex: 1 }}>{value || "—"}</div>
+  <div style={{ marginBottom: 10 }}>
+    <div style={{ fontWeight: "600", color: "#555" }}>{label}</div>
+    <div>{value || "—"}</div>
   </div>
 );
 
 const Section = ({ title, rows, fileUrl }) => {
   const [viewUrl, setViewUrl] = useState(null);
-
   const isPdf = fileUrl?.toLowerCase().endsWith(".pdf");
 
+  // Chunk fields into sets of 6 (3 rows of 2 columns)
+  const chunkedRows = [];
+  for (let i = 0; i < rows.length; i += 6) {
+    chunkedRows.push(rows.slice(i, i + 6));
+  }
+
   return (
-    <div
-      style={{
-        border: "1px solid #ccc",
-        borderRadius: 8,
-        padding: 16,
-        marginBottom: 32,
-        maxWidth: 450,
-      }}
-    >
+    <div style={{ border: "1px solid #ccc", borderRadius: 8, padding: 16, marginBottom: 32 }}>
       <h3 style={{ marginBottom: 16 }}>{title}</h3>
 
-      {/* 3 rows label+value */}
-      {rows.map(({ label, value }, i) => (
-        <Row key={i} label={label} value={value} />
+      {chunkedRows.map((chunk, chunkIndex) => (
+        <div
+          key={chunkIndex}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr) 180px",
+            gap: "16px",
+            alignItems: "flex-start",
+            marginBottom: 24,
+          }}
+        >
+          {/* Left 3 columns with label-value fields (up to 6 pairs) */}
+          {Array(3)
+            .fill(0)
+            .map((_, colIndex) => {
+              const field1 = chunk[colIndex * 2];
+              const field2 = chunk[colIndex * 2 + 1];
+
+              return (
+                <div key={colIndex}>
+                  {field1 && (
+                    <div style={{ marginBottom: 8 }}>
+                      <div style={{ fontWeight: 600, color: "#333" }}>{field1.label}</div>
+                      <div>{field1.value || "—"}</div>
+                    </div>
+                  )}
+                  {field2 && (
+                    <div>
+                      <div style={{ fontWeight: 600, color: "#333" }}>{field2.label}</div>
+                      <div>{field2.value || "—"}</div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+
+          {/* Last column: Preview + buttons (only once per section) */}
+          {chunkIndex === 0 ? (
+            <div style={{ textAlign: "center" }}>
+              <div
+                onClick={() => fileUrl && setViewUrl(fileUrl)}
+                style={{
+                  width: "100%",
+                  height: 120,
+                  borderRadius: 6,
+                  border: "1px solid #ccc",
+                  backgroundColor: "#f9f9f9",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  cursor: fileUrl ? "pointer" : "default",
+                  overflow: "hidden",
+                  marginBottom: 12,
+                }}
+                title={fileUrl ? "Click to view" : "No file available"}
+              >
+                {!fileUrl ? (
+                  "No file available"
+                ) : isPdf ? (
+                  <div>PDF Document</div>
+                ) : (
+                  <img
+                    src={fileUrl}
+                    alt={title}
+                    style={{ maxHeight: "100%", maxWidth: "100%", objectFit: "contain" }}
+                  />
+                )}
+              </div>
+
+              <button onClick={() => setViewUrl(fileUrl)} style={btnStyle("#007bff", "#fff")}>
+                View
+              </button>
+              <button onClick={() => alert(`Verify ${title}`)} style={btnStyle("#28a745", "#fff")}>
+                Verify
+              </button>
+              <button onClick={() => alert(`Resubmit ${title}`)} style={btnStyle("#ffc107", "#000")}>
+                Resubmit
+              </button>
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </div>
       ))}
 
-      {/* 4th row full width image/pdf preview */}
-      <div
-        onClick={() => fileUrl && setViewUrl(fileUrl)}
-        style={{
-          marginTop: 16,
-          height: 180,
-          borderRadius: 6,
-          border: "1px solid #ccc",
-          backgroundColor: "#f9f9f9",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          cursor: fileUrl ? "pointer" : "default",
-          color: "#666",
-          fontWeight: "600",
-          userSelect: "none",
-          overflow: "hidden",
-        }}
-        title={fileUrl ? "Click to view" : "No file available"}
-      >
-        {!fileUrl ? (
-          "No file available"
-        ) : isPdf ? (
-          <div>PDF Document (Click to View)</div>
-        ) : (
-          <img
-            src={fileUrl}
-            alt={title}
-            style={{ maxHeight: "100%", maxWidth: "100%", objectFit: "contain" }}
-          />
-        )}
-      </div>
-
-      {/* Buttons left aligned below */}
-      <div style={{ marginTop: 16 }}>
-        <button
-          onClick={() => alert(`Verify ${title}`)}
-          style={{
-            marginRight: 12,
-            padding: "8px 16px",
-            borderRadius: 4,
-            border: "none",
-            backgroundColor: "#28a745",
-            color: "#fff",
-            fontWeight: "600",
-            cursor: "pointer",
-          }}
-        >
-          Verify
-        </button>
-        <button
-          onClick={() => alert(`Complete ${title}`)}
-          style={{
-            padding: "8px 16px",
-            borderRadius: 4,
-            border: "none",
-            backgroundColor: "#ffc107",
-            color: "#000",
-            fontWeight: "600",
-            cursor: "pointer",
-          }}
-        >
-          Complete
-        </button>
-      </div>
-
-      {/* Modal view */}
+      {/* Modal Preview */}
       {viewUrl && (
         <div
           onClick={() => setViewUrl(null)}
@@ -144,18 +177,11 @@ const Section = ({ title, rows, fileUrl }) => {
               backgroundColor: "#fff",
               padding: 12,
               borderRadius: 8,
-              boxShadow: "0 0 10px rgba(0,0,0,0.3)",
               overflow: "hidden",
             }}
           >
             {isPdf ? (
-              <iframe
-                src={viewUrl}
-                title="Document Preview"
-                width="700"
-                height="900"
-                style={{ border: "none" }}
-              />
+              <iframe src={viewUrl} width="700" height="900" style={{ border: "none" }} />
             ) : (
               <img
                 src={viewUrl}
@@ -165,17 +191,7 @@ const Section = ({ title, rows, fileUrl }) => {
             )}
             <button
               onClick={() => setViewUrl(null)}
-              style={{
-                marginTop: 12,
-                padding: "8px 14px",
-                cursor: "pointer",
-                borderRadius: 4,
-                border: "none",
-                backgroundColor: "#007bff",
-                color: "#fff",
-                fontWeight: "600",
-                width: "100%",
-              }}
+              style={btnStyle("#007bff", "#fff", "100%", 12)}
             >
               Close
             </button>
@@ -186,43 +202,79 @@ const Section = ({ title, rows, fileUrl }) => {
   );
 };
 
+// Button style helper
+const btnStyle = (bg, color, width = "100%", marginBottom = 8) => ({
+  marginBottom,
+  padding: "6px 12px",
+  borderRadius: 4,
+  border: "none",
+  backgroundColor: bg,
+  color,
+  fontWeight: 600,
+  cursor: "pointer",
+  width,
+});
+
+
 export default function Documents() {
+  const { personalDetails, address, documents } = sampleCandidateData;
+
+  const formatRows = (obj) =>
+    Object.entries(obj).map(([key, value]) => ({
+      label: key.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase()),
+      value,
+    }));
+
   return (
-    <div
-      style={{
-        padding: 24,
-        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-      }}
-    >
+    <div style={{ padding: 24, fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}>
+      {/* 1. Personal Details Section */}
       <Section
-        title="Personal Details & Photo"
-        rows={[
-          { label: "First Name", value: sampleCandidateData.personalDetails.firstName },
-          { label: "Middle Name", value: sampleCandidateData.personalDetails.middleName },
-          { label: "Last Name", value: sampleCandidateData.personalDetails.lastName },
-        ]}
-        fileUrl={sampleCandidateData.personalDetails.photoUrl}
+        title="Personal Details"
+        rows={formatRows(
+          Object.fromEntries(
+            Object.entries(personalDetails).filter(([key]) => key !== "photoUrl")
+          )
+        )}
+        fileUrl={personalDetails.photoUrl}
       />
 
+      {/* 2. Combined Address Section */}
+      <Section
+        title="Address Details"
+        rows={[
+          ...formatRows(address.current).map((item) => ({
+            ...item,
+            label: `Current - ${item.label}`,
+          })),
+          ...formatRows(address.permanent).map((item) => ({
+            ...item,
+            label: `Permanent - ${item.label}`,
+          })),
+        ]}
+      />
+
+      {/* 3. Aadhaar Section (Single Row) */}
       <Section
         title="Aadhaar Document"
         rows={[
-          { label: "Document Number", value: sampleCandidateData.documents.aadhaar.number },
-          { label: "Name on Card", value: sampleCandidateData.documents.aadhaar.nameOnCard },
+          { label: "Document Number", value: documents.aadhaar.number },
+          { label: "Name on Card", value: documents.aadhaar.nameOnCard },
           { label: "Type", value: "Aadhaar" },
         ]}
-        fileUrl={sampleCandidateData.documents.aadhaar.fileUrl}
+        fileUrl={documents.aadhaar.fileUrl}
       />
 
+      {/* 4. PAN Section (Single Row) */}
       <Section
         title="PAN Document"
         rows={[
-          { label: "Document Number", value: sampleCandidateData.documents.pan.number },
-          { label: "Name on Card", value: sampleCandidateData.documents.pan.nameOnCard },
+          { label: "Document Number", value: documents.pan.number },
+          { label: "Name on Card", value: documents.pan.nameOnCard },
           { label: "Type", value: "PAN" },
         ]}
-        fileUrl={sampleCandidateData.documents.pan.fileUrl}
+        fileUrl={documents.pan.fileUrl}
       />
     </div>
   );
 }
+
