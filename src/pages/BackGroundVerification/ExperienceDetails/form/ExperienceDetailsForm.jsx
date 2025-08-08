@@ -41,7 +41,10 @@ const ExperienceDetailsForm = () => {
           salaryPreviewUrl: "",
           relievingFile: null,
           relievingPreviewUrl: "",
+          experienceFile: null,
+          experiencePreviewUrl: "",
           isCurrentOrg: false,
+          isLatestOrg: false
         },
       ],
     },
@@ -138,14 +141,26 @@ const ExperienceDetailsForm = () => {
         {fields.map((field, index) => {
           const watchedSalaryFile = watch(`experiences.${index}.salaryFile`) || [];
           const watchedRelievingFile = watch(`experiences.${index}.relievingFile`);
+          const watchedExperienceFile = watch(`experiences.${index}.experienceFile`)
           const isCurrentOrg = watch(`experiences.${index}.isCurrentOrg`);
+          const isLatestOrg = watch(`experiences.${index}.isLatestOrg`)
           
           return (
             <div key={field.id} className="mb-8">
-              <p className="text-xl font-medium mb-6 ml-6 mt-6">Experience {index +1}</p>
+              <p className="text-xl font-medium mb-6 ml-6 mt-6">{index === 0 ? "Current or Latest Experience" : `Experience ${index + 1}`}</p>
                {/* Current Org Checkbox */}
               {index === 0 &&(
-                <div className=" me-11 flex justify-end">
+                <div className=" me-11 gap-7 flex justify-end">
+
+                  <label className="flex items-center space-x-2">
+                  <span className="text-sm">Latest company</span>
+                  <input
+                    className="w-4 h-5"
+                    type="checkbox"
+                    {...register(`experiences.${index}.isLatestOrg`)}
+                  />
+                </label>
+
                 <label className="flex items-center space-x-2">
                   <span className="text-sm">Serving notice period</span>
                   <input
@@ -221,7 +236,7 @@ const ExperienceDetailsForm = () => {
                   error={errors.experiences?.[index]?.lastWorkingDate?.message}
                 />
   
-                {/* Salary Slip & Experience letter Upload */}
+                {/* Salary Slip / Experience letter  */}
                 <InputField
                   label={isCurrentOrg ? "Salary Slip" : "Experience Letter"}
                   type={isCurrentOrg ? "multiFile" : "upload"}
@@ -313,9 +328,9 @@ const ExperienceDetailsForm = () => {
                   error={errors.experiences?.[index]?.salaryFile?.message}
                 />
   
-                {/* Relieving Letter Upload */}
+                {/* Relieving Letter / Resignation letter  */}
                 <InputField
-                  label="Relieving Letter"
+                  label={isCurrentOrg ? "Resignation letter" : "Relieving Letter"}
                   type="upload"
                   {...register(`experiences.${index}.relievingFile`, {
                     required: !isCurrentOrg ?"Relieving Letter is required" : false,
@@ -337,24 +352,39 @@ const ExperienceDetailsForm = () => {
                   error={errors.experiences?.[index]?.relievingFile?.message}
                 />
 
-                  {/* Extra optional input box */}
-                {/* {index !== 0 &&(
-                  <InputField
-                  label="Company Name"
-                  type="text"
-                  asterisk
-                  {...register(`experiences.${index}.companyName`, {
-                    required: "Company Name is required",
-                  })}
-                  error={errors.experiences?.[index]?.companyName?.message}
-                />
-                )} */}
+                  {/* Experience letter */}
+                {index === 0 && isLatestOrg &&(
+                  <div className="">
+                    <InputField
+                    label="Experience Letter"
+                    type="upload"
+                    {...register(`experiences.${index}.experienceFile`, {
+                      required: !isCurrentOrg ?"Experience Letter is required" : false,
+                    })}
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        const previewUrl = URL.createObjectURL(file);
+                        setValue(`experiences.${index}.experienceFile`, file);
+                        setValue(`experiences.${index}.experiencePreviewUrl`, previewUrl);
+                        updateExperienceField(index, "experienceFile", file);
+                        updateExperienceField(index, "experiencePreviewUrl", previewUrl);
+                      }
+                    }}
+                    name={`experiences.${index}.experienceFile`}
+                    asterisk={!isCurrentOrg}
+                    value={watchedExperienceFile || experienceList[index].experiencePreviewUrl}
+                    placeholder={watchedExperienceFile?.name || "Choose experience letter"}
+                    error={errors.experiences?.[index]?.experienceFile?.message}
+                  />
+                  </div>
+                )}
 
               </FormWrapper>
   
   
               {/* Delete Button */}
-              {fields.length > 1 && index == 1 &&(
+              {fields.length > 1 && index !== 0 &&(
                 <div className="flex justify-end mb-8 pr-4">
                  <button
                     type="button"
