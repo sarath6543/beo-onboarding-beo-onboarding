@@ -57,12 +57,36 @@ const CandidatesMain = () => {
     { id: "name", name: "Name" },
     { id: "status", name: "Status",
       render: (value) => (
-        <Chip label={getStatus(value)}  style={{color: value === "error" && "white" ,backgroundColor:chipColor(value)}} />
+        <Chip label={getStatus(value)}  style={{color: value === "error" && "white" ,backgroundColor:chipColor(value)}}  sx={{
+  width: 100,              
+  height: 28,              
+  borderRadius: '5px',    
+  fontSize: '0.75rem',   
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  textAlign: 'center',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+}}/>
       ), },
     { id: "email", name: "Email" },
     { id: "offerstatus", name: "Offer Letter Status",
       render: (value) => (
-        <Chip label={getOfferStatus(value)} style={{color:chipColor(value), borderColor:chipColor(value)}} variant="outlined"/>
+        <Chip label={getOfferStatus(value)} style={{color:chipColor(value), borderColor:chipColor(value)}} variant="outlined" sx={{
+  width: 100,              
+  height: 28,              
+  borderRadius: '5px',     
+  fontSize: '0.75rem',     
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  textAlign: 'center',
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+}}/>
       ), },
     { id: "role", name: "Role" },
   ];
@@ -127,8 +151,8 @@ const CandidatesMain = () => {
     </Slider>
 
     {/* Header Section */}
-    <div className="p-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-      <div className="text-2xl font-semibold ms-12">Candidates</div>
+    <div className="p-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+      <div className="text-2xl font-semibold ms-5">Candidates</div>
 
       <div className="flex flex-col sm:flex-row gap-4 items-center">
         
