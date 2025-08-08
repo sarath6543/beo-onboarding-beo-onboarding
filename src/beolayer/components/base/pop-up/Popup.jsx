@@ -5,6 +5,10 @@ import FontIcon from '../Icons/FontIcon.jsx';
 const Popup = ({ onClose, show, title, type, fileType, children }) => {
 
   const [textBox,setTextBox] = useState("")
+  const handleClose =()=> {
+    setTextBox("");
+    onClose()
+  }
   
   const validation = type === "validation";
   const warning = type === "warning";
@@ -18,7 +22,7 @@ const Popup = ({ onClose, show, title, type, fileType, children }) => {
             <div className="fixed inset-0 flex justify-center items-center bg-black bg-black/50 z-50">
             <div className="bg-white rounded-lg shadow-lg w-full max-w-lg p-6 relative">
               <button
-                onClick={onClose}
+                onClick={handleClose}
                 className="absolute top-2 right-3 text-gray-500 hover:text-gray-700 text-2xl font-bold"
               >
                 &times;
@@ -33,7 +37,7 @@ const Popup = ({ onClose, show, title, type, fileType, children }) => {
               ></textarea> 
               <div className='flex justify-center gap-6 mt-6'>
                   <button
-                    onClick={onClose}
+                    onClick={handleClose}
                     className="bg-gray-200 text-gray-600 hover:text-gray-400 rounded-md py-1 px-3 "
                   >
                   Close
@@ -43,7 +47,11 @@ const Popup = ({ onClose, show, title, type, fileType, children }) => {
                     value={textBox}
                     onClick={onClose}
                     disabled={!textBox.trim()}
-                    className={`rounded-md py-1 px-3 bg-black text-gray-200 hover:text-gray-400`}
+                    className={`rounded-md py-1 px-3 
+                      ${textBox.trim() 
+                        ? 'bg-black text-gray-200 hover:text-gray-400' 
+                        : 'bg-black text-gray-200 cursor-not-allowed'}
+                    `}
                   >
                     Submit
                   </button>

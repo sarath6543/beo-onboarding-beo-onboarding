@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navigate, useNavigation } from "react-router-dom";
 import FormWrapper from "../../../../beolayer/components/base/Form/FormWrapper";
 import DetailsCard from "../../../../beolayer/components/base/DetailsCard/DetailsCard";
@@ -16,8 +16,13 @@ const DocumentationDetailsForm = () => {
   const { experienceList, setExperienceField } = useExperienceStore();
   const { educationList, setEducationalField } = useEducationStore();
   const addressDetails = useAddressStore();
-// console.log(panCardDetails,"kjdhfgkjdfhnkgjdnfkjgdf")
 
+  const [isAcknowledged, setIsAcknowledged] = useState(false);
+  const handleCheckboxChange = (e) => {
+    setIsAcknowledged(e.target.checked);
+  };
+
+// console.log(panCardDetails,"pan")
 // console.log("exp",experienceList);
 
   const handleSave = () => {
@@ -100,20 +105,20 @@ const DocumentationDetailsForm = () => {
     ];
   };
 
-  const createExperienceColumns = (exp) => [
-    [
-      { label: "Company Name", value: exp.company },
-      { label: "Role", value: exp.role },
-    ],
-    [
-      { label: "Start Date", value: exp.startDate },
-      { label: "End Date", value: exp.endDate },
-    ],
-    [
-      { label: "Employment Type", value: exp.employmentType },
-      { label: "Current Organization", value: exp.isCurrentOrg ? "Yes" : "No" },
-    ],
-  ];
+  // const createExperienceColumns = (exp) => [
+  //   [
+  //     { label: "Company Name", value: exp.company },
+  //     { label: "Role", value: exp.role },
+  //   ],
+  //   [
+  //     { label: "Start Date", value: exp.startDate },
+  //     { label: "End Date", value: exp.endDate },
+  //   ],
+  //   [
+  //     { label: "Employment Type", value: exp.employmentType },
+  //     { label: "Current Organization", value: exp.isCurrentOrg ? "Yes" : "No" },
+  //   ],
+  // ];
 
 const educationDetailsColumns = educationList.map((edu, index) => {
   const certificateUrl =
@@ -339,11 +344,19 @@ const relievingImgItems = exp.isCurrentOrg
       <DetailsCard title="Address Details" columns={addressDetailsColumns} />
       <DetailsCard title="Education Details"columns={educationDetailsColumns} />
       <DetailsCard title="Experience Details" columns={experienceDetailsColumns} />
+
+      <div>
+        <input className="m-2" type="checkbox" onChange={handleCheckboxChange} required />
+        <label className="text-sm">
+          I hereby acknowledge that the information provided is true and complete to the best of my knowledge.
+        </label>
+      </div>
+
        <div className="max-w-6xl mx-auto px-2 flex flex-col sm:flex-row justify-end gap-5">
           <button onClick={handleBack} className="px-7 py-3 text-sm rounded-full border border-gray-300 bg-white text-black hover:bg-gray-100 font-semibold transition">
            Back
           </button>
-          <button onClick={handleSave} className="px-7 py-3 text-sm rounded-full bg-yellow-400 text-black hover:bg-yellow-500 transition font-semibold">
+          <button disabled={!isAcknowledged} onClick={handleSave} className="px-7 py-3 text-sm rounded-full bg-yellow-400 text-black hover:bg-yellow-500 transition font-semibold">
             Submit
           </button>
         </div>

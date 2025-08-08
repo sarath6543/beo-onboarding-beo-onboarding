@@ -76,6 +76,14 @@ const ExperienceDetailsForm = () => {
           updateExperienceField(index, "salaryFile", newValue ? [] : null);
           updateExperienceField(index, "salaryPreviewUrl", newValue ? [] : "");
         }
+        else if(name === `experiences.${index}.isLatestOrg`){
+          const newValue = value.experiences?.[index]?.isLatestOrg;
+
+          setValue(`experiences.${index}.salaryFile`, newValue ? [] : null);
+          setValue(`experiences.${index}.salaryPreviewUrl`, newValue ? [] : "");
+          updateExperienceField(index, "salaryFile", newValue ? [] : null);
+          updateExperienceField(index, "salaryPreviewUrl", newValue ? [] : "");
+        }
       });
       return () => subscription.unsubscribe();
     })
@@ -238,17 +246,17 @@ const ExperienceDetailsForm = () => {
   
                 {/* Salary Slip / Experience letter  */}
                 <InputField
-                  label={isCurrentOrg ? "Salary Slip" : "Experience Letter"}
-                  type={isCurrentOrg ? "multiFile" : "upload"}
+                  label={isCurrentOrg || isLatestOrg ? "Salary Slip" : "Experience Letter"}
+                  type={isCurrentOrg || isLatestOrg ? "multiFile" : "upload"}
                   multiple={isCurrentOrg}
                   disabled={watchedSalaryFile.length > 2}
                   {...register(`experiences.${index}.salaryFile`, {
-                    required: (isCurrentOrg ?"Salary Slip is required" : "Experience Letter is required"),
+                    required: (isCurrentOrg || isLatestOrg ?"Salary Slip is required" : "Experience Letter is required"),
                   })}
                   onChange={(e) => {
                     const newFiles = Array.from(e.target.files || []);
 
-                    if (isCurrentOrg && newFiles.length > 0) {
+                    if ((isCurrentOrg || isLatestOrg) && newFiles.length > 0) {
                       
                       const existingValue = watch(`experiences.${index}.salaryFile`);
                       let existingFiles = [];
@@ -274,7 +282,7 @@ const ExperienceDetailsForm = () => {
                       updateExperienceField(index, "salaryFile", mergedFiles);
                       updateExperienceField(index, "salaryPreviewUrl", previewUrls);
 
-                    } else if (!isCurrentOrg && newFiles.length > 0) {
+                    } else if (!isCurrentOrg || !isLatestOrg && newFiles.length > 0) {
                       const file = newFiles[0];
                       const previewUrl = URL.createObjectURL(file);
                       setValue(`experiences.${index}.salaryFile`, file);
@@ -319,7 +327,7 @@ const ExperienceDetailsForm = () => {
                   name={`experiences.${index}.salaryFile`}
                   asterisk
                   value={
-                    isCurrentOrg ?
+                    isCurrentOrg || isLatestOrg ?
                       watchedSalaryFile || experienceList[index]?.salaryFile || []
                       : 
                       watchedSalaryFile || experienceList[index]?.salaryFile || null
@@ -330,10 +338,10 @@ const ExperienceDetailsForm = () => {
   
                 {/* Relieving Letter / Resignation letter  */}
                 <InputField
-                  label={isCurrentOrg ? "Resignation letter" : "Relieving Letter"}
+                  label={isCurrentOrg ? "Resignation Acceptance Letter" : "Relieving Letter"}
                   type="upload"
                   {...register(`experiences.${index}.relievingFile`, {
-                    required: !isCurrentOrg ?"Relieving Letter is required" : false,
+                    required: !isCurrentOrg ?"Relieving Letter is required" : "Resignation Acceptance Letter is required",
                   })}
                   onChange={(e) => {
                     const file = e.target.files[0];
@@ -346,7 +354,7 @@ const ExperienceDetailsForm = () => {
                     }
                   }}
                   name={`experiences.${index}.relievingFile`}
-                  asterisk={!isCurrentOrg}
+                  asterisk
                   value={watchedRelievingFile || experienceList[index].relievingPreviewUrl}
                   placeholder={watchedRelievingFile?.name || "Choose relieving letter"}
                   error={errors.experiences?.[index]?.relievingFile?.message}
@@ -354,7 +362,7 @@ const ExperienceDetailsForm = () => {
 
                   {/* Experience letter */}
                 {index === 0 && isLatestOrg &&(
-                  <div className="">
+                  <div className="mt-[-23px]">
                     <InputField
                     label="Experience Letter"
                     type="upload"
