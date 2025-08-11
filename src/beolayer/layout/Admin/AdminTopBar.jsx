@@ -42,7 +42,7 @@ export default function AdminTopBar() {
   return (
     <header
       className="w-full bg-white text-black flex items-center justify-between px-6 pr-10 relative border-b-[1px] border-gray-100"
-      style={{ height: 88 }}
+      style={{ minHeight: 88 }}
     >
       {/* You can add a title or breadcrumb here if needed */}
       <div className="flex-grow" />

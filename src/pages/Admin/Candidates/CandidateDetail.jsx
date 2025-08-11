@@ -156,7 +156,7 @@ const CandidateDetail = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <div className="w-full p-4">
+      <div className="w-full p-9">
         <div className="w-full p-4 border border-gray-200 rounded-lg shadow-sm bg-white">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center">
@@ -192,106 +192,106 @@ const CandidateDetail = () => {
             <div className="text-gray-400 text-sm mt-1">-------------</div>
           </div>
         </div>
-      </div>
 
-      {/* Create Offer Form */}
-      {isEditing && (status === "Not Started" || status === "Rejected") && (
-        <div className="w-full px-4 py-6">
-          <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow">
-            <h2 className="text-xl font-bold mb-4">Create Offer</h2>
-            <form onSubmit={handleOfferSubmit} className="grid gap-4">
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Candidate Name"
-                className="border border-gray-300 rounded px-4 py-2"
-                required
-              />
-              <input
-                type="date"
-                name="joiningDate"
-                value={formData.joiningDate}
-                onChange={handleChange}
-                className="border border-gray-300 rounded px-4 py-2"
-                required
-              />
-              <input
-                type="text"
-                name="salary"
-                value={formData.salary}
-                onChange={handleChange}
-                placeholder="Salary"
-                className="border border-gray-300 rounded px-4 py-2"
-                required
-              />
-              <input
-                type="text"
-                name="noticePeriod"
-                value={formData.noticePeriod}
-                onChange={handleChange}
-                placeholder="Notice Period"
-                className="border border-gray-300 rounded px-4 py-2"
-                required
-              />
-              <div className="flex justify-end gap-2">
-                <button
-                  type="button"
-                  onClick={() => setIsEditing(false)}
-                  className="px-4 py-2 border rounded hover:bg-gray-100 transition"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
-                >
-                  Generate Offer
-                </button>
+        {/* Create Offer Form */}
+        {isEditing && (status === "Not Started" || status === "Rejected") && (
+          <div className="w-full px-4 py-6">
+            <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow">
+              <h2 className="text-xl font-bold mb-4">Create Offer</h2>
+              <form onSubmit={handleOfferSubmit} className="grid gap-4">
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Candidate Name"
+                  className="border border-gray-300 rounded px-4 py-2"
+                  required
+                />
+                <input
+                  type="date"
+                  name="joiningDate"
+                  value={formData.joiningDate}
+                  onChange={handleChange}
+                  className="border border-gray-300 rounded px-4 py-2"
+                  required
+                />
+                <input
+                  type="text"
+                  name="salary"
+                  value={formData.salary}
+                  onChange={handleChange}
+                  placeholder="Salary"
+                  className="border border-gray-300 rounded px-4 py-2"
+                  required
+                />
+                <input
+                  type="text"
+                  name="noticePeriod"
+                  value={formData.noticePeriod}
+                  onChange={handleChange}
+                  placeholder="Notice Period"
+                  className="border border-gray-300 rounded px-4 py-2"
+                  required
+                />
+                <div className="flex justify-end gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsEditing(false)}
+                    className="px-4 py-2 border rounded hover:bg-gray-100 transition"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
+                  >
+                    Generate Offer
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Show offer letter preview */}
+        {(status === "Not Started" || status === "Rejected") && offerHTML && !isEditing && (
+          <div className="w-full px-4 py-6 max-w-4xl mx-auto bg-white p-6 rounded-lg shadow mb-6">
+            <iframe
+              title="Offer Letter"
+              ref={iframeRef}
+              style={{ width: "100%", height: "400px", border: "1px solid #ddd" }}
+              sandbox=""
+            />
+          </div>
+        )}
+
+        {/* Tabs visible only when Accepted */}
+        {status === "Accepted" && (
+          <div className="w-full  mt-6">
+            <div className=" mx-auto">
+              <div className="tabs flex border-b border-gray-300 mb-4">
+                {tabs.map((tab) => (
+                  <button
+                    key={tab.key}
+                    onClick={() => setActiveTab(tab.key)}
+                    className={`py-2 px-4 mr-2 border-b-2 ${
+                      activeTab === tab.key
+                        ? "border-blue-500 font-semibold text-blue-600"
+                        : "border-transparent text-gray-600 hover:text-blue-500"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
               </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* Show offer letter preview */}
-      {(status === "Not Started" || status === "Rejected") && offerHTML && !isEditing && (
-        <div className="w-full px-4 py-6 max-w-4xl mx-auto bg-white p-6 rounded-lg shadow mb-6">
-          <iframe
-            title="Offer Letter"
-            ref={iframeRef}
-            style={{ width: "100%", height: "400px", border: "1px solid #ddd" }}
-            sandbox=""
-          />
-        </div>
-      )}
-
-      {/* Tabs visible only when Accepted */}
-      {status === "Accepted" && (
-        <div className="w-full px-4 mt-6">
-          <div className="max-w-7xl mx-auto">
-            <div className="tabs flex border-b border-gray-300 mb-4">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.key}
-                  onClick={() => setActiveTab(tab.key)}
-                  className={`py-2 px-4 mr-2 border-b-2 ${
-                    activeTab === tab.key
-                      ? "border-blue-500 font-semibold text-blue-600"
-                      : "border-transparent text-gray-600 hover:text-blue-500"
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-            <div className="tab-content bg-white border border-gray-200 p-6 rounded shadow-sm">
-              {renderTabContent()}
+              <div className="tab-content bg-white border border-gray-200 p-6 rounded shadow-sm">
+                {renderTabContent()}
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

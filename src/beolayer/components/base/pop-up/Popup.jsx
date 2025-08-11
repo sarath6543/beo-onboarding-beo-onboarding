@@ -110,7 +110,7 @@ const Popup = ({ onClose, show, title, type, fileType, children }) => {
                 className="absolute top-2 right-3 text-gray-500 hover:text-gray-700 text-2xl font-bold"
               >
               </button>
-              <h2 className="text-2xl text-center font-semibold mb-4">{title ? (title): "Please Confirm"}</h2>
+              <h2 className="text-2xl text-center font-semibold mb-4">{title ? (title): ""}</h2>
               <div className="text-center text-gray-700 text-sm">
                 {fileType === "application/pdf" ? (
                   <iframe
