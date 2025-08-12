@@ -78,146 +78,106 @@ const template = `
   <html>
     <head>
       <style>
-        body { font-family: Arial, sans-serif; padding: 40px; color: #222; background: #fff; }
-        h3, h4 { margin-top: 32px; color: #30557d; }
-        table { border-collapse: collapse; width: 100%; margin: 24px 0; }
-        th, td { border: 1px solid #888; padding: 8px 12px; }
-        ul, ol { margin-left: 20px; }
+        body { font-family: Arial, sans-serif; padding: 32px; background: #f9f9f9; color: #222; }
+        h2, h3 { color: #303043; }
+        .annexure { margin-top: 32px; border-top: 1px solid #dedede; padding-top: 24px;}
+        .salary-breakup { background: #fafcff; padding: 16px; border-radius: 8px; margin-top:16px;}
+        ul { list-style-type: none; padding: 0;}
+        li { margin-bottom: 8px;}
+        .letter-meta { color: #5d94ce; margin-bottom: 16px;}
       </style>
     </head>
     <body>
-      <p>${new Date().toLocaleDateString()}</p>
-      <p>Dear <b>${formData.name}</b>,</p>
-      <p>
-        Congratulations! Further to your application for employment with us, you have successfully completed our selection process and we are pleased to make you an offer of employment.
-      </p>
-      <p>
-        This offer is based on your profile, relevant work experience and performance in the selection process. You have been selected for the position of <b>Senior Developer</b>, at <b>BEO Software Private Limited Cochin</b>. Your CTC as applicable with break-up has been detailed in the Annexure to this letter. The terms of this offer letter shall remain confidential and are not to be disclosed to any third party.
-      </p>
-      <p>
-        Kindly confirm your acceptance of this offer and your date of joining by signing Annexure and proposing your date of joining.
-        If not accepted within 7 days of receipt, this offer is liable to lapse at the discretion of BEO Software Private Limited.<br>
-        For any clarifications regarding your job, salary, or any policy, please contact HR Department <a href="mailto:hrgrp@beo.in">hrgrp@beo.in</a>
-      </p>
-      <p>
-        We request you to carry a signed copy of offer letter and its annexure as a token of your acceptance on the joining day. You are advised to go through the contents before signing the documents.
-      </p>
-      <p>
-        At the time of your joining, photocopy of the following documents should be submitted. Please carry original copies for verification:
-        <ol>
-          <li>All academic certificates</li>
-          <li>Experience certificate from all previous employer(s) and release letter from current employer</li>
-          <li>Passport/ID proof</li>
-          <li>Form 16 (Income Tax) from previous employer (if applicable)*</li>
-          <li>4 passport size photographs</li>
-          <li>PAN Card</li>
-        </ol>
-      </p>
-      <p>
-        Welcome to BEO Software. We wish you a long, rewarding and fulfilling career and looking forward to join us.
-      </p>
-      <p>
-        Yours sincerely,<br>
-        For BEO Software Private Limited<br><br>
-        <b>Joseph Antony</b><br>
-        Chief Executive Officer
-      </p>
+      <div class="letter">
+        <div class="letter-meta">
+          <b>Date:</b> ${new Date().toLocaleDateString()}<br>
+        </div>
+        <p>Dear <strong>${formData.name}</strong>,</p>
+        <p>Congratulations! Further to your application for employment with us, you have successfully completed our selection process and we are pleased to make you an offer of employment.</p>
+        <p>This offer is based on your profile, relevant work experience and performance in the selection process. You have been selected for the position of <b>Senior Developer</b> at <b>BEO Software Private Limited, Cochin</b>.</p>
+        
+        <p>Your CTC and break-up have been detailed in the annexure below.</p>
+        <p>
+          Please confirm your acceptance of this offer and your date of joining by signing the annexure and proposing your date of joining.<br>
+          <b>Joining Date:</b> ${formData.joiningDate}
+        </p>
+        <p>The terms of this offer letter shall remain confidential and are not to be disclosed to any third party.</p>
+        
+        <p>
+          At the time of your joining, please bring originals and copies of the following documents for verification:
+          <ol>
+            <li>All academic certificates</li>
+            <li>Experience certificate(s) and release letter(s)</li>
+            <li>Passport/ID proof</li>
+            <li>Form 16 (Income Tax) from previous employer (if applicable)</li>
+            <li>4 passport size photographs</li>
+            <li>PAN Card</li>
+          </ol>
+        </p>
 
-      <h3>ANNEXURE - I <br> Compensation Structure</h3>
-      <table>
-        <tr><th>Salary Component</th><th>Monthly (₹)</th><th>Annual (₹)</th></tr>
-        <tr><td>Basic</td><td>${calculate(breakup.BASIC)}</td><td>${(parseFloat(calculate(breakup.BASIC))*12).toFixed(2)}</td></tr>
-        <tr><td>DA</td><td>${calculate(breakup.DA)}</td><td>${(parseFloat(calculate(breakup.DA))*12).toFixed(2)}</td></tr>
-        <tr><td>HRA</td><td>${calculate(breakup.HRA)}</td><td>${(parseFloat(calculate(breakup.HRA))*12).toFixed(2)}</td></tr>
-        <tr><td>Children Education Allowance</td><td>${calculate(breakup.CEA)}</td><td>${(parseFloat(calculate(breakup.CEA))*12).toFixed(2)}</td></tr>
-        <tr><td>Leave Travel Allowance</td><td>${calculate(breakup.LTA)}</td><td>${(parseFloat(calculate(breakup.LTA))*12).toFixed(2)}</td></tr>
-        <tr><td>Special Allowance</td><td>${calculate(breakup.SPECIAL_ALLOWANCE)}</td><td>${(parseFloat(calculate(breakup.SPECIAL_ALLOWANCE))*12).toFixed(2)}</td></tr>
-        <tr><td>Communication Allowance</td><td>${calculate(breakup.COMMUNICATION_ALLOWANCE)}</td><td>${(parseFloat(calculate(breakup.COMMUNICATION_ALLOWANCE))*12).toFixed(2)}</td></tr>
-        <tr><td>Research Allowance</td><td>${calculate(breakup.RESEARCH_ALLOWANCE)}</td><td>${(parseFloat(calculate(breakup.RESEARCH_ALLOWANCE))*12).toFixed(2)}</td></tr>
-        <tr>
-            <td><b>Monthly Gross Salary</b></td>
-            <td><b>₹${formData.salary ? parseFloat(formData.salary).toLocaleString('en-IN', {minimumFractionDigits:2}) : "-"}</b></td>
-            <td><b>₹${formData.salary ? (parseFloat(formData.salary)*12).toLocaleString('en-IN', {maximumFractionDigits:2}) : "-"}</b></td>
-        </tr>
-        <tr><td>Family Health & Personal Accident Insurance</td><td>-</td><td>5,985.00</td></tr>
-        <tr><td>Employer PF Contribution</td><td>1,800.00</td><td>21,600.00</td></tr>
-        <tr><td><b>TOTAL CTC</b></td><td>-</td><td><b>₹${formData.salary ? (parseFloat(formData.salary)*12+5985+21600).toLocaleString('en-IN', {maximumFractionDigits:2}) : "-"}</b></td></tr>
-      </table>
-      <p>
-        Statutory Deductions like PF(1,800.00), ESIC(0.00), Employee Fund(50.00), Professional Tax(208.00), Income Tax, etc. which are applicable to you will be deducted from your monthly Gross Salary.
-      </p>
-      <h4>Benefits</h4>
-      <ol>
-        <li>
-          <b>Health Insurance Plan:</b><br>
-          You will be covered under the Group Health Insurance Scheme and Personal Accident insurance claim. Standard Plan provides you a cover up to Rupees Three lakhs and Personal accident cover up to Rupees Five Lakhs. The insurance cover will be as per the terms and conditions specified in the Company policy and may be revised from time to time.
-        </li>
-        <li>
-          <b>Joining Bonus:</b><br>
-          You will be entitled for a joining bonus (50 percent of your Monthly Gross Salary) which will be paid to you along with your first month’s salary.
-        </li>
-      </ol>
-      <p>
-        For BEO Software Private Limited <br><br>
-        <b>Joseph Antony</b><br>
-        Chief Executive Officer
-      </p>
+        <p>Welcome to BEO Software. We wish you a long, rewarding and fulfilling career and look forward to your joining.</p>
+        <p>Yours sincerely,<br>
+           <b>Joseph Antony</b><br>Chief Executive Officer
+        </p>
 
-      <h3>ANNEXURE - II <br> General Terms and Conditions of Employment</h3>
-      <ol>
-        <li>Either side will have to give Three months’ notice for terminating your service at any time.</li>
-        <li>During your employment you can be transferred across the company, its divisions/clients in India or abroad without change in terms.</li>
-        <li>Your employment is governed by company rules and policies as amended from time to time.</li>
-        <li>Confidentiality about company information is strictly expected; breach may result in immediate termination.</li>
-        <li>Remuneration/terms must not be communicated to other employees.</li>
-        <li>Honesty with company assets and documents is mandatory; breaches can result in instant termination.</li>
-        <li>All company work (programs, reports, etc.) is company property and copyright.</li>
-        <li>No outside employment/business while on company rolls; any violation can lead to termination.</li>
-      </ol>
-      <p>
-        Kindly sign the duplication of this letter as a token of your acceptance of the appointment letter and its terms and conditions. You are advised to go through the contents before signing this letter.
-      </p>
-      <p>
-        This is to confirm that I have received the Letter of Offer on ________________.<br>
-        I hereby accept this Offer and intend to join service on ________________.
-      </p>
-      <br>
-      <p style="margin-left:250px;">
-        ___________________________<br>
-        Date:<br>
-        ${formData.name}
-      </p>
+        <div class="annexure">
+          <h3>ANNEXURE - I: Compensation Structure</h3>
+          <div class="salary-breakup">
+            <p><b>Monthly Gross Salary:</b> ₹${formData.salary ? parseFloat(formData.salary).toLocaleString('en-IN', {minimumFractionDigits:2}) : "-"}<br>
+            <b>Total CTC (Annual):</b> ₹${(formData.salary ? (parseFloat(formData.salary)*12 + 5985 + 21600) : "-").toLocaleString('en-IN', {maximumFractionDigits:2})}</p>
+            <ul>
+              <li><strong>Basic:</strong> ₹${calculate(breakup.BASIC)}</li>
+              <li><strong>DA:</strong> ₹${calculate(breakup.DA)}</li>
+              <li><strong>HRA:</strong> ₹${calculate(breakup.HRA)}</li>
+              <li><strong>Children Education Allowance:</strong> ₹${calculate(breakup.CEA)}</li>
+              <li><strong>Leave Travel Allowance:</strong> ₹${calculate(breakup.LTA)}</li>
+              <li><strong>Special Allowance:</strong> ₹${calculate(breakup.SPECIAL_ALLOWANCE)}</li>
+              <li><strong>Communication Allowance:</strong> ₹${calculate(breakup.COMMUNICATION_ALLOWANCE)}</li>
+              <li><strong>Research Allowance:</strong> ₹${calculate(breakup.RESEARCH_ALLOWANCE)}</li>
+            </ul>
+            <p>Annual Benefits:<br>
+              <b>Health & Accident Insurance:</b> ₹5,985<br>
+              <b>Employer PF Contribution:</b> ₹21,600<br>
+            </p>
+            <p><b>Statutory Deductions</b> will apply (PF: ₹1,800, Employee Fund: ₹50, Professional Tax: ₹208, Income Tax etc. per month as applicable).</p>
+          </div>
+        </div>
 
-      <h3>ANNEXURE - III</h3>
-      <b>1. Work time rules</b>
-      <ul>
-        <li>Flexible working hours, Monday-Friday 8:00 am – 7:30 pm (office closed on weekends & holidays)</li>
-        <li>Monthly average of 8 hours working/day needed</li>
-        <li>Less than 3 hrs: full day leave; less than 6 hrs: half day leave</li>
-      </ul>
-      <b>2. Leave Policy</b>
-      <ul>
-        <li>Apply leave via BEO system and get sanction prior to leave day</li>
-        <li>Leave(s) only with enough balance</li>
-        <li>Apply 1 week ahead for 1 day, 2 weeks for 2-5 days, 1 month for >5 days</li>
-        <li>Emergency leave: inform manager by phone/email</li>
-        <li>In notice period, leave only with manager consent</li>
-        <li>Company provides 24 leaves per year (12 Casual/Sick + 12 Earned), 13 holidays for 2025</li>
-      </ul>
-      <b>3. Exit Policy</b>
-      <p>Notice Period as per Annexure II.</p>
-      <b>4. Internet Usage Policy</b>
-      <p>Internet for office use only; categories like social networking/chat are restricted.</p>
-      <br>
-      <p>
-        _______________________________<br>
-        Date:<br>
-        ${formData.name}
-      </p>
+        <div class="annexure">
+          <h3>ANNEXURE - II: General Terms & Conditions</h3>
+          <ul>
+            <li>Either side will have to give <b>Three months’ notice</b> for terminating your service at any time.</li>
+            <li>You may be transferred to any office/division/client of the company in India or abroad, without change in terms, at management’s sole discretion.</li>
+            <li>Your employment will be governed by current and future Company policies.</li>
+            <li>You must **not divulge confidential information** about the Company to anyone outside, including salary details.</li>
+            <li>Any dishonesty or theft of company property may lead to immediate termination.</li>
+            <li>All work produced (programs, studies, etc.) remains property & copyright of the company.</li>
+            <li>You may not engage in other gainful employment/business while employed with us.</li>
+          </ul>
+          <p><b>Notice Period:</b> ${formData.noticePeriod}</p>
+        </div>
+
+        <div class="annexure">
+          <h3>Benefits</h3>
+          <ul>
+            <li>Group Health Insurance cover up to **₹3 lakhs**. Personal Accident cover up to **₹5 lakhs**.</li>
+            <li>Joining Bonus: 50% of Monthly Gross Salary (₹${formData.salary ? (parseFloat(formData.salary)*0.5).toLocaleString('en-IN', {maximumFractionDigits:2}) : "-"}) paid with first month’s salary.</li>
+          </ul>
+        </div>
+
+        <div style="margin-top:36px;">
+          <hr>
+          <p>
+            This is to confirm that I have received the Letter of Offer on ________________<br>
+            I hereby accept this Offer and intend to join service on <b>${formData.joiningDate}</b>
+          </p>
+          <br>
+          <p>__________________________<br>Date:<br>${formData.name}</p>
+        </div>
+      </div>
     </body>
   </html>
 `;
-
 
 
     setOfferHTML(template);
