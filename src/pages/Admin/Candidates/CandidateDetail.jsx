@@ -12,7 +12,7 @@ const tabs = [
 const CandidateDetail = () => {
   const { id } = useParams();
 
-  const [status, setStatus] = useState("Accepted");  
+  const [status, setStatus] = useState("Not Started");  
   const [isEditing, setIsEditing] = useState(false);
   const [offerHTML, setOfferHTML] = useState("");
   const iframeRef = useRef(null);
